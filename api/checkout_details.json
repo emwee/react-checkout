@@ -1,0 +1,24 @@
+{
+	"selected_variants": [{
+		"id": 1,
+		"num_tickets": 2
+	}],
+	"available_dates": [
+		"2016-02-28",
+		"2016-02-29",
+		"2016-03-01",
+		"2016-03-02",
+		"2016-03-03"
+	],
+	"timeslots": [],
+	"variants": [{
+		"id": 1,
+		"title": "Adults",
+		"price": 17.5
+	},{
+		"id": 2,
+		"title": "Children",
+		"price": 12
+	}],
+	"max_bookable": null
+}

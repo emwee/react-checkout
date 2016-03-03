@@ -3,12 +3,13 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { getCheckoutDetails } from './actions'
 import CheckoutApp from './containers/checkout'
 import configureStore from './store/configureStore'
 
 const store = configureStore()
 
-console.log(store.getState())
+store.dispatch(getCheckoutDetails())
 
 render(
 	<Provider store={store}>

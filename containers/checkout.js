@@ -1,43 +1,36 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Datepicker from '../components/datepicker'
+import Datepicker from '../containers/datepicker'
+import Variants from '../components/variants'
 import * as CheckoutActions from '../actions'
 
-class CheckoutForm extends Component {
-	// constructor() {
-	// 	super()
-	// 	this.props = {}
-	// }
+class CheckoutApp extends Component {
 	render() {
-		console.log('CheckoutForm.render', this.props)
-		const { available_dates } = this.props
-		console.log('available_dates', available_dates)
-		console.log('this.props', this.props)
+		// console.log('CheckoutApp.render', this.props)
+		// const { availableDates, variants } = this.props
 		return (
 			<div>
-				<Datepicker available_dates={available_dates} />
+				<Datepicker />
 			</div>
 		)
 	}
 }
 
-function mapStateToProps(state) {
-  return {
-    available_dates: state.availableDates
-  }
-}
+// function mapStateToProps(state) {
+//   return {
+//     availableDates: state.availableDates,
+//     variants: state.variants
+//   }
+// }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(CheckoutActions, dispatch)
-  }
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     actions: bindActionCreators(CheckoutActions, dispatch)
+//   }
+// }
 
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CheckoutForm)
-
-// export default CheckoutForm
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(CheckoutApp)
