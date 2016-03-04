@@ -22,7 +22,7 @@ class OrderSummary extends Component {
 			return <p>no date selected</p>
 		}
 
-		return <p>selected date: {date.toDateString()}</p>
+		return <p>selected date: {date}</p>
 	}
 	getSelectedTimeslot(timeslot_id) {
 		if (!timeslot_id) {

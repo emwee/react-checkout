@@ -10,10 +10,10 @@ class CheckoutApp extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			selected_date: null,
-			selected_timeslot: null,
-			selected_variants: [],
-			quantity_variants: {}
+			selected_date: '2016-04-02',
+			selected_timeslot: 1,
+			selected_variants: [1, 2],
+			quantity_variants: {1: 2, 2: 3}
 		}
 	}
 	onSelectDate(date) {
@@ -63,6 +63,7 @@ class CheckoutApp extends Component {
 				<OrderSummary {...this.props} {...this.state} />
 				<Datepicker
 					available_dates={available_dates}
+					selected_date={this.state.selected_date}
 					onSelectDate={this.onSelectDate.bind(this)} />
 				<Timeslots
 					timeslots={timeslots}
@@ -72,6 +73,7 @@ class CheckoutApp extends Component {
 				<Variants
 					variants={variants}
 					onSelectVariant={this.onSelectVariant.bind(this)}
+					quantity_variants={this.state.quantity_variants}
 					disabled={!this.state.selected_timeslot} />
 			</div>
 		)
