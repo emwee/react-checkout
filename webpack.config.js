@@ -2,7 +2,7 @@ var webpack = require("webpack");
 
 module.exports = {
     entry: {
-        app: "./main.js",
+        app: "./app.js",
         vendor: ["pikaday"]
     },
     output: {

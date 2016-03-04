@@ -60,6 +60,7 @@ class CheckoutApp extends Component {
 					onSelectDate={this.onSelectDate.bind(this)} />
 				<Timeslots
 					timeslots={timeslots}
+					selected_timeslot={this.state.selected_timeslot}
 					onSelectTimeslot={this.onSelectTimeslot.bind(this)}
 					disabled={!this.state.selected_date} />
 				<Variants
