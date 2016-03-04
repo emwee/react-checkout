@@ -11,7 +11,7 @@ class CheckoutApp extends Component {
 		super(props)
 		this.state = {
 			selected_date: '2016-04-02',
-			selected_timeslot: 1,
+			selected_timeslot: null,
 			selected_variants: [1, 2],
 			quantity_variants: {1: 2, 2: 3}
 		}
@@ -58,9 +58,14 @@ class CheckoutApp extends Component {
 	render() {
 		console.log('CheckoutApp.render', this)
 		const { available_dates, variants, timeslots } = this.props
+		const has_timeslots = !!timeslots.length
+		const variants_disabled = has_timeslots ? !this.state.selected_timeslot : !this.state.selected_date
+
 		return (
 			<div>
-				<OrderSummary {...this.props} {...this.state} />
+				<OrderSummary
+					{...this.props} {...this.state}
+					has_timeslots={has_timeslots} />
 				<Datepicker
 					available_dates={available_dates}
 					selected_date={this.state.selected_date}
@@ -74,7 +79,7 @@ class CheckoutApp extends Component {
 					variants={variants}
 					onSelectVariant={this.onSelectVariant.bind(this)}
 					quantity_variants={this.state.quantity_variants}
-					disabled={!this.state.selected_timeslot} />
+					disabled={variants_disabled} />
 			</div>
 		)
 	}

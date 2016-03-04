@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
+import { formatPrice } from '../viewhelpers'
 
 require('../css/variants.css')
 
@@ -10,8 +11,13 @@ class Variant extends Component {
 		const num_tickets_options = []
 		const css_class = classNames('variant', {'variant--disabled': disabled })
 		const onChange = (e) => {
-			console.log('onChange')
 			onSelectVariant(id, parseInt(e.target.value, 10))
+		}
+
+		let subtotal_node = null
+
+		if (num_selected) {
+			subtotal_node = <span>{formatPrice(num_selected * price)}</span>
 		}
 
 		for (let i=0; i<=num_tickets; i++) {
@@ -22,7 +28,7 @@ class Variant extends Component {
 
 		return (
 			<div className={css_class}>
-				<p>{title} (#{id}) ({price})</p>
+				<p>{title} (#{id}) ({formatPrice(price)}) {subtotal_node}</p>
 				<select ref="selector" disabled={disabled} value={num_selected || 0} onChange={onChange.bind(this)}>
 					{num_tickets_options}
 				</select>

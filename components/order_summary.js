@@ -7,7 +7,6 @@ class OrderSummaryVariant extends Component {
 	render() {
 		const { qty, variant } = this.props
 		const subtotal = qty * variant.price
-
 		return (
 			<div>
 				<p>{variant.title} ({variant.id}) x {qty} {formatPrice(variant.price)} = {formatPrice(subtotal)}</p>
@@ -55,12 +54,12 @@ class OrderSummary extends Component {
 		}
 	}
 	render() {
-		const { selected_date, selected_timeslot, selected_variants, quantity_variants } = this.props
-
+		const { selected_date, selected_timeslot, selected_variants, quantity_variants, has_timeslots } = this.props
+		const timeslots_node = has_timeslots ? this.getSelectedTimeslot(selected_timeslot) : null
 		return (
 			<div className="order-summary">
 				{this.getSelectedDate(selected_date) }
-				{this.getSelectedTimeslot(selected_timeslot) }
+				{timeslots_node}
 				{this.getSelectedVariants(selected_variants, quantity_variants) }
 				{this.getTotalPrice(quantity_variants) }
 			</div>
