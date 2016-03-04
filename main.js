@@ -1,19 +1,11 @@
-import 'babel-polyfill'
-import React from 'react'
+import React, { Component } from 'react'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import { getCheckoutDetails } from './actions'
-import CheckoutApp from './containers/checkout'
-import configureStore from './store/configureStore'
+import CheckoutApp from './components/checkout'
+import checkout_data from './data/checkout_details.json'
 
-const store = configureStore()
-
-store.dispatch(getCheckoutDetails())
+console.log('checkout_data', checkout_data)
 
 render(
-	<Provider store={store}>
-		<CheckoutApp />
-	</Provider>,
+	<CheckoutApp {...checkout_data} />,
 	document.getElementById('app')
 )
