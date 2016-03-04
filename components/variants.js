@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
+require('../css/variants.css')
+
 class Variant extends Component {
 	componentDidMount() {
 		const selector = ReactDOM.findDOMNode(this.refs.selector)
@@ -36,7 +38,8 @@ class Variants extends Component {
 	render() {
 		const { variants, onSelectVariant } = this.props
 		const variant_nodes = variants.map(variant => {
-			return <Variant key={variant.id}
+			return <Variant
+				key={variant.id}
 				onSelectVariant={onSelectVariant}
 				{...variant} />
 		})

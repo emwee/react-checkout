@@ -7,5 +7,5 @@ console.log('checkout_data', checkout_data)
 
 render(
 	<CheckoutApp {...checkout_data} />,
-	document.getElementById('app')
+	document.getElementsByClassName('checkout-app')[ 0]
 )

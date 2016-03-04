@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+require('../css/timeslots.css')
+
 class Timeslot extends Component {
 	render() {
 		const { id, timeslot, disabled, onSelectTimeslot} = this.props
@@ -7,7 +9,7 @@ class Timeslot extends Component {
 			onSelectTimeslot(id)
 		}
 		return (
-			<button disabled={disabled} onClick={onSelect.bind(this)}>
+			<button className="timeslot-btn" disabled={disabled} onClick={onSelect.bind(this)}>
 				{id} / {timeslot}
 			</button>
 		)

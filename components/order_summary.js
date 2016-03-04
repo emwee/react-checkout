@@ -1,5 +1,18 @@
 import React, { Component } from 'react'
 
+require('../css/order_summary.css')
+
+class OrderSummaryVariant extends Component {
+	render() {
+		const { id, qty} = this.props
+		return (
+			<div>
+				<p>variant {id} x {qty}</p>
+			</div>
+		)
+	}
+}
+
 class OrderSummary extends Component {
 	getSelectedDate(date) {
 		if (date) {
@@ -9,36 +22,40 @@ class OrderSummary extends Component {
 		}
 	}
 	getTimeslotById(id) {
-		for (let t of this.props.timeslots) {
-			if (t.id === id)
-				return t.timeslot
+		for (let timeslot of this.props.timeslots) {
+			if (timeslot.id === id) {
+				return timeslot.timeslot
+			}
 		}
 	}
 	getSelectedTimeslot(timeslot_id) {
 		if (timeslot_id) {
-			return <p>
-				selected timeslot: {timeslot_id} ({this.getTimeslotById(timeslot_id)})
-			</p>
+			return <p>selected timeslot: {timeslot_id} ({this.getTimeslotById(timeslot_id)})</p>
 		} else {
 			return <p>no timeslot selected</p>
 		}
 	}
-	getSelectedVariants(variants) {
-		console.log('getSelectedVariants', variants)
-		if (variants) {
-			return <p>variants</p>
-		} else {
-			return <p>no variants</p>
+	getSelectedVariants(selected_variants, quantity_variants) {
+		console.log('getSelectedVariants', selected_variants, quantity_variants)
+
+		if (!selected_variants.length) {
+			return <p>no variants selected</p>
 		}
+
+		return selected_variants.map(variant_id => {
+			return <OrderSummaryVariant key={variant_id}
+				id={variant_id}
+				qty={quantity_variants[variant_id]} />
+		})
 	}
 	render() {
-		const { selected_date, selected_timeslot, quantity_variants } = this.props
+		const { selected_date, selected_timeslot, selected_variants, quantity_variants } = this.props
 		return (
-			<div className="variants">
+			<div className="order-summary">
 				<p>order summary</p>
 				{this.getSelectedDate(selected_date) }
 				{this.getSelectedTimeslot(selected_timeslot) }
-				{this.getSelectedVariants(quantity_variants) }
+				{this.getSelectedVariants(selected_variants, quantity_variants) }
 			</div>
 		)
 	}

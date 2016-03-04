@@ -4,6 +4,7 @@ import Pikaday from 'pikaday'
 import moment from 'moment'
 
 require('pikaday/css/pikaday.css')
+require('../css/datepicker.css')
 
 class Datepicker extends Component {
 	componentDidMount() {
@@ -22,7 +23,9 @@ class Datepicker extends Component {
 	}
 	render() {
 		return (
-			<div ref="datepicker"></div>
+			<div className="datepicker-wrapper">
+				<div ref="datepicker"></div>
+			</div>
 		)
 	}
 }
