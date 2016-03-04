@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
+import { formatPrice } from '../viewhelpers'
 
 require('../css/order_summary.css')
 
 class OrderSummaryVariant extends Component {
 	render() {
 		const { qty, variant } = this.props
+		const subtotal = qty * variant.price
+
 		return (
 			<div>
-				<p>{variant.title} ({variant.id}) x {qty} {variant.price} = {qty * variant.price}</p>
+				<p>{variant.title} ({variant.id}) x {qty} {formatPrice(variant.price)} = {formatPrice(subtotal)}</p>
 			</div>
 		)
 	}
@@ -45,9 +48,9 @@ class OrderSummary extends Component {
 	}
 	render() {
 		const { selected_date, selected_timeslot, selected_variants, quantity_variants } = this.props
+
 		return (
 			<div className="order-summary">
-				<p>order summary</p>
 				{this.getSelectedDate(selected_date) }
 				{this.getSelectedTimeslot(selected_timeslot) }
 				{this.getSelectedVariants(selected_variants, quantity_variants) }

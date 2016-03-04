@@ -18,7 +18,13 @@ class CheckoutApp extends Component {
 	}
 	onSelectDate(date) {
 		this.setState({selected_date: date})
+
+		// reset timeslots
 		this.setState({selected_timeslot: null})
+
+		// reset variants
+		this.setState({selected_variants: []})
+		this.setState({quantity_variants: {}})
 	}
 	onSelectTimeslot(timeslot_id) {
 		this.setState({selected_timeslot: timeslot_id})
@@ -65,7 +71,8 @@ class CheckoutApp extends Component {
 					disabled={!this.state.selected_date} />
 				<Variants
 					variants={variants}
-					onSelectVariant={this.onSelectVariant.bind(this)} />
+					onSelectVariant={this.onSelectVariant.bind(this)}
+					disabled={!this.state.selected_timeslot} />
 			</div>
 		)
 	}

@@ -14,7 +14,6 @@ data.entities.timeslots = checkout_data.timeslots.reduce((obj, timeslot) => {
 	return obj
 }, {})
 
-
 data.entities.variants = checkout_data.variants.reduce((obj, variant) => {
 	obj[variant.id] = variant
 	return obj
