@@ -32,10 +32,6 @@ class OrderSummary extends Component {
 		return <p>selected timeslot: {timeslot_id} ({this.props.entities.timeslots[timeslot_id].timeslot})</p>
 	}
 	getSelectedVariants(selected_variants, quantity_variants) {
-		console.log('getSelectedVariants')
-		const { entities } = this.props
-		console.log(entities)
-
 		if (!selected_variants.length) {
 			return <p>no variants selected</p>
 		}
@@ -43,8 +39,20 @@ class OrderSummary extends Component {
 		return selected_variants.map(variant_id => {
 			return <OrderSummaryVariant key={variant_id}
 				qty={quantity_variants[variant_id]}
-				variant={entities.variants[variant_id]} />
+				variant={ this.props.entities.variants[variant_id]} />
 		})
+	}
+	getTotalPrice(quantity_variants) {
+
+		let total_price = 0
+
+		for (let row in quantity_variants) {
+			total_price += this.props.entities.variants[row].price * quantity_variants[row]
+		}
+
+		if (total_price) {
+			return <p>total price: {formatPrice(total_price)}</p>
+		}
 	}
 	render() {
 		const { selected_date, selected_timeslot, selected_variants, quantity_variants } = this.props
@@ -54,6 +62,7 @@ class OrderSummary extends Component {
 				{this.getSelectedDate(selected_date) }
 				{this.getSelectedTimeslot(selected_timeslot) }
 				{this.getSelectedVariants(selected_variants, quantity_variants) }
+				{this.getTotalPrice(quantity_variants) }
 			</div>
 		)
 	}
