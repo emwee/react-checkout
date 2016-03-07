@@ -4,15 +4,20 @@ import classNames from 'classnames'
 require('../css/timeslots.css')
 
 class Timeslot extends Component {
+	constructor() {
+		super()
+		this.handleClick = this.handleClick.bind(this)
+	}
+	handleClick() {
+		const { id, onSelectTimeslot} = this.props
+		onSelectTimeslot(id)
+	}
 	render() {
-		const { id, timeslot, selected, disabled, onSelectTimeslot} = this.props
+		const { id, timeslot, selected, disabled } = this.props
 		const css_class = classNames('timeslot-btn', {'timeslot-btn--selected': selected })
-		const onSelect = () => {
-			onSelectTimeslot(id)
-		}
 
 		return (
-			<button className={css_class} disabled={disabled} onClick={onSelect.bind(this)}>
+			<button className={css_class} disabled={disabled} onClick={this.handleClick}>
 				{id} / {timeslot}
 			</button>
 		)

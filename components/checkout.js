@@ -10,10 +10,10 @@ class CheckoutApp extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			selected_date: '2016-04-02',
+			selected_date: '2016-04-01',
 			selected_timeslot: null,
-			selected_variants: [1, 2],
-			quantity_variants: {1: 2, 2: 3}
+			selected_variants: [],
+			quantity_variants: {}
 		}
 	}
 	onSelectDate(date) {

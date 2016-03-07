@@ -6,13 +6,19 @@ import { formatPrice } from '../viewhelpers'
 require('../css/variants.css')
 
 class Variant extends Component {
+	constructor() {
+		super()
+		this.handleChange = this.handleChange.bind(this)
+	}
+	handleChange(e) {
+		const { id, onSelectVariant} = this.props
+		const qty = parseInt(e.target.value, 10)
+		onSelectVariant(id, qty)
+	}
 	render() {
-		const { id, title, price, num_tickets, num_selected, disabled, onSelectVariant } = this.props
+		const { id, title, price, num_tickets, num_selected, disabled } = this.props
 		const num_tickets_options = []
 		const css_class = classNames('variant', {'variant--disabled': disabled })
-		const onChange = (e) => {
-			onSelectVariant(id, parseInt(e.target.value, 10))
-		}
 
 		let subtotal_node = null
 
@@ -29,7 +35,7 @@ class Variant extends Component {
 		return (
 			<div className={css_class}>
 				<p>{title} (#{id}) ({formatPrice(price)}) {subtotal_node}</p>
-				<select ref="selector" disabled={disabled} value={num_selected || 0} onChange={onChange.bind(this)}>
+				<select ref="selector" disabled={disabled} value={num_selected || 0} onChange={this.handleChange}>
 					{num_tickets_options}
 				</select>
 			</div>
