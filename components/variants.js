@@ -39,16 +39,17 @@ class Variant extends Component {
 	}
 	render() {
 		console.log('Variant.render', this)
-		const { id, title, price, num_tickets, max_bookable, num_selected, disabled } = this.props
+		const { title, price, num_tickets, max_bookable, num_selected, disabled } = this.props
 		const max_tickets = max_bookable || num_tickets
 		const css_class = classNames('variant', {'variant--disabled': disabled })
 
 		return (
 			<div className={css_class}>
-				<p>{title} (#{id}) {formatPrice(price)} {this.getSubtotal(price, num_selected)}</p>
+				<p>{title} {formatPrice(price)}</p>
 				<select disabled={disabled} value={num_selected || 0} onChange={this.handleChange}>
 					{this.getOptions(max_tickets, num_selected)}
 				</select>
+				<p>{this.getSubtotal(price, num_selected)}</p>
 			</div>
 		)
 	}

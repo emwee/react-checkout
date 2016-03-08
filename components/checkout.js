@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import validator from 'validator'
 import Datepicker from './datepicker'
 import Timeslots from './timeslots'
 import Variants from './variants'
 import OrderSummary from './order_summary'
-import { FirstName, LastName } from './customer_details'
+import { CustomerDetails, FirstName, LastName, Email } from './customer_details'
 
 require('../css/checkout.css')
 
@@ -17,20 +18,63 @@ class CheckoutApp extends Component {
 			quantity_by_variant_id: {101:2, 102:7},
 			customer: {
 				first_name: null,
-				last_name: null
-			}
+				last_name: null,
+				email: null
+			},
+			errors: {}
 		}
+	}
+	onChangeInput(field_name) {
+
 	}
 	onChangeFirstName(first_name) {
 		console.log('onChangeFirstName', first_name)
 		const customer = this.state.customer
-		customer.first_name = first_name
-		this.setState({customer: customer})
+		const errors = this.state.errors;
 
+		if (validator.isLength(first_name, { min: 2 })) {
+			customer.first_name = first_name
+			delete errors.first_name
+		} else {
+			customer.first_name = null
+			const errors = this.state.errors;
+			errors.first_name = 'please fill out a first name'
+			this.setState({errors})
+		}
+
+		this.setState({customer, errors})
 	}
 	onChangeLastName(last_name) {
 		console.log('onChangeLastName', last_name)
+		const customer = this.state.customer
+		const errors = this.state.errors;
 
+		if (validator.isLength(last_name, { min: 2 })) {
+			customer.last_name = last_name
+			delete errors.last_name
+		} else {
+			customer.last_name = null
+			const errors = this.state.errors;
+			errors.last_name = 'please fill out a last name'
+		}
+
+		this.setState({customer, errors})
+	}
+	onChangeLastEmail(email) {
+		console.log('onChangeLastEmail', email)
+		const customer = this.state.customer
+		const errors = this.state.errors;
+
+		if (validator.isEmail(email)) {
+			customer.email = email
+			delete errors.email
+		} else {
+			customer.email = null
+			const errors = this.state.errors;
+			errors.email = 'please fill out a valid email'
+		}
+
+		this.setState({customer, errors})
 	}
 	onSelectDate(date) {
 		this.setState({selected_date: date})
@@ -99,10 +143,17 @@ class CheckoutApp extends Component {
 					onSelectVariant={this.onSelectVariant.bind(this)}
 					quantity_by_variant_id={this.state.quantity_by_variant_id}
 					disabled={variants_disabled} />
-				<div>
-					<FirstName onChange={this.onChangeFirstName.bind(this)} />
-					<LastName onChange={this.onChangeLastName.bind(this)} />
-				</div>
+				<CustomerDetails>
+					<FirstName
+						error={this.state.errors.first_name}
+						onChange={this.onChangeFirstName.bind(this)} />
+					<LastName
+						error={this.state.errors.last_name}
+						onChange={this.onChangeLastName.bind(this)} />
+					<Email
+						error={this.state.errors.email}
+						onChange={this.onChangeLastEmail.bind(this)} />
+				</CustomerDetails>
 			</div>
 		)
 	}

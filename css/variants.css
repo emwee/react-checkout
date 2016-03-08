@@ -1,9 +1,17 @@
 .variant {
 	margin-bottom: 1rem;
-	padding: 1rem;
+	padding: 0.5rem;
 	background-color: #f6f6f6;
 }
 
 .variant--disabled {
 	opacity: 0.8;
+}
+
+.variant p {
+	display: inline-block;
+}
+
+.variant select {
+	display: inline-block;
 }

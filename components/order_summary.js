@@ -55,14 +55,20 @@ class OrderSummary extends Component {
 	}
 	getCustomerDetails(customer) {
 		console.log('getCustomerDetails', customer)
-		if (customer.first_name) {
-			return <p>{customer.first_name}</p>
+		let nodes = []
+
+		for (let field_name in customer) {
+			if (customer[field_name]) {
+				nodes.push(<p key={field_name}>{customer[field_name]}</p>)
+			}
 		}
+		return nodes
 	}
 	render() {
-		const { selected_date, selected_timeslot, selected_variants, quantity_by_variant_id,
-			has_timeslots, customer } = this.props
+		const { selected_date, selected_timeslot, selected_variants,
+			quantity_by_variant_id, has_timeslots, customer } = this.props
 		const timeslots_node = has_timeslots ? this.getSelectedTimeslot(selected_timeslot) : null
+
 		return (
 			<div className="order-summary">
 				{this.getSelectedDate(selected_date) }

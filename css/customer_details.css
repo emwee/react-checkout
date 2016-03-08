@@ -1,0 +1,13 @@
+.customer-details {
+	padding: 0.5rem;
+	background-color: #f6f6f6;
+}
+
+.textfield-wrapper {
+	margin-bottom: 1rem;
+}
+
+.textfield {
+	font-size: 1rem;
+	padding: 0.25em;
+}
