@@ -6,6 +6,8 @@ import parseCheckoutData from './utils/parse_checkout_data'
 
 const data = parseCheckoutData(checkout_data)
 
+console.log('data', data)
+
 render(
 	<CheckoutApp {...data} />,
 	document.getElementsByClassName('checkout-app')[ 0]

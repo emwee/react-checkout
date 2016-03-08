@@ -5,29 +5,25 @@
 		"2016-04-0",
 		"2016-04-04"
 	],
-	"timeslots": [
-		{
-			"id": 111,
-			"timeslot": "9:00"
-		},
-		{
-			"id": 112,
-			"timeslot": "10:00"
-		}
-	],
+	"timeslots": [],
 	"variants": [
 		{
-			"id": 211,
+			"id": 101,
 			"title": "Adults",
 			"price": 17.5,
-			"num_tickets": 3
+			"num_tickets": 40
 		},
 		{
-			"id": 212,
+			"id": 102,
 			"title": "Children",
 			"price": 12,
-			"num_tickets": 4
+			"num_tickets": 40
+		},{
+			"id": 103,
+			"title": "Aliens",
+			"price": 7,
+			"num_tickets": 40
 		}
 	],
-	"max_bookable": null
+	"max_bookable": 10
 }

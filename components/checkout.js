@@ -3,6 +3,7 @@ import Datepicker from './datepicker'
 import Timeslots from './timeslots'
 import Variants from './variants'
 import OrderSummary from './order_summary'
+import { FirstName, LastName } from './customer_details'
 
 require('../css/checkout.css')
 
@@ -12,9 +13,24 @@ class CheckoutApp extends Component {
 		this.state = {
 			selected_date: '2016-04-01',
 			selected_timeslot: null,
-			selected_variants: [],
-			quantity_variants: {}
+			selected_variants: [101, 102],
+			quantity_by_variant_id: {101:2, 102:7},
+			customer: {
+				first_name: null,
+				last_name: null
+			}
 		}
+	}
+	onChangeFirstName(first_name) {
+		console.log('onChangeFirstName', first_name)
+		const customer = this.state.customer
+		customer.first_name = first_name
+		this.setState({customer: customer})
+
+	}
+	onChangeLastName(last_name) {
+		console.log('onChangeLastName', last_name)
+
 	}
 	onSelectDate(date) {
 		this.setState({selected_date: date})
@@ -24,15 +40,15 @@ class CheckoutApp extends Component {
 
 		// reset variants
 		this.setState({selected_variants: []})
-		this.setState({quantity_variants: {}})
+		this.setState({quantity_by_variant_id: {}})
 	}
 	onSelectTimeslot(timeslot_id) {
 		this.setState({selected_timeslot: timeslot_id})
 	}
 	updateQuantityVariants(variant_id, num_tickets) {
-		const quantity_variants = this.state.quantity_variants
-		quantity_variants[variant_id] = num_tickets
-		this.setState({quantity_variants: quantity_variants})
+		const quantity_by_variant_id = this.state.quantity_by_variant_id
+		quantity_by_variant_id[variant_id] = num_tickets
+		this.setState({quantity_by_variant_id: quantity_by_variant_id})
 	}
 	updateSelectedVariants(variant_id, num_tickets) {
 		let selected_variants = this.state.selected_variants
@@ -57,9 +73,11 @@ class CheckoutApp extends Component {
 	}
 	render() {
 		console.log('CheckoutApp.render', this)
-		const { available_dates, variants, timeslots } = this.props
+		const { available_dates, variants, timeslots, max_bookable } = this.props
 		const has_timeslots = !!timeslots.length
 		const variants_disabled = has_timeslots ? !this.state.selected_timeslot : !this.state.selected_date
+
+		console.log('variants', variants)
 
 		return (
 			<div>
@@ -77,9 +95,14 @@ class CheckoutApp extends Component {
 					disabled={!this.state.selected_date} />
 				<Variants
 					variants={variants}
+					max_bookable={max_bookable}
 					onSelectVariant={this.onSelectVariant.bind(this)}
-					quantity_variants={this.state.quantity_variants}
+					quantity_by_variant_id={this.state.quantity_by_variant_id}
 					disabled={variants_disabled} />
+				<div>
+					<FirstName onChange={this.onChangeFirstName.bind(this)} />
+					<LastName onChange={this.onChangeLastName.bind(this)} />
+				</div>
 			</div>
 		)
 	}
