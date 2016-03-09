@@ -3,7 +3,7 @@ var webpack = require("webpack");
 module.exports = {
     entry: {
         app: "./app.js",
-        vendor: ["pikaday"]
+        vendor: ["pikaday", "jquery"]
     },
     output: {
         path: __dirname,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import validator from 'validator'
+import $ from 'jquery'
 import Datepicker from './datepicker'
 import Timeslots from './timeslots'
 import Variants from './variants'
@@ -10,10 +11,13 @@ require('../css/checkout.css')
 
 class CheckoutApp extends Component {
 	constructor(props) {
+		console.log('CheckoutApp.constructor')
 		super(props)
+		console.log(props)
+
 		this.state = {
 			selected_date: '2016-04-01',
-			selected_timeslot: null,
+			selected_timeslot: 111,
 			selected_variants: [101, 102],
 			quantity_by_variant_id: {101:2, 102:7},
 			customer: {
@@ -21,11 +25,12 @@ class CheckoutApp extends Component {
 				last_name: null,
 				email: null
 			},
-			errors: {}
+			errors: {},
+			entities: {
+				timeslots: {},
+				variants: {}
+			}
 		}
-	}
-	onChangeInput(field_name) {
-
 	}
 	onChangeFirstName(first_name) {
 		console.log('onChangeFirstName', first_name)
@@ -77,6 +82,7 @@ class CheckoutApp extends Component {
 		this.setState({customer, errors})
 	}
 	onSelectDate(date) {
+		console.log('onSelectDate')
 		this.setState({selected_date: date})
 
 		// reset timeslots
@@ -85,6 +91,30 @@ class CheckoutApp extends Component {
 		// reset variants
 		this.setState({selected_variants: []})
 		this.setState({quantity_by_variant_id: {}})
+
+		console.log('-----')
+
+		$.getJSON('./data/timeslots_2016-04-01.json', (json) => {
+			console.log('json', json)
+
+			if (json.success) {
+
+				const entities_state = this.state.entities
+
+				console.log(entities_state)
+
+				for (let row in json.timeslots) {
+					const timeslot = json.timeslots[row]
+					entities_state.timeslots[date + '.' + timeslot.id] = timeslot
+				}
+
+				console.log(entities_state)
+
+				this.setState({ entities: entities_state })
+			}
+		}).fail((data) => {
+			console.log('fail', data)
+		});
 	}
 	onSelectTimeslot(timeslot_id) {
 		this.setState({selected_timeslot: timeslot_id})
@@ -120,8 +150,6 @@ class CheckoutApp extends Component {
 		const { available_dates, variants, timeslots, max_bookable } = this.props
 		const has_timeslots = !!timeslots.length
 		const variants_disabled = has_timeslots ? !this.state.selected_timeslot : !this.state.selected_date
-
-		console.log('variants', variants)
 
 		return (
 			<div>

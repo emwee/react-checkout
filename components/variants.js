@@ -80,12 +80,10 @@ class Variants extends Component {
 		}
 	}
 	render() {
-		console.log('Variants.render', this)
 		const { variants, disabled, quantity_by_variant_id, max_bookable, onSelectVariant } = this.props
 		return (
 			<div className="variants">
 				{variants.map(variant => {
-					console.log('variant', variant)
 					return <Variant
 						key={variant.id}
 						num_selected={quantity_by_variant_id[variant.id]}
