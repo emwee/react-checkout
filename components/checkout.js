@@ -25,11 +25,11 @@ class CheckoutApp extends Component {
 				last_name: null,
 				email: null
 			},
-			errors: {},
-			entities: {
-				timeslots: {},
-				variants: {}
-			}
+			errors: {}
+			// entities: {
+			// 	timeslots: {},
+			// 	variants: {}
+			// }
 		}
 	}
 	onChangeFirstName(first_name) {
@@ -92,29 +92,29 @@ class CheckoutApp extends Component {
 		this.setState({selected_variants: []})
 		this.setState({quantity_by_variant_id: {}})
 
-		console.log('-----')
+		// console.log('-----')
 
-		$.getJSON('./data/timeslots_2016-04-01.json', (json) => {
-			console.log('json', json)
+		// $.getJSON('./data/timeslots_2016-04-01.json', (json) => {
+		// 	console.log('json', json)
 
-			if (json.success) {
+		// 	if (json.success) {
 
-				const entities_state = this.state.entities
+		// 		const entities_state = this.state.entities
 
-				console.log(entities_state)
+		// 		console.log(entities_state)
 
-				for (let row in json.timeslots) {
-					const timeslot = json.timeslots[row]
-					entities_state.timeslots[date + '.' + timeslot.id] = timeslot
-				}
+		// 		for (let row in json.timeslots) {
+		// 			const timeslot = json.timeslots[row]
+		// 			entities_state.timeslots[date + '.' + timeslot.id] = timeslot
+		// 		}
 
-				console.log(entities_state)
+		// 		console.log(entities_state)
 
-				this.setState({ entities: entities_state })
-			}
-		}).fail((data) => {
-			console.log('fail', data)
-		});
+		// 		this.setState({ entities: entities_state })
+		// 	}
+		// }).fail((data) => {
+		// 	console.log('fail', data)
+		// });
 	}
 	onSelectTimeslot(timeslot_id) {
 		this.setState({selected_timeslot: timeslot_id})
