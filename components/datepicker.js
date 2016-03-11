@@ -9,25 +9,32 @@ require('../css/datepicker.css')
 class Datepicker extends Component {
 	constructor() {
 		super()
-		this.onSelectDate = this.onSelectDate.bind(this)
+		this.picker = null
 	}
-	onSelectDate(date) {
-		const { onSelectDate } = this.props
-		onSelectDate(moment(date).format('YYYY-MM-DD'))
+	componentDidUpdate() {
+		const { availableDates } = this.props
+		this.picker.setMinDate(new Date(availableDates[0]))
+		this.picker.setMaxDate(new Date(availableDates[availableDates.length-1]))
+		this.picker.gotoDate(new Date(availableDates[0]))
 	}
 	componentDidMount() {
-		const { available_dates, selected_date } = this.props
+		console.log('datepicker.componentDidMount')
+		const { availableDates, selectedDate, onSelectDate } = this.props
+		console.log(availableDates)
 		const node = ReactDOM.findDOMNode(this.refs.datepicker)
-		const picker = new Pikaday({
+		this.picker = new Pikaday({
 			field: node,
 			bound: false,
-			defaultDate: selected_date ? new Date(selected_date) : new Date(available_dates[0]),
-			minDate: new Date(available_dates[0]),
-			maxDate: new Date(available_dates[available_dates.length-1]),
-			setDefaultDate: !!selected_date,
-			onSelect: this.onSelectDate,
-			disableDayFn: (date) =>
-				!available_dates.includes(moment(date).format('YYYY-MM-DD'))
+			defaultDate: new Date(availableDates[0]),
+			minDate: new Date(availableDates[0]),
+			maxDate: new Date(availableDates[availableDates.length-1]),
+			setDefaultDate: !!selectedDate,
+			onSelect: (date) => {
+				onSelectDate(date)
+			},
+			disableDayFn: (date) => {
+				!availableDates.includes(moment(date).format('YYYY-MM-DD'))
+			}
 		})
 	}
 	render() {
