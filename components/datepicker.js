@@ -11,11 +11,16 @@ class Datepicker extends Component {
 		super()
 		this.picker = null
 	}
-	componentDidUpdate() {
+	updatePicker() {
 		const { availableDates } = this.props
-		this.picker.setMinDate(new Date(availableDates[0]))
-		this.picker.setMaxDate(new Date(availableDates[availableDates.length-1]))
-		this.picker.gotoDate(new Date(availableDates[0]))
+		const firstDate = availableDates[0]
+		const lastDate = availableDates[availableDates.length-1]
+		this.picker.setMinDate(new Date(firstDate))
+		this.picker.setMaxDate(new Date(lastDate))
+		this.picker.gotoDate(new Date(firstDate))
+	}
+	componentDidUpdate() {
+		this.updatePicker()
 	}
 	componentDidMount() {
 		console.log('datepicker.componentDidMount')
@@ -25,17 +30,16 @@ class Datepicker extends Component {
 		this.picker = new Pikaday({
 			field: node,
 			bound: false,
-			defaultDate: new Date(availableDates[0]),
-			minDate: new Date(availableDates[0]),
-			maxDate: new Date(availableDates[availableDates.length-1]),
 			setDefaultDate: !!selectedDate,
 			onSelect: (date) => {
-				onSelectDate(date)
+				onSelectDate(moment(date).format('YYYY-MM-DD'))
 			},
 			disableDayFn: (date) => {
 				!availableDates.includes(moment(date).format('YYYY-MM-DD'))
 			}
 		})
+
+		this.updatePicker()
 	}
 	render() {
 		return (

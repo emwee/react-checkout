@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux'
+import { default as order } from './order'
+import { default as variants } from './variants'
+import { default as timeslots } from './timeslots'
 
 const initialState =  {
-	isFetchingTimeslots: false,
-	isFetchingVariants: false,
+	// isFetchingTimeslots: false,
+	// isFetchingVariants: false,
+	// customerData: {},
+	// formErrors: {},
 	selectedDate: null,
 	selectedTimeslot: null,
-	selectedVariants: [],
-	quantityByVariantId: {},
-	customerData: {},
-	formErrors: {},
-	availableDates: [],
-	variants: []
+	availableDates: []
 }
 
 const selectedDate = (state=initialState.selectedDate, action) => {
@@ -31,57 +31,20 @@ const selectedTimeslot = (state=initialState.selectedTimeslot, action) => {
 	}
 }
 
-const selectedVariants = (state=initialState.selectedVariants, action) => {
-	switch (action.type) {
-		case 'ADD_VARIANT':
-			return [111]
-		default:
-			return state
-	}
-}
-
-const quantityByVariantId = (state=initialState.quantityByVariantId, action) => {
-	return state
-}
-
 const availableDates = (state=initialState.availableDates, action) => {
-	console.log(action)
 	switch (action.type) {
-		case 'RECEIVE_PRODUCTS':
-			return action.details.available_dates
+		case 'RECEIVE_CHECKOUT_DETAILS':
+			return action.available_dates
 		default:
 			return state
 	}
 }
 
-const getVariants = (state=[], action) => {
-	switch (action.type) {
-		case 'RECEIVE_PRODUCTS':
-		console.log(action.details.variants)
-			return action.details.variants
-		default:
-			return state
-	}
-}
-
-// const checkoutApp = combineReducers({
-// 	availableDates,
-//   selectedDate,
-//   selectedTimeslot,
-//   selectedVariants,
-//   quantityByVariantId,
-//   timeslots
-// })
-
-function checkoutApp(state = {}, action) {
-	return {
-		availableDates: availableDates(state.availableDates, action),
-		selectedDate: selectedDate(state.selectedDate, action),
-		selectedTimeslot: selectedTimeslot(state.selectedTimeslot, action),
-		selectedVariants: selectedVariants(state.selectedVariants, action),
-		quantityByVariantId: quantityByVariantId(state.quantityByVariantId, action),
-		variants: getVariants(state.variants, action)
-	}
-}
-
-export default checkoutApp
+export default combineReducers({
+	availableDates,
+	selectedDate,
+	selectedTimeslot,
+	timeslots,
+	variants,
+	order
+})
