@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { default as order } from './order'
 import { default as variants } from './variants'
 import { default as timeslots } from './timeslots'
+import * as types from '../constants/action_types'
 
 const initialState =  {
 	// isFetchingTimeslots: false,
@@ -15,7 +16,7 @@ const initialState =  {
 
 const selectedDate = (state=initialState.selectedDate, action) => {
 	switch (action.type) {
-		case 'SELECT_DATE':
+		case types.SELECT_DATE:
 			return action.date
 		default:
 			return state
@@ -24,7 +25,7 @@ const selectedDate = (state=initialState.selectedDate, action) => {
 
 const selectedTimeslot = (state=initialState.selectedTimeslot, action) => {
 	switch (action.type) {
-		case 'SELECT_TIMESLOT':
+		case types.SELECT_TIMESLOT:
 			return action.timeslot_id
 		default:
 			return state
@@ -33,7 +34,7 @@ const selectedTimeslot = (state=initialState.selectedTimeslot, action) => {
 
 const availableDates = (state=initialState.availableDates, action) => {
 	switch (action.type) {
-		case 'RECEIVE_CHECKOUT_DETAILS':
+		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.available_dates
 		default:
 			return state

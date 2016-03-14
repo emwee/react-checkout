@@ -1,3 +1,5 @@
+import * as types from '../constants/action_types'
+
 const initialState =  {
 	addedVariantIds: [],
 	quantityByVariantId: {}
@@ -6,7 +8,7 @@ const initialState =  {
 const addedVariantIds = (state=initialState.addedVariantIds, action) => {
 	console.log('--addedVariantIds');
 	switch (action.type) {
-		case 'ADD_VARIANT':
+		case types.ADD_VARIANT:
 			if (state.indexOf(action.variantId) !== -1) {
 				return state
 			}
@@ -18,7 +20,7 @@ const addedVariantIds = (state=initialState.addedVariantIds, action) => {
 
 const quantityByVariantId = (state=initialState.quantityByVariantId, action) => {
 	switch (action.type) {
-		case 'ADD_VARIANT':
+		case types.ADD_VARIANT:
 			const { variantId, quantity } = action
 			return {
 				...state,

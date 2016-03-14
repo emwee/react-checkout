@@ -1,4 +1,6 @@
-const initialState =  {
+import * as types from '../constants/action_types'
+
+const initialState = {
 	timeslotIds: [],
 	timeslotById: {}
 }
@@ -6,7 +8,7 @@ const initialState =  {
 const timeslotById = (state=initialState.timeslotById, action) => {
 	console.log('--timeslotById', action);
 	switch (action.type) {
-		case 'RECEIVE_CHECKOUT_DETAILS':
+		case types.RECEIVE_CHECKOUT_DETAILS:
 			const aa = action.timeslots.reduce((obj, timeslot) => {
 				obj[timeslot.id] = timeslot
 				return obj
@@ -22,7 +24,7 @@ const timeslotById = (state=initialState.timeslotById, action) => {
 
 function timeslotIds(state = [], action) {
 	switch (action.type) {
-		case 'RECEIVE_CHECKOUT_DETAILS':
+		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.timeslots.map(timeslot => timeslot.id)
 		default:
 			return state

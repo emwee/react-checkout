@@ -1,4 +1,6 @@
-const initialState =  {
+import * as types from '../constants/action_types'
+
+const initialState = {
 	variantIds: [],
 	variantById: {}
 }
@@ -6,7 +8,7 @@ const initialState =  {
 const variantById = (state=initialState.variantById, action) => {
 	console.log('--variantById');
 	switch (action.type) {
-		case 'RECEIVE_CHECKOUT_DETAILS':
+		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.variants.reduce((obj, variant) => {
 				obj[variant.id] = variant
 				return obj
@@ -18,7 +20,7 @@ const variantById = (state=initialState.variantById, action) => {
 
 function variantIds(state = [], action) {
 	switch (action.type) {
-		case 'RECEIVE_CHECKOUT_DETAILS':
+		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.variants.map(variant => variant.id)
 		default:
 			return state
