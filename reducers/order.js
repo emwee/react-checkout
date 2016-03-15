@@ -63,19 +63,27 @@ export default function order(state = initialState, action) {
   }
 }
 
+export function getSelectedTimeslot(state) {
+	return state.timeslots.timeslotsById[state.order.selectedTimeslotId]
+}
+
 export function getAddedVariants(state) {
 	console.log('--getAddedVariants', state);
+	console.log(state)
 	return state.order.addedVariantIds.map((variantId) => {
 		return {
-			...state.variants.variantById[variantId],
+			...state.variants.variantsById[variantId],
 			quantity: state.order.quantityByVariantId[variantId]
 		}
 	})
 }
 
 export function getTotalPrice(state) {
-	return state.order.addedVariantIds.reduce((total, variantId) =>
-		total + state.variants.variantById[variantId].price * state.order.quantityByVariantId[variantId],
+	const a = state.order.addedVariantIds.reduce((total, variantId) =>
+		total + state.variants.variantsById[variantId].price * state.order.quantityByVariantId[variantId],
 		0
 	)
+
+	console.log(a)
+	return a
 }

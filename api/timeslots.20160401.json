@@ -2,13 +2,13 @@
 	"success": true,
 	"timeslots": [
 		{
-			"id": 211,
+			"id": 101,
 			"timeslot": "9:01",
 			"enabled": true,
 			"max_bookable": 11
 		},
 		{
-			"id": 212,
+			"id": 102,
 			"timeslot": "10:01",
 			"enabled": true,
 			"max_bookable": 12

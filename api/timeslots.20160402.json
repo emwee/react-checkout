@@ -1,0 +1,17 @@
+{
+	"success": true,
+	"timeslots": [
+		{
+			"id": 201,
+			"timeslot": "9:01",
+			"enabled": true,
+			"max_bookable": 11
+		},
+		{
+			"id": 202,
+			"timeslot": "10:01",
+			"enabled": true,
+			"max_bookable": 12
+		}
+	]
+}

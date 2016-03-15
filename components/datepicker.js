@@ -31,9 +31,7 @@ class Datepicker extends Component {
 			field: node,
 			bound: false,
 			setDefaultDate: !!selectedDate,
-			onSelect: (date) => {
-				onSelectDate(moment(date).format('YYYY-MM-DD'))
-			},
+			onSelect: onSelectDate,
 			disableDayFn: (date) => {
 				!availableDates.includes(moment(date).format('YYYY-MM-DD'))
 			}

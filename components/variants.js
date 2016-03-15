@@ -7,9 +7,8 @@ require('../css/variants.css')
 
 export class VariantItems extends Component {
 	render() {
-		console.log('VariantItems.render');
 		return (
-				<div>{this.props.children}</div>
+			<div>{this.props.children}</div>
 		)
 	}
 }
@@ -27,14 +26,12 @@ export class VariantItem extends Component {
 		return nodes
 	}
 	onChangeVariant() {
-		console.log('onChangeVariant', this);
 		const { id, onSelectVariant } = this.props
 		const node = ReactDOM.findDOMNode(this.refs.select)
 		const quantity = parseInt(node.value, 10)
 		onSelectVariant(id, quantity)
 	}
 	render() {
-		console.log('VariantItem.render', this.props);
 		const { title, price, quantity } = this.props
 		const disabled = false
 		return (

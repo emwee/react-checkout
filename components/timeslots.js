@@ -15,11 +15,10 @@ export class TimeslotItems extends Component {
 export class TimeslotItem extends Component {
 	render() {
 		console.log('TimeslotItem.render', this.props);
-		const { id, timeslot, selected, onSelect } = this.props
-
+		const { id, timeslot, enabled, selected, onSelect } = this.props
 		return (
 			<button className={classNames('timeslot-btn', {'timeslot-btn--selected': selected })}
-				onClick={onSelect}>
+				onClick={onSelect} disabled={!enabled}>
 				{id} / {timeslot}
 			</button>
 		)

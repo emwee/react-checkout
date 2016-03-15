@@ -2,11 +2,11 @@ import * as types from '../constants/action_types'
 
 const initialState = {
 	variantIds: [],
-	variantById: {}
+	variantsById: {}
 }
 
-const variantById = (state=initialState.variantById, action) => {
-	console.log('--variantById');
+const variantsById = (state=initialState.variantsById, action) => {
+	console.log('--variantsById');
 	switch (action.type) {
 		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.variants.reduce((obj, variant) => {
@@ -28,14 +28,14 @@ function variantIds(state = [], action) {
 }
 
 function getVariant(state, variantId) {
-	return state.variantById[variantId]
+	return state.variantsById[variantId]
 }
 
 export default function variants(state = initialState, action) {
   switch (action.type) {
   	default:
   		return {
-  			variantById: variantById(state.variantById, action),
+  			variantsById: variantsById(state.variantsById, action),
   			variantIds: variantIds(state.variantIds, action)
   		}
   }

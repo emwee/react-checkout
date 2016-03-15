@@ -1,10 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import { formatPrice } from '../viewhelpers'
 
-require('../css/order_summary.css')
-
-class SummaryVariantRow extends Component {
+export class SummaryVariants extends Component {
 	render() {
+		console.log('SummaryVariants.render', this.props)
+		return <div>{this.props.children}</div>
+	}
+}
+
+export class SummaryVariant extends Component {
+	render() {
+		console.log('SummaryVariant.render', this.props)
 		const { title, price, quantity } = this.props
 		return (
 			<div>
@@ -13,5 +19,3 @@ class SummaryVariantRow extends Component {
 		)
 	}
 }
-
-export default SummaryVariantRow

@@ -1,0 +1,17 @@
+{
+	'order': {
+		'addedVariantIds': [],
+		'quantityByVariantId': {},
+		'selectedDate': null,
+		'selectedTimeslotId': null
+	}
+	'availableDates': [],
+	'variants': {
+		'variantById': {}
+		'variantIds': []
+	}
+	'timeslots': {
+		'timeslotIds': [],
+		'timeslotsById': {}
+	}
+}

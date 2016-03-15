@@ -1,3 +1,6 @@
+import 'babel-polyfill'
+import fetch from 'isomorphic-fetch'
+import moment from 'moment'
 import api from '../api/index'
 import * as types from '../constants/action_types'
 
@@ -30,18 +33,30 @@ export function invalidateDate(date) {
   }
 }
 
-export function fetchTimeslots(date) {
+export function requestTimeslots(date) {
   return {
-    type: types.FETCH_TIMESLOTS,
+    type: types.REQUEST_TIMESLOTS,
     date
   }
 }
 
-export function receiveTimeslots(date, response) {
+export function fetchTimeslots(date) {
+  return function (dispatch) {
+    dispatch(requestTimeslots(date))
+    const formattedDate = moment(date).format('YYYYMMDD')
+    return fetch(`./api/timeslots.${formattedDate}.json`)
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveTimeslots(date, json))
+      })
+  }
+}
+
+export function receiveTimeslots(date, json) {
   return {
     type: types.RECEIVE_TIMESLOTS,
     date,
-    timeslots: response.timeslots,
+    timeslots: json.timeslots,
     receivedAt: Date.now()
   }
 }

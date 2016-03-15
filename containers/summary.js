@@ -1,39 +1,26 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { getAddedVariants, getTotalPrice } from '../reducers/order'
-import SummaryVariantRow from '../components/summary_variant'
+import { getSelectedTimeslot, getAddedVariants, getTotalPrice } from '../reducers/order'
+import SummaryDate from '../components/summary_date'
+import SummaryTimeslot from '../components/summary_timeslot'
+import { SummaryVariants, SummaryVariant } from '../components/summary_variant'
+import SummaryTotalPrice from '../components/summary_total_price'
 
 class SummaryContainer extends Component {
-	renderDate() {
-		const { selectedDate } = this.props
-		if (!selectedDate) {
-			return <p>no date selected</p>
-		}
-		return <p>{selectedDate}</p>
-	}
-	renderVariants() {
-		const { addedVariants } = this.props
-		if (!addedVariants.length) {
-			return <p>no variants selected</p>
-		}
-
-		return addedVariants.map((variant) => {
-			return <SummaryVariantRow key={variant.id} {...variant} />
-		})
-	}
-	renderTotalPrice() {
-		const { addedVariants, totalPrice } = this.props
-		if (addedVariants.length) {
-			<p>{ totalPrice }</p>
-		}
-	}
 	render() {
-		console.log('SummaryContainer.render', this);
+		const { selectedDate, selectedTimeslot, addedVariants, totalPrice } = this.props
 		return (
 			<div className="order-summary">
-				{this.renderDate()}
-				{this.renderVariants()}
-				{this.renderTotalPrice()}
+				<SummaryDate date={selectedDate} />
+				<SummaryTimeslot timeslot={selectedTimeslot} />
+				<SummaryVariants>
+					{addedVariants.map(variant =>
+						<SummaryVariant
+							key={variant.id}
+							{...variant} />
+					)}
+				</SummaryVariants>
+				<SummaryTotalPrice totalPrice={totalPrice} />
 			</div>
 		)
 	}
@@ -42,6 +29,7 @@ class SummaryContainer extends Component {
 function mapStateToProps(state) {
 	return {
 		selectedDate: state.order.selectedDate,
+		selectedTimeslot: getSelectedTimeslot(state),
 		addedVariants: getAddedVariants(state),
 		totalPrice: getTotalPrice(state)
 	}

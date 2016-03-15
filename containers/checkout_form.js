@@ -1,28 +1,28 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { selectDate, selectTimeslot, addVariant } from '../actions'
+import * as actions from '../actions'
 import { getVariants } from '../reducers/variants'
 import { getTimeslots } from '../reducers/timeslots'
 import Datepicker from '../components/datepicker'
 import { TimeslotItems, TimeslotItem } from '../components/timeslots'
 import { VariantItems, VariantItem } from '../components/variants'
 
+require('../css/order_summary.css')
+
 class CheckoutForm extends Component {
 	render() {
 		console.log('CheckoutForm.render', this);
 		const {
-			availableDates,
 			selectedDate,
-			selectDate,
-			variants,
-			addVariant,
+			selectedTimeslotId,
+			availableDates,
 			timeslots,
+			variants,
+			quantityByVariantId,
+			selectDate,
 			selectTimeslot,
-			quantityByVariantId
+			addVariant
 		} = this.props
-
-		console.log('variants', variants);
-		console.log('timeslots', timeslots);
 
 		return (
 			<div>
@@ -34,6 +34,7 @@ class CheckoutForm extends Component {
 					{timeslots.map(timeslot =>
 						<TimeslotItem
 							key={timeslot.id}
+							selected ={timeslot.id === selectedTimeslotId}
 							{...timeslot}
 							onSelect={() => selectTimeslot(timeslot.id)} />
 					)}
@@ -55,7 +56,8 @@ class CheckoutForm extends Component {
 function mapStateToProps(state) {
 	return {
 		availableDates: state.availableDates,
-		selectedDate: state.selectedDate,
+		selectedDate: state.order.selectedDate,
+		selectedTimeslotId: state.order.selectedTimeslotId,
 		quantityByVariantId: state.order.quantityByVariantId,
 		variants: getVariants(state.variants),
 		timeslots: getTimeslots(state.timeslots)
@@ -65,13 +67,14 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		selectDate: (date) => {
-			dispatch(selectDate(date))
+			dispatch(actions.selectDate(date))
+			dispatch(actions.fetchTimeslots(date))
 		},
 		selectTimeslot: (timeslotId) => {
-			dispatch(selectTimeslot(timeslotId))
+			dispatch(actions.selectTimeslot(timeslotId))
 		},
 		addVariant: (variantId, quantity) => {
-			dispatch(addVariant(variantId, quantity))
+			dispatch(actions.addVariant(variantId, quantity))
 		}
 	}
 }
