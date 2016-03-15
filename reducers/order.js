@@ -26,9 +26,8 @@ const selectedTimeslotId = (state=initialState.selectedTimeslotId, action) => {
 }
 
 const addedVariantIds = (state=initialState.addedVariantIds, action) => {
-	console.log('--addedVariantIds');
 	switch (action.type) {
-		case 'ADD_VARIANT':
+		case types.ADD_VARIANT:
 			if (state.indexOf(action.variantId) !== -1) {
 				return state
 			}
@@ -40,7 +39,7 @@ const addedVariantIds = (state=initialState.addedVariantIds, action) => {
 
 const quantityByVariantId = (state=initialState.quantityByVariantId, action) => {
 	switch (action.type) {
-		case 'ADD_VARIANT':
+		case types.ADD_VARIANT:
 			const { variantId, quantity } = action
 			return {
 				...state,
@@ -68,8 +67,6 @@ export function getSelectedTimeslot(state) {
 }
 
 export function getAddedVariants(state) {
-	console.log('--getAddedVariants', state);
-	console.log(state)
 	return state.order.addedVariantIds.map((variantId) => {
 		return {
 			...state.variants.variantsById[variantId],
@@ -79,11 +76,8 @@ export function getAddedVariants(state) {
 }
 
 export function getTotalPrice(state) {
-	const a = state.order.addedVariantIds.reduce((total, variantId) =>
+	return state.order.addedVariantIds.reduce((total, variantId) =>
 		total + state.variants.variantsById[variantId].price * state.order.quantityByVariantId[variantId],
 		0
 	)
-
-	console.log(a)
-	return a
 }

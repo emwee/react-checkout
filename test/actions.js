@@ -48,9 +48,9 @@ describe('async actions', () => {
 	it('creates a RECEIVE_TIMESLOTS when fetching timeslots has been done', (done) => {
 		nock('http://example.com/')
 			.get('/timeslots')
-			.reply(200, {
-				success: true,
-				timeslots: [{ id: 101, timeslot: '11:00' }]
+			.reply(300, {
+				success: false,
+				foobar: [{ id: 102, timeslot: '11:00' }]
 			})
 
 		const today = new Date()
@@ -62,7 +62,7 @@ describe('async actions', () => {
 
 		const store = mockStore({ timeslots: [] }, expectedActions, done)
 
-		store.dispatch(actions.fetchTimeslots(today))
+		store.dispatch(actions.fetchTimeslots(1))
 
 		setTimeout(() => done(), 300);
 	})
