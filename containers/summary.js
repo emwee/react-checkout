@@ -41,9 +41,7 @@ class SummaryContainer extends Component {
 
 function mapStateToProps(state) {
 	return {
-		selectedDate: state.selectedDate,
-		addedVariantIds: state.addedVariantIds,
-		quantityByVariantId: state.quantityByVariantId,
+		selectedDate: state.order.selectedDate,
 		addedVariants: getAddedVariants(state),
 		totalPrice: getTotalPrice(state)
 	}

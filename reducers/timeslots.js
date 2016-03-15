@@ -1,46 +1,54 @@
 import * as types from '../constants/action_types'
 
 const initialState = {
-	timeslotIds: [],
-	timeslotById: {}
+	timeslotsbyId: {},
+	timeslotIdsByDate: {},
+	timeslotIds: [] // needed ?
 }
 
-const timeslotById = (state=initialState.timeslotById, action) => {
-	console.log('--timeslotById', action);
+const timeslotsbyId = (state = initialState.timeslotsbyId, action) => {
 	switch (action.type) {
-		case types.RECEIVE_CHECKOUT_DETAILS:
-			const aa = action.timeslots.reduce((obj, timeslot) => {
-				obj[timeslot.id] = timeslot
-				return obj
-			}, {})
+		// case types.RECEIVE_CHECKOUT_DETAILS:
+		// 	const aa = action.timeslots.reduce((obj, timeslot) => {
+		// 		obj[timeslot.id] = timeslot
+		// 		return obj
+		// 	}, {})
 
-			console.log(aa);
+		// 	console.log(aa);
 
-			return aa
+		// 	return aa
 		default:
 			return state
 	}
 }
 
-function timeslotIds(state = [], action) {
+const timeslotIdsByDate = (state = initialState.timeslotIdsByDate, action) => {
 	switch (action.type) {
-		case types.RECEIVE_CHECKOUT_DETAILS:
-			return action.timeslots.map(timeslot => timeslot.id)
 		default:
 			return state
 	}
 }
 
-function getTimeslot(state, timeslotId) {
+function timeslotIds(state = initialState.timeslotIds, action) {
+	switch (action.type) {
+		// case types.RECEIVE_CHECKOUT_DETAILS:
+		// 	return action.timeslots.map(timeslot => timeslot.id)
+		default:
+			return state
+	}
+}
+
+function getTimeslot(state, id) {
 	console.log('getTimeslot');
-	return state.timeslotById[timeslotId]
+	return state.timeslotsbyId[id]
 }
 
 export default function timeslots(state = initialState, action) {
   switch (action.type) {
   	default:
   		return {
-  			timeslotById: timeslotById(state.timeslotById, action),
+  			timeslotsbyId: timeslotsbyId(state.timeslotsbyId, action),
+  			timeslotIdsByDate: timeslotIdsByDate(state.timeslotIdsByDate, action),
   			timeslotIds: timeslotIds(state.timeslotIds, action)
   		}
   }
@@ -48,7 +56,7 @@ export default function timeslots(state = initialState, action) {
 
 export function getTimeslots(state) {
 	console.log('getTimeslots', state);
-	return state.timeslotIds.map((timeslotId) => {
-		return getTimeslot(state, timeslotId)
+	return state.timeslotIds.map((id) => {
+		return getTimeslot(state, id)
 	})
 }

@@ -42,7 +42,7 @@ class CheckoutForm extends Component {
 					{variants.map(variant =>
 						<VariantItem
 							key={variant.id}
-							quantity={quantityByVariantId[variant.id]}
+							quantity={quantityByVariantId[variant.id] || 0}
 							{...variant}
 							onSelectVariant={addVariant} />
 					)}
