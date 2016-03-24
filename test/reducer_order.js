@@ -9,7 +9,7 @@ describe('order reducer', () => {
 		).toEqual({
 			selectedDate: null,
 			selectedTimeslotId: null,
-			addedVariantIds: [],
+			selectedVariantIds: [],
 			quantityByVariantId: {},
 		})
 	})
@@ -26,22 +26,22 @@ describe('timeslots reducer', () => {
 		).toEqual({
 			selectedDate: today,
 			selectedTimeslotId: null,
-			addedVariantIds: [],
+			selectedVariantIds: [],
 			quantityByVariantId: {},
 		})
 	})
 
-	it('should handle ADD_VARIANT', () => {
+	it('should handle SELECT_VARIANT', () => {
 		expect(
 			reducer({}, {
-				type: types.ADD_VARIANT,
+				type: types.SELECT_VARIANT,
 				variantId: 101,
 				quantity: 3
 			})
 		).toEqual({
 			selectedDate: null,
 			selectedTimeslotId: null,
-			addedVariantIds: [ 101 ],
+			selectedVariantIds: [ 101 ],
 			quantityByVariantId: { 101:3 },
 		})
 
@@ -49,17 +49,17 @@ describe('timeslots reducer', () => {
 			reducer({
 				selectedDate: null,
 				selectedTimeslotId: null,
-				addedVariantIds: [ 101 ],
+				selectedVariantIds: [ 101 ],
 				quantityByVariantId: { 101:3 },
 			}, {
-				type: types.ADD_VARIANT,
+				type: types.SELECT_VARIANT,
 				variantId: 101,
 				quantity: 5
 			})
 		).toEqual({
 			selectedDate: null,
 			selectedTimeslotId: null,
-			addedVariantIds: [ 101 ],
+			selectedVariantIds: [ 101 ],
 			quantityByVariantId: { 101:5 },
 		})
 	})

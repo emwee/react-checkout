@@ -3,7 +3,7 @@ import * as types from '../constants/action_types'
 const initialState =  {
 	selectedDate: null,
 	selectedTimeslotId: null,
-	addedVariantIds: [],
+	selectedVariantIds: [],
 	quantityByVariantId: {}
 }
 
@@ -25,9 +25,9 @@ const selectedTimeslotId = (state=initialState.selectedTimeslotId, action) => {
 	}
 }
 
-const addedVariantIds = (state=initialState.addedVariantIds, action) => {
+const selectedVariantIds = (state=initialState.selectedVariantIds, action) => {
 	switch (action.type) {
-		case types.ADD_VARIANT:
+		case types.SELECT_VARIANT:
 			if (state.indexOf(action.variantId) !== -1) {
 				return state
 			}
@@ -39,7 +39,7 @@ const addedVariantIds = (state=initialState.addedVariantIds, action) => {
 
 const quantityByVariantId = (state=initialState.quantityByVariantId, action) => {
 	switch (action.type) {
-		case types.ADD_VARIANT:
+		case types.SELECT_VARIANT:
 			const { variantId, quantity } = action
 			return {
 				...state,
@@ -51,23 +51,23 @@ const quantityByVariantId = (state=initialState.quantityByVariantId, action) => 
 }
 
 export default function order(state = initialState, action) {
-  switch (action.type) {
-  	default:
-  		return {
-  			selectedDate: selectedDate(state.selectedDate, action),
+	switch (action.type) {
+		default:
+			return {
+				selectedDate: selectedDate(state.selectedDate, action),
 				selectedTimeslotId: selectedTimeslotId(state.selectedTimeslotId, action),
-  			addedVariantIds: addedVariantIds(state.addedVariantIds, action),
-  			quantityByVariantId: quantityByVariantId(state.quantityByVariantId, action)
-  		}
-  }
+				selectedVariantIds: selectedVariantIds(state.selectedVariantIds, action),
+				quantityByVariantId: quantityByVariantId(state.quantityByVariantId, action)
+				}
+	}
 }
 
 export function getSelectedTimeslot(state) {
 	return state.timeslots.timeslotsById[state.order.selectedTimeslotId]
 }
 
-export function getAddedVariants(state) {
-	return state.order.addedVariantIds.map((variantId) => {
+export function getSelectedVariants(state) {
+	return state.order.selectedVariantIds.map((variantId) => {
 		return {
 			...state.variants.variantsById[variantId],
 			quantity: state.order.quantityByVariantId[variantId]
@@ -76,7 +76,7 @@ export function getAddedVariants(state) {
 }
 
 export function getTotalPrice(state) {
-	return state.order.addedVariantIds.reduce((total, variantId) =>
+	return state.order.selectedVariantIds.reduce((total, variantId) =>
 		total + state.variants.variantsById[variantId].price * state.order.quantityByVariantId[variantId],
 		0
 	)

@@ -68,9 +68,9 @@ export function selectTimeslot(timeslotId) {
 	}
 }
 
-export function addVariant(variantId, quantity) {
+export function selectVariant(variantId, quantity) {
   return {
-  	type: types.ADD_VARIANT,
+  	type: types.SELECT_VARIANT,
   	variantId,
   	quantity
   }
