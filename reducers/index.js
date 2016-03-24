@@ -5,7 +5,8 @@ import { default as timeslots } from './timeslots'
 import * as types from '../constants/action_types'
 
 const initialState =  {
-	availableDates: []
+	availableDates: [],
+	hasTimeslots: false
 }
 
 const availableDates = (state=initialState.availableDates, action) => {
@@ -17,8 +18,18 @@ const availableDates = (state=initialState.availableDates, action) => {
 	}
 }
 
+const hasTimeslots = (state=initialState.hasTimeslots, action) => {
+	switch (action.type) {
+		case types.RECEIVE_CHECKOUT_DETAILS:
+			return action.has_timeslots
+		default:
+			return state
+	}
+}
+
 export default combineReducers({
 	availableDates,
+	hasTimeslots,
 	timeslots,
 	variants,
 	order

@@ -8,9 +8,9 @@ export default class App extends Component {
 	render() {
 		console.log('App.render')
 		return (
-			<div>
-				<SummaryContainer />
+			<div className="checkout-app">
 				<CheckoutForm />
+				<SummaryContainer />
 			</div>
 		)
 	}

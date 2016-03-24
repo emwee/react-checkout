@@ -27,17 +27,18 @@ export class VariantItem extends Component {
 	}
 	onChangeVariant() {
 		const { id, onSelectVariant } = this.props
-		const node = ReactDOM.findDOMNode(this.refs.select)
+		const node = ReactDOM.findDOMNode(this.refs.quantity_selector)
 		const quantity = parseInt(node.value, 10)
 		onSelectVariant(id, quantity)
 	}
 	render() {
-		const { title, price, quantity } = this.props
-		const disabled = false
+		const { title, price, quantity, disabled } = this.props
 		return (
-			<div className='variant'>
-				<p>{title} {formatPrice(price)}</p>
-				<select ref="select" disabled={disabled} value={quantity ? quantity : null} onChange={this.onChangeVariant}>
+			<div className={classNames('variant', { 'variant--disabled': disabled })}>
+				<p className="variant__title">{title}</p>
+				<p className="variant__price">{formatPrice(price)}</p>
+				<select className="variant__quantity-selector" ref="quantity_selector" disabled={disabled}
+					value={quantity ? quantity : null} onChange={this.onChangeVariant}>
 					{this.renderOptions(10)}
 				</select>
 			</div>

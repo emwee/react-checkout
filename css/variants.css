@@ -1,17 +1,16 @@
 .variant {
 	margin-bottom: 1rem;
-	padding: 0.5rem;
+	padding: 1rem;
 	background-color: #f6f6f6;
+	display: flex
 }
 
 .variant--disabled {
 	opacity: 0.8;
 }
 
-.variant p {
-	display: inline-block;
-}
-
-.variant select {
-	display: inline-block;
+.variant__title,
+.variant__price,
+.variant__quantity-selector {
+	flex: 1;
 }

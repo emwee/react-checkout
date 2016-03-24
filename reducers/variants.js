@@ -33,11 +33,11 @@ function getVariant(state, variantId) {
 
 export default function variants(state = initialState, action) {
   switch (action.type) {
-  	default:
-  		return {
-  			variantsById: variantsById(state.variantsById, action),
-  			variantIds: variantIds(state.variantIds, action)
-  		}
+	default:
+		return {
+			variantsById: variantsById(state.variantsById, action),
+			variantIds: variantIds(state.variantIds, action)
+		}
   }
 }
 

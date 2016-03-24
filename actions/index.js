@@ -40,15 +40,26 @@ export function requestTimeslots(date) {
   }
 }
 
+export function shouldFetchTimeslots(date) {
+  return function (dispatch, getState) {
+    const { hasTimeslots } = getState()
+    if (hasTimeslots) {
+      dispatch(fetchTimeslots(date))
+    }
+  }
+}
+
 export function fetchTimeslots(date) {
   return function (dispatch) {
     dispatch(requestTimeslots(date))
-    const formattedDate = moment(date).format('YYYYMMDD')
-    return fetch(`./api/timeslots.${formattedDate}.json`)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(receiveTimeslots(date, json))
-      })
+    setTimeout(() => {
+      const formattedDate = moment(date).format('YYYYMMDD')
+      return fetch(`./api/timeslots.${formattedDate}.json`)
+        .then(response => response.json())
+        .then(json => {
+          dispatch(receiveTimeslots(date, json))
+        })
+    }, 2000)
   }
 }
 

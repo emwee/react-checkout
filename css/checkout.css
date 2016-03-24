@@ -7,5 +7,18 @@ p {
 }
 
 .checkout-app {
-	max-width: 50rem;
+	width: 100%;
+	display: flex;
+}
+
+.checkout-form {
+	flex: 3;
+}
+
+.order-summary {
+	flex: 1;
+	margin-left: 1rem;
+	padding: 1rem;
+	float: right;
+	background-color: #f6f6f6;
 }
