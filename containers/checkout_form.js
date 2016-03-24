@@ -21,7 +21,7 @@ class CheckoutForm extends Component {
 			quantityByVariantId,
 			selectDate,
 			selectTimeslot,
-			addVariant
+			selectVariant
 		} = this.props
 
 		return (
@@ -45,7 +45,7 @@ class CheckoutForm extends Component {
 							key={variant.id}
 							quantity={quantityByVariantId[variant.id] || 0}
 							{...variant}
-							onSelectVariant={addVariant} />
+							onSelectVariant={selectVariant} />
 					)}
 				</VariantItems>
 			</div>
@@ -73,8 +73,8 @@ function mapDispatchToProps(dispatch) {
 		selectTimeslot: (timeslotId) => {
 			dispatch(actions.selectTimeslot(timeslotId))
 		},
-		addVariant: (variantId, quantity) => {
-			dispatch(actions.addVariant(variantId, quantity))
+		selectVariant: (variantId, quantity) => {
+			dispatch(actions.selectVariant(variantId, quantity))
 		}
 	}
 }
