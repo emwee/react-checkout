@@ -9,7 +9,8 @@ export class TimeslotItems extends Component {
 		return (
 				<div>
 					{this.props.isFetching && <p>fetching timeslots...</p>}
-					{!this.props.children.length && <p>no timeslots fetched yet..</p>}
+					{this.props.didInvalidate && <p>fetching timeslots failed...</p>}
+					{!this.props.children.length && !this.props.didInvalidate && <p>no timeslots fetched yet..</p>}
 					{this.props.children}
 				</div>
 		)

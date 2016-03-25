@@ -9,7 +9,6 @@ export class SummaryVariants extends Component {
 
 export class SummaryVariant extends Component {
 	render() {
-		console.log('SummaryVariant.render', this.props)
 		const { title, price, quantity, disabled } = this.props
 
 		if (quantity === 0) {

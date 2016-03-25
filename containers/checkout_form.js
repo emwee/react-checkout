@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
+import { getMaxBookable } from '../reducers'
 import { hasTimeslots, getVariants } from '../reducers/variants'
 import { isFetching, getTimeslots } from '../reducers/timeslots'
+import { getTotalQuantity } from '../reducers/order'
 import Datepicker from '../components/datepicker'
 import { TimeslotItems, TimeslotItem } from '../components/timeslots'
 import { VariantItems, VariantItem } from '../components/variants'
@@ -26,37 +28,36 @@ class CheckoutForm extends Component {
 			onSelectDate={selectDate} />
 	}
 	renderTimeslots() {
-		const { hasTimeslots, isFetching, timeslots, selectedTimeslotId, selectTimeslot } = this.props
+		const { hasTimeslots, isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = this.props
 
 		if (!hasTimeslots) {
 			return null
 		}
 
-		return <TimeslotItems isFetching={isFetching}>
+		return <TimeslotItems isFetching={isFetching} didInvalidate={didInvalidate}>
 			{timeslots.map(timeslot =>
 				<TimeslotItem
 					key={timeslot.id}
-					selected ={timeslot.id === selectedTimeslotId}
 					{...timeslot}
-					onSelect={() => selectTimeslot(timeslot.id)} />
+					selected ={timeslot.id === selectedTimeslotId}
+					onSelect={() => selectTimeslot(timeslot.id, timeslot.max_bookable)} />
 			)}
 		</TimeslotItems>
 	}
 	renderVariants() {
-		const { variants, quantityByVariantId, selectVariant } = this.props
-		return <VariantItems>
+		const { variants, quantityByVariantId, totalQuantity, maxBookable, selectVariant } = this.props
+		return <VariantItems totalQuantity={totalQuantity} maxBookable={maxBookable}>
 			{variants.map(variant =>
 				<VariantItem
 					key={variant.id}
+					{...variant}
 					quantity={quantityByVariantId[variant.id] || 0}
 					disabled={this.isVariantDisabled()}
-					{...variant}
 					onSelectVariant={selectVariant} />
 			)}
 		</VariantItems>
 	}
 	render() {
-		console.log('CheckoutForm.render', this);
 		return (
 			<div className="checkout-form">
 				{ this.renderDatepicker() }
@@ -75,15 +76,17 @@ function mapStateToProps(state) {
 		quantityByVariantId: state.order.quantityByVariantId,
 		variants: getVariants(state.variants),
 		timeslots: getTimeslots(state.timeslots),
+		totalQuantity: getTotalQuantity(state),
 		isFetching: state.timeslots.isFetching,
-		hasTimeslots: state.hasTimeslots
+		didInvalidate: state.timeslots.didInvalidate,
+		hasTimeslots: state.hasTimeslots,
+		maxBookable: getMaxBookable(state)
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
 		selectDate: (date) => {
-			console.log('selectDate')
 			dispatch(actions.selectDate(date))
 			dispatch(actions.shouldFetchTimeslots(date))
 		},

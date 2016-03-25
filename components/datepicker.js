@@ -23,9 +23,7 @@ class Datepicker extends Component {
 		this.updatePicker()
 	}
 	componentDidMount() {
-		console.log('datepicker.componentDidMount')
 		const { availableDates, selectedDate, onSelectDate } = this.props
-		console.log(availableDates)
 		const node = ReactDOM.findDOMNode(this.refs.datepicker)
 		this.picker = new Pikaday({
 			field: node,

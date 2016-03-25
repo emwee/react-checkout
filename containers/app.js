@@ -6,7 +6,6 @@ require('../css/checkout.css')
 
 export default class App extends Component {
 	render() {
-		console.log('App.render')
 		return (
 			<div className="checkout-app">
 				<CheckoutForm />

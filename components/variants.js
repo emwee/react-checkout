@@ -7,8 +7,14 @@ require('../css/variants.css')
 
 export class VariantItems extends Component {
 	render() {
+		const { totalQuantity, maxBookable } = this.props
+		const maxBookableExceeded = totalQuantity > maxBookable
 		return (
-			<div>{this.props.children}</div>
+			<div>
+				<h3>Select your variants..</h3>
+				{maxBookableExceeded && <p>you selected more tickets than the max bookable ({maxBookable}). please adjust.</p>}
+				<div>{this.props.children}</div>
+			</div>
 		)
 	}
 }

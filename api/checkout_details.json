@@ -24,6 +24,6 @@
 			"num_tickets": 40
 		}
 	],
-	"max_bookable": 10,
+	"max_bookable": 9,
 	"has_timeslots": true
 }

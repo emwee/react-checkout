@@ -62,7 +62,6 @@ class Variants extends Component {
 		for (let variant_id in quantity_by_variant_id) {
 			total_selected += quantity_by_variant_id[variant_id]
 		}
-
 		return total_selected
 	}
 	showMaxBookable(max_bookable, quantity_by_variant_id) {

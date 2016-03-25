@@ -57,15 +57,28 @@ export function fetchTimeslots(date) {
       return fetch(`./api/timeslots.${formattedDate}.json`)
         .then(response => response.json())
         .then(json => {
-          dispatch(receiveTimeslots(date, json))
+          if (json.success) {
+            dispatch(receiveTimeslots(date, json))
+          } else {
+            dispatch(receiveTimeslotsFailed(date, json))
+          }
         })
-    }, 2000)
+    }, 300)
   }
 }
 
 export function receiveTimeslots(date, json) {
   return {
-    type: types.RECEIVE_TIMESLOTS,
+    type: types.RECEIVE_TIMESLOTS_SUCCESS,
+    date,
+    timeslots: json.timeslots,
+    receivedAt: Date.now()
+  }
+}
+
+export function receiveTimeslotsFailed(date, json) {
+  return {
+    type: types.RECEIVE_TIMESLOTS_FAILURE,
     date,
     timeslots: json.timeslots,
     receivedAt: Date.now()
@@ -73,10 +86,17 @@ export function receiveTimeslots(date, json) {
 }
 
 export function selectTimeslot(timeslotId) {
-	return {
-		type: types.SELECT_TIMESLOT,
-		timeslotId
-	}
+  return {
+    type: types.SELECT_TIMESLOT,
+    timeslotId
+  }
+}
+
+export function setMaxBookable(maxBookable) {
+  return {
+    type: types.SET_MAX_BOOKABLE,
+    maxBookable
+  }
 }
 
 export function selectVariant(variantId, quantity) {

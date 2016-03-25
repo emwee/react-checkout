@@ -6,7 +6,6 @@ const initialState = {
 }
 
 const variantsById = (state=initialState.variantsById, action) => {
-	console.log('--variantsById');
 	switch (action.type) {
 		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.variants.reduce((obj, variant) => {
@@ -42,7 +41,6 @@ export default function variants(state = initialState, action) {
 }
 
 export function getVariants(state) {
-	console.log('getVariants', state);
 	return state.variantIds.map((variantId) => {
 		return getVariant(state, variantId)
 	})

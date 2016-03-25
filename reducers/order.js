@@ -20,6 +20,9 @@ const selectedTimeslotId = (state=initialState.selectedTimeslotId, action) => {
 	switch (action.type) {
 		case types.SELECT_TIMESLOT:
 			return action.timeslotId
+		case types.RECEIVE_TIMESLOTS_SUCCESS:
+		case types.RECEIVE_TIMESLOTS_FAILURE:
+			return null
 		default:
 			return state
 	}
@@ -51,14 +54,11 @@ const quantityByVariantId = (state=initialState.quantityByVariantId, action) => 
 }
 
 export default function order(state = initialState, action) {
-	switch (action.type) {
-		default:
-			return {
-				selectedDate: selectedDate(state.selectedDate, action),
-				selectedTimeslotId: selectedTimeslotId(state.selectedTimeslotId, action),
-				selectedVariantIds: selectedVariantIds(state.selectedVariantIds, action),
-				quantityByVariantId: quantityByVariantId(state.quantityByVariantId, action)
-				}
+	return {
+		selectedDate: selectedDate(state.selectedDate, action),
+		selectedTimeslotId: selectedTimeslotId(state.selectedTimeslotId, action),
+		selectedVariantIds: selectedVariantIds(state.selectedVariantIds, action),
+		quantityByVariantId: quantityByVariantId(state.quantityByVariantId, action)
 	}
 }
 
@@ -73,6 +73,13 @@ export function getSelectedVariants(state) {
 			quantity: state.order.quantityByVariantId[variantId]
 		}
 	})
+}
+
+export function getTotalQuantity(state) {
+	return state.order.selectedVariantIds.reduce((total, variantId) =>
+		total + state.order.quantityByVariantId[variantId],
+		0
+	)
 }
 
 export function getTotalPrice(state) {
