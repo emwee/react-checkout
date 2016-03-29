@@ -1,3 +1,4 @@
+import { combineReducers } from 'redux'
 import * as types from '../constants/action_types'
 
 const initialState = {
@@ -30,15 +31,10 @@ function getVariant(state, variantId) {
 	return state.variantsById[variantId]
 }
 
-export default function variants(state = initialState, action) {
-  switch (action.type) {
-	default:
-		return {
-			variantsById: variantsById(state.variantsById, action),
-			variantIds: variantIds(state.variantIds, action)
-		}
-  }
-}
+export default combineReducers({
+	variantsById,
+	variantIds
+})
 
 export function getVariants(state) {
 	return state.variantIds.map((variantId) => {

@@ -1,3 +1,4 @@
+import { combineReducers } from 'redux'
 import * as types from '../constants/action_types'
 
 const initialState = {
@@ -55,14 +56,12 @@ const timeslotsById = (state = initialState.timeslotsById, action) => {
 	}
 }
 
-export default function timeslots(state = initialState, action) {
-	return {
-		didInvalidate: didInvalidate(state.didInvalidate, action),
-		isFetching: isFetching(state.isFetching, action),
-		timeslotsById: timeslotsById(state.timeslotsById, action),
-		timeslotIds: timeslotIds(state.timeslotIds, action)
-	}
-}
+export default combineReducers({
+	didInvalidate,
+	isFetching,
+	timeslotsById,
+	timeslotIds
+})
 
 export function getTimeslotById(state, id) {
 	return state.timeslotsById[id]

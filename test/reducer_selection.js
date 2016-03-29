@@ -1,5 +1,5 @@
 import expect from 'expect'
-import reducer from '../reducers/order'
+import reducer from '../reducers/selection'
 import * as types from '../constants/action_types'
 
 describe('order reducer', () => {

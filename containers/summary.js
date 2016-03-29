@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { getSelectedTimeslot, getSelectedVariants, getTotalPrice } from '../reducers/order'
+import { getSelectedTimeslot, getSelectedVariants, getTotalPrice } from '../reducers/selection'
 import SummaryDate from '../components/summary_date'
 import SummaryTimeslot from '../components/summary_timeslot'
 import { SummaryVariants, SummaryVariant } from '../components/summary_variant'
@@ -34,7 +34,7 @@ class SummaryContainer extends Component {
 function mapStateToProps(state) {
 	return {
 		hasTimeslots: state.hasTimeslots,
-		selectedDate: state.order.selectedDate,
+		selectedDate: state.selection.selectedDate,
 		selectedTimeslot: getSelectedTimeslot(state),
 		selectedVariants: getSelectedVariants(state),
 		totalPrice: getTotalPrice(state)

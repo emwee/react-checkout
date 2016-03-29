@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { default as order } from './order'
+import { default as selection } from './selection'
 import { default as variants } from './variants'
 import { default as timeslots, getTimeslotById } from './timeslots'
 import * as types from '../constants/action_types'
@@ -45,11 +45,11 @@ export default combineReducers({
 	maxBookable,
 	timeslots,
 	variants,
-	order
+	selection
 })
 
 export function getMaxBookable(state) {
-	const { selectedTimeslotId } = state.order
+	const { selectedTimeslotId } = state.selection
 	if (selectedTimeslotId) {
 		const timeslot = getTimeslotById(state.timeslots, selectedTimeslotId)
 		return timeslot.max_bookable

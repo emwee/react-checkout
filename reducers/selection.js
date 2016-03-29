@@ -1,3 +1,4 @@
+import { combineReducers } from 'redux'
 import * as types from '../constants/action_types'
 
 const initialState =  {
@@ -53,38 +54,36 @@ const quantityByVariantId = (state=initialState.quantityByVariantId, action) => 
 	}
 }
 
-export default function order(state = initialState, action) {
-	return {
-		selectedDate: selectedDate(state.selectedDate, action),
-		selectedTimeslotId: selectedTimeslotId(state.selectedTimeslotId, action),
-		selectedVariantIds: selectedVariantIds(state.selectedVariantIds, action),
-		quantityByVariantId: quantityByVariantId(state.quantityByVariantId, action)
-	}
-}
+export default combineReducers({
+	selectedDate,
+	selectedTimeslotId,
+	selectedVariantIds,
+	quantityByVariantId
+})
 
 export function getSelectedTimeslot(state) {
-	return state.timeslots.timeslotsById[state.order.selectedTimeslotId]
+	return state.timeslots.timeslotsById[state.selection.selectedTimeslotId]
 }
 
 export function getSelectedVariants(state) {
-	return state.order.selectedVariantIds.map((variantId) => {
+	return state.selection.selectedVariantIds.map((variantId) => {
 		return {
 			...state.variants.variantsById[variantId],
-			quantity: state.order.quantityByVariantId[variantId]
+			quantity: state.quantityByVariantId[variantId]
 		}
 	})
 }
 
 export function getTotalQuantity(state) {
-	return state.order.selectedVariantIds.reduce((total, variantId) =>
-		total + state.order.quantityByVariantId[variantId],
+	return state.selectedVariantIds.reduce((total, variantId) =>
+		total + state.quantityByVariantId[variantId],
 		0
 	)
 }
 
 export function getTotalPrice(state) {
-	return state.order.selectedVariantIds.reduce((total, variantId) =>
-		total + state.variants.variantsById[variantId].price * state.order.quantityByVariantId[variantId],
+	return state.selection.selectedVariantIds.reduce((total, variantId) =>
+		total + state.variants.variantsById[variantId].price * state.selection.quantityByVariantId[variantId],
 		0
 	)
 }
