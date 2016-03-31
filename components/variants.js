@@ -32,10 +32,10 @@ export class VariantItem extends Component {
 		return nodes
 	}
 	onChangeVariant() {
-		const { id, onSelectVariant } = this.props
+		const { id, selectVariant } = this.props
 		const node = ReactDOM.findDOMNode(this.refs.quantity_selector)
 		const quantity = parseInt(node.value, 10)
-		onSelectVariant(id, quantity)
+		selectVariant(id, quantity)
 	}
 	render() {
 		const { title, price, quantity, disabled } = this.props

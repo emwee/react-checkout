@@ -7,17 +7,13 @@ import { SummaryVariants, SummaryVariant } from '../components/summary_variant'
 import SummaryTotalPrice from '../components/summary_total_price'
 
 class SummaryContainer extends Component {
-	renderTimeslot(selectedTimeslot) {
-		const { hasTimeslots } = this.props
-		return (hasTimeslots && <SummaryTimeslot timeslot={selectedTimeslot} />)
-	}
 	render() {
-		const { selectedDate, selectedTimeslot, selectedVariants, totalPrice } = this.props
+		const { selectedDate, hasTimeslots, selectedTimeslot, selectedVariants, totalPrice } = this.props
 		return (
 			<div className="order-summary">
 				<h3 className="order-summary__heading">Order summary</h3>
 				<SummaryDate date={selectedDate} />
-				{this.renderTimeslot(selectedTimeslot)}
+				{ hasTimeslots && <SummaryTimeslot timeslot={selectedTimeslot} /> }
 				<SummaryVariants>
 					{selectedVariants.map(variant =>
 						<SummaryVariant
@@ -42,6 +38,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-	mapStateToProps,
-	{}
+	mapStateToProps
 )(SummaryContainer)

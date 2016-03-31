@@ -10,14 +10,9 @@ export class SummaryVariants extends Component {
 export class SummaryVariant extends Component {
 	render() {
 		const { title, price, quantity, disabled } = this.props
-
-		if (quantity === 0) {
-			return <p>..</p>
-		}
-
-		return (
+		return (quantity > 0 &&
 			<div>
-				<p> {quantity}x {title} {formatPrice(price)} {formatPrice(price * quantity)}</p>
+				<p>{quantity}x {title} {formatPrice(price)} {formatPrice(price * quantity)}</p>
 			</div>
 		)
 	}

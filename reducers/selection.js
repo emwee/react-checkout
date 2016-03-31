@@ -69,7 +69,7 @@ export function getSelectedVariants(state) {
 	return state.selection.selectedVariantIds.map((variantId) => {
 		return {
 			...state.variants.variantsById[variantId],
-			quantity: state.quantityByVariantId[variantId]
+			quantity: state.selection.quantityByVariantId[variantId]
 		}
 	})
 }

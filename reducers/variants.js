@@ -41,3 +41,13 @@ export function getVariants(state) {
 		return getVariant(state, variantId)
 	})
 }
+
+export function isVariantDisabled(state) {
+	const { hasTimeslots, selection: { selectedDate, selectedTimeslotId} } = state
+
+	if (!hasTimeslots) {
+		return !selectedDate
+	}
+
+	return !selectedDate || !selectedTimeslotId
+}

@@ -2,23 +2,14 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { getMaxBookable } from '../reducers'
-import { hasTimeslots, getVariants } from '../reducers/variants'
+import { getVariants, isVariantDisabled } from '../reducers/variants'
 import { isFetching, getTimeslots } from '../reducers/timeslots'
 import { getTotalQuantity } from '../reducers/selection'
 import { VariantItems, VariantItem } from '../components/variants'
 
 class VariantsContainer extends Component {
-	isVariantDisabled() {
-		const { selectedDate, selectedTimeslotId, hasTimeslots } = this.props
-
-		if (!hasTimeslots) {
-			return !selectedDate
-		}
-
-		return !selectedDate || !selectedTimeslotId
-	}
 	render() {
-		const { variants, quantityByVariantId, totalQuantity, maxBookable, selectVariant } = this.props
+		const { variants, quantityByVariantId, totalQuantity, isVariantDisabled, maxBookable, selectVariant } = this.props
 		return (
 			<VariantItems totalQuantity={totalQuantity} maxBookable={maxBookable}>
 			{variants.map(variant =>
@@ -26,8 +17,8 @@ class VariantsContainer extends Component {
 					key={variant.id}
 					{...variant}
 					quantity={quantityByVariantId[variant.id] || 0}
-					disabled={this.isVariantDisabled()}
-					onSelectVariant={selectVariant} />
+					disabled={isVariantDisabled}
+					selectVariant={selectVariant} />
 			)}
 		</VariantItems>
 		)
@@ -36,14 +27,13 @@ class VariantsContainer extends Component {
 
 function mapStateToProps(state) {
 	return {
-		selectedDate: state.selection.selectedDate,
-		selectedTimeslotId: state.selection.selectedTimeslotId,
 		quantityByVariantId: state.selection.quantityByVariantId,
 		variants: getVariants(state.variants),
 		totalQuantity: getTotalQuantity(state.selection),
 		isFetching: state.timeslots.isFetching,
 		hasTimeslots: state.hasTimeslots,
-		maxBookable: getMaxBookable(state)
+		maxBookable: getMaxBookable(state),
+		isVariantDisabled: isVariantDisabled(state)
 	}
 }
 

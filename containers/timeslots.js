@@ -8,11 +8,8 @@ import { TimeslotItems, TimeslotItem } from '../components/timeslots'
 
 class Timeslots extends Component {
 	render() {
-		const { hasTimeslots, isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = this.props
+		const { isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = this.props
 
-		if (!hasTimeslots) {
-			return null
-		}
 		return (
 			<TimeslotItems isFetching={isFetching} didInvalidate={didInvalidate}>
 			{timeslots.map(timeslot =>
@@ -20,7 +17,7 @@ class Timeslots extends Component {
 					key={timeslot.id}
 					{...timeslot}
 					selected ={timeslot.id === selectedTimeslotId}
-					onSelect={() => selectTimeslot(timeslot.id, timeslot.max_bookable)} />
+					onSelect={() => selectTimeslot(timeslot.id)} />
 			)}
 		</TimeslotItems>
 		)
