@@ -27,9 +27,9 @@ class Timeslots extends Component {
 function mapStateToProps(state) {
 	return {
 		selectedTimeslotId: state.selection.selectedTimeslotId,
-		timeslots: getTimeslots(state.timeslots),
-		isFetching: state.timeslots.isFetching,
-		didInvalidate: state.timeslots.didInvalidate,
+		timeslots: getTimeslots(state.entities.timeslots),
+		isFetching: state.entities.timeslots.isFetching,
+		didInvalidate: state.entities.timeslots.didInvalidate,
 		hasTimeslots: state.hasTimeslots
 	}
 }

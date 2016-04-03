@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { getMaxBookable } from '../reducers'
 import { getVariants, isVariantDisabled } from '../reducers/variants'
-import { isFetching, getTimeslots } from '../reducers/timeslots'
 import { getTotalQuantity } from '../reducers/selection'
 import { VariantItems, VariantItem } from '../components/variants'
 
@@ -28,9 +27,8 @@ class VariantsContainer extends Component {
 function mapStateToProps(state) {
 	return {
 		quantityByVariantId: state.selection.quantityByVariantId,
-		variants: getVariants(state.variants),
+		variants: getVariants(state.entities.variants),
 		totalQuantity: getTotalQuantity(state.selection),
-		isFetching: state.timeslots.isFetching,
 		hasTimeslots: state.hasTimeslots,
 		maxBookable: getMaxBookable(state),
 		isVariantDisabled: isVariantDisabled(state)

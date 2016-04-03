@@ -27,14 +27,14 @@ function variantIds(state = [], action) {
 	}
 }
 
-function getVariant(state, variantId) {
-	return state.variantsById[variantId]
-}
-
 export default combineReducers({
 	variantsById,
 	variantIds
 })
+
+export function getVariant(state, variantId) {
+	return state.variantsById[variantId]
+}
 
 export function getVariants(state) {
 	return state.variantIds.map((variantId) => {
@@ -43,11 +43,22 @@ export function getVariants(state) {
 }
 
 export function isVariantDisabled(state) {
-	const { hasTimeslots, selection: { selectedDate, selectedTimeslotId} } = state
+	const { hasTimeslots,
+		selection: {
+			selectedDate,
+			selectedTimeslotId
+		}
+	} = state
 
 	if (!hasTimeslots) {
 		return !selectedDate
 	}
 
-	return !selectedDate || !selectedTimeslotId
+	if (!selectedDate) {
+		return true
+	}
+
+	if (!selectedTimeslotId) {
+		return true
+	}
 }

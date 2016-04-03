@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { getVariant } from './variants'
 import * as types from '../constants/action_types'
 
 const initialState =  {
@@ -62,13 +63,13 @@ export default combineReducers({
 })
 
 export function getSelectedTimeslot(state) {
-	return state.timeslots.timeslotsById[state.selection.selectedTimeslotId]
+	return state.entities.timeslots.timeslotsById[state.selection.selectedTimeslotId]
 }
 
 export function getSelectedVariants(state) {
 	return state.selection.selectedVariantIds.map((variantId) => {
 		return {
-			...state.variants.variantsById[variantId],
+			...getVariant(state.entities.variants, variantId),
 			quantity: state.selection.quantityByVariantId[variantId]
 		}
 	})
@@ -83,7 +84,8 @@ export function getTotalQuantity(state) {
 
 export function getTotalPrice(state) {
 	return state.selection.selectedVariantIds.reduce((total, variantId) =>
-		total + state.variants.variantsById[variantId].price * state.selection.quantityByVariantId[variantId],
+		total + getVariant(state.entities.variants, variantId).price *
+			state.selection.quantityByVariantId[variantId],
 		0
 	)
 }
