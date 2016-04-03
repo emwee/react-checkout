@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { getMaxBookable } from '../reducers'
+import { getMaxBookable } from '../reducers/product'
 import { hasTimeslots } from '../reducers/variants'
 import { isFetching, getTimeslots } from '../reducers/timeslots'
 import { TimeslotItems, TimeslotItem } from '../components/timeslots'
@@ -30,7 +30,7 @@ function mapStateToProps(state) {
 		timeslots: getTimeslots(state.entities.timeslots),
 		isFetching: state.entities.timeslots.isFetching,
 		didInvalidate: state.entities.timeslots.didInvalidate,
-		hasTimeslots: state.hasTimeslots
+		hasTimeslots: state.product.hasTimeslots
 	}
 }
 

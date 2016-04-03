@@ -17,7 +17,7 @@ class DatepickerContainer extends Component {
 
 function mapStateToProps(state) {
 	return {
-		availableDates: state.availableDates,
+		availableDates: state.product.availableDates,
 		selectedDate: state.selection.selectedDate
 	}
 }

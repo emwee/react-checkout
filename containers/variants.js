@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { getMaxBookable } from '../reducers'
+import { getMaxBookable } from '../reducers/product'
 import { getVariants, isVariantDisabled } from '../reducers/variants'
 import { getTotalQuantity } from '../reducers/selection'
 import { VariantItems, VariantItem } from '../components/variants'
@@ -29,9 +29,8 @@ function mapStateToProps(state) {
 		quantityByVariantId: state.selection.quantityByVariantId,
 		variants: getVariants(state.entities.variants),
 		totalQuantity: getTotalQuantity(state.selection),
-		hasTimeslots: state.hasTimeslots,
+		isVariantDisabled: isVariantDisabled(state),
 		maxBookable: getMaxBookable(state),
-		isVariantDisabled: isVariantDisabled(state)
 	}
 }
 

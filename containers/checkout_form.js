@@ -19,7 +19,7 @@ class CheckoutForm extends Component {
 
 function mapStateToProps(state) {
 	return {
-		hasTimeslots: state.hasTimeslots,
+		hasTimeslots: state.product.hasTimeslots,
 	}
 }
 

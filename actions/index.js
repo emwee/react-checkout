@@ -42,7 +42,7 @@ export function requestTimeslots(date) {
 
 export function shouldFetchTimeslots(date) {
   return function (dispatch, getState) {
-    const { hasTimeslots } = getState()
+    const { product: { hasTimeslots } } = getState()
     if (hasTimeslots) {
       dispatch(fetchTimeslots(date))
     }
