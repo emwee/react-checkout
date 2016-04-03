@@ -43,7 +43,10 @@ export function getVariants(state) {
 }
 
 export function isVariantDisabled(state) {
-	const { hasTimeslots,
+	const {
+		product: {
+			hasTimeslots
+		},
 		selection: {
 			selectedDate,
 			selectedTimeslotId
