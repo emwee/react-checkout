@@ -62,16 +62,20 @@ export default combineReducers({
 	quantityByVariantId
 })
 
+function getEnabledVariants(state) {
+	return state.selection.selectedVariantIds.filter((variantId) => {
+		if (!isVariantDisabled(state, variantId)) {
+			return variantId
+		}
+	})
+}
+
 export function getSelectedTimeslot(state) {
 	return state.entities.timeslots.timeslotsById[state.selection.selectedTimeslotId]
 }
 
 export function getSelectedVariants(state) {
-	return state.selection.selectedVariantIds.filter((variantId) => {
-		if (!isVariantDisabled(state, variantId)) {
-			return variantId
-		}
-	}).map((variantId) => {
+	return getEnabledVariants(state).map((variantId) => {
 		return {
 			...getVariant(state.entities.variants, variantId),
 			quantity: state.selection.quantityByVariantId[variantId]
@@ -79,17 +83,17 @@ export function getSelectedVariants(state) {
 	})
 }
 
-export function getTotalQuantity(state) {
-	return state.selectedVariantIds.reduce((total, variantId) =>
-		total + state.quantityByVariantId[variantId],
+export function getTotalPrice(state) {
+	return getEnabledVariants(state).reduce((total, variantId) =>
+		total + getVariant(state.entities.variants, variantId).price *
+			state.selection.quantityByVariantId[variantId],
 		0
 	)
 }
 
-export function getTotalPrice(state) {
+export function getTotalQuantity(state) {
 	return state.selection.selectedVariantIds.reduce((total, variantId) =>
-		total + getVariant(state.entities.variants, variantId).price *
-			state.selection.quantityByVariantId[variantId],
+		total + state.selection.quantityByVariantId[variantId],
 		0
 	)
 }

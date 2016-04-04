@@ -28,7 +28,7 @@ function mapStateToProps(state) {
 	return {
 		quantityByVariantId: state.selection.quantityByVariantId,
 		variants: getVariants(state.entities.variants),
-		totalQuantity: getTotalQuantity(state.selection),
+		totalQuantity: getTotalQuantity(state),
 		isDisabled: (variantId) => isVariantDisabled(state, variantId),
 		maxBookable: getMaxBookable(state),
 	}
