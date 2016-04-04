@@ -16,7 +16,8 @@
 			"id": 102,
 			"title": "Children",
 			"price": 12,
-			"num_tickets": 40
+			"num_tickets": 40,
+			"valid_with": [101]
 		},{
 			"id": 103,
 			"title": "Aliens",

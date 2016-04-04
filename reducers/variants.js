@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { quantityByVariantId } from './selection'
 import * as types from '../constants/action_types'
 
 const initialState = {
@@ -18,7 +19,7 @@ const variantsById = (state=initialState.variantsById, action) => {
 	}
 }
 
-function variantIds(state = [], action) {
+const variantIds = (state = [], action) => {
 	switch (action.type) {
 		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.variants.map(variant => variant.id)
@@ -42,14 +43,15 @@ export function getVariants(state) {
 	})
 }
 
-export function isVariantDisabled(state) {
+export function isVariantDisabled(state, variantId) {
 	const {
 		product: {
 			hasTimeslots
 		},
 		selection: {
 			selectedDate,
-			selectedTimeslotId
+			selectedTimeslotId,
+			selectedVariantIds
 		}
 	} = state
 
@@ -64,4 +66,26 @@ export function isVariantDisabled(state) {
 	if (!selectedTimeslotId) {
 		return true
 	}
+
+	const variant = getVariant(state.entities.variants, variantId)
+	const { valid_with: dependencies } = variant
+
+	if (!dependencies) {
+		return false
+	}
+
+	if (!selectedVariantIds.length) {
+		return true
+	}
+
+	const dependenciesTotalQuantity = dependencies.reduce((total, variantId) => {
+			return total + state.selection.quantityByVariantId[variantId]
+		}, 0
+	)
+
+	if (dependenciesTotalQuantity > 0) {
+		return false
+	}
+
+	return true
 }
