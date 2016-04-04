@@ -1,8 +1,9 @@
+import 'babel-polyfill'
 import expect from 'expect'
 import reducer from '../reducers/selection'
 import * as types from '../constants/action_types'
 
-describe('order reducer', () => {
+describe('selection reducer', () => {
 	it('should return the initial state', () => {
 		expect(
 			reducer(undefined, {})
@@ -15,7 +16,7 @@ describe('order reducer', () => {
 	})
 })
 
-describe('timeslots reducer', () => {
+describe('selection reducer', () => {
 	it('should handle SELECT_DATE', () => {
 		const today = new Date()
 		expect(

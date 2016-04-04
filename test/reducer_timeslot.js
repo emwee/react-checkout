@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import expect from 'expect'
 import reducer from '../reducers/timeslots'
 import * as types from '../constants/action_types'
