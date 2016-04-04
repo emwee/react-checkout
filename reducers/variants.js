@@ -44,46 +44,26 @@ export function getVariants(state) {
 }
 
 export function isVariantDisabled(state, variantId) {
-	const {
-		product: {
-			hasTimeslots
-		},
-		selection: {
-			selectedDate,
-			selectedTimeslotId,
-			selectedVariantIds
-		}
-	} = state
 
-	if (!hasTimeslots) {
-		return !selectedDate
-	}
-
-	if (!selectedDate) {
+	if (!state.selection.selectedDate) {
 		return true
 	}
 
-	if (!selectedTimeslotId) {
+	if (state.product.hasTimeslots && !state.selection.selectedTimeslotId) {
 		return true
 	}
 
 	const variant = getVariant(state.entities.variants, variantId)
-	const { valid_with: dependencies } = variant
 
-	if (!dependencies) {
+	if (!variant.valid_with) {
 		return false
 	}
 
-	if (!selectedVariantIds.length) {
-		return true
-	}
+	const validWithTotalQuantity = variant.valid_with.reduce((total, variantId) => {
+		return total + state.selection.quantityByVariantId[variantId]
+	}, 0)
 
-	const dependenciesTotalQuantity = dependencies.reduce((total, variantId) => {
-			return total + state.selection.quantityByVariantId[variantId]
-		}, 0
-	)
-
-	if (dependenciesTotalQuantity > 0) {
+	if (state.selection.selectedVariantIds.length && validWithTotalQuantity > 0) {
 		return false
 	}
 
