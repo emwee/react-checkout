@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { getVariant } from './variants'
+import { getVariant, isVariantDisabled } from './variants'
 import * as types from '../constants/action_types'
 
 const initialState =  {
@@ -67,7 +67,11 @@ export function getSelectedTimeslot(state) {
 }
 
 export function getSelectedVariants(state) {
-	return state.selection.selectedVariantIds.map((variantId) => {
+	return state.selection.selectedVariantIds.filter((variantId) => {
+		if (!isVariantDisabled(state, variantId)) {
+			return variantId
+		}
+	}).map((variantId) => {
 		return {
 			...getVariant(state.entities.variants, variantId),
 			quantity: state.selection.quantityByVariantId[variantId]
