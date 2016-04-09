@@ -43,7 +43,7 @@ export class VariantItem extends Component {
 				<p className="variant__title">{title}</p>
 				<p className="variant__price">{formatPrice(price)}</p>
 				<select className="variant__quantity-selector" ref="quantity_selector" disabled={disabled}
-					value={quantity ? quantity : null} onChange={this.onChangeVariant}>
+					value={quantity} onChange={this.onChangeVariant}>
 					{this.renderOptions(10)}
 				</select>
 			</div>

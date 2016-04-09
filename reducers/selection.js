@@ -37,6 +37,8 @@ const selectedVariantIds = (state=initialState.selectedVariantIds, action) => {
 				return state
 			}
 			return [ ...state, action.variantId ]
+		case types.SELECT_DATE:
+			return []
 		default:
 			return state
 	}
@@ -50,6 +52,8 @@ const quantityByVariantId = (state=initialState.quantityByVariantId, action) => 
 				...state,
 				[variantId]: quantity
 			}
+		case types.SELECT_DATE:
+			return {}
 		default:
 			return state
 	}

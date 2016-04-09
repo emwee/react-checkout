@@ -26,5 +26,5 @@
 		}
 	],
 	"max_bookable": 9,
-	"has_timeslots": true
+	"has_timeslots": false
 }
