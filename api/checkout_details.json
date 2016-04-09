@@ -26,5 +26,12 @@
 		}
 	],
 	"max_bookable": 9,
-	"has_timeslots": false
+	"has_timeslots": false,
+	"selection": {
+		"date": "2016-04-02",
+		"variantIds": [101],
+		"quantityByVariantId": {
+			"101": 2
+		}
+	}
 }

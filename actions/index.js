@@ -11,10 +11,21 @@ function receiveCheckoutDetails(details) {
   }
 }
 
+const preselectCheckoutDetails = selection => {
+  return {
+    type: types.PRESELECT_CHECKOUT_DETAILS,
+    selection
+  }
+}
+
 export function getCheckoutDetails() {
   return dispatch => {
     api.getCheckoutDetails(details => {
       dispatch(receiveCheckoutDetails(details))
+
+      if (details.selection) {
+        dispatch(preselectCheckoutDetails(details.selection))
+      }
     })
   }
 }

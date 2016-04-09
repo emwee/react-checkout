@@ -11,6 +11,8 @@ const initialState =  {
 
 const selectedDate = (state=initialState.selectedDate, action) => {
 	switch (action.type) {
+		case types.PRESELECT_CHECKOUT_DETAILS:
+			return action.selection.date
 		case types.SELECT_DATE:
 			return action.date
 		default:
@@ -32,6 +34,8 @@ const selectedTimeslotId = (state=initialState.selectedTimeslotId, action) => {
 
 const selectedVariantIds = (state=initialState.selectedVariantIds, action) => {
 	switch (action.type) {
+		case types.PRESELECT_CHECKOUT_DETAILS:
+			return action.selection.variantIds
 		case types.SELECT_VARIANT:
 			if (state.indexOf(action.variantId) !== -1) {
 				return state
@@ -46,6 +50,8 @@ const selectedVariantIds = (state=initialState.selectedVariantIds, action) => {
 
 const quantityByVariantId = (state=initialState.quantityByVariantId, action) => {
 	switch (action.type) {
+		case types.PRESELECT_CHECKOUT_DETAILS:
+			return action.selection.quantityByVariantId
 		case types.SELECT_VARIANT:
 			const { variantId, quantity } = action
 			return {

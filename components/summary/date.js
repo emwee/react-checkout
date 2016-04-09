@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { formatDate } from '../../viewhelpers'
 
 export default class SummaryDate extends Component {
 	render() {
@@ -6,6 +7,6 @@ export default class SummaryDate extends Component {
 		if (!date) {
 			return <p>no date selected</p>
 		}
-		return <p>{date.toLocaleString()}</p>
+		return <p>{formatDate(date, 'LLLL')}</p>
 	}
 }
