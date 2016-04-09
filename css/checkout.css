@@ -15,6 +15,43 @@ p {
 	flex: 3;
 }
 
+.checkout-form__booking-details {
+	display: flex;
+}
+
+.checkout-form__when {
+
+}
+
+.checkout-form__what {
+	margin-left: 1rem;
+	flex: 1;
+}
+
+.form-row {
+	margin-bottom: 1rem;
+}
+
+.form-row label {
+	display: block;
+	margin-bottom: 0.25rem;
+}
+
+.textfield {
+	padding: 0.25rem;
+	font-size: 1rem;
+}
+
+.textfield--error {
+	border: 1px solid red;
+}
+
+.form-error {
+	margin-top: 0.25rem;
+	font-size: 0.75rem;
+	color: red;
+}
+
 .order-summary {
 	flex: 1;
 	margin-left: 1rem;

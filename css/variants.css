@@ -10,6 +10,11 @@
 }
 
 .variant__title,
+.variant__price {
+	margin-bottom: 0;
+}
+
+.variant__title,
 .variant__price,
 .variant__quantity-selector {
 	flex: 1;

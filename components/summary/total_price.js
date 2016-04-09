@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { formatPrice } from '../viewhelpers'
+import { formatPrice } from '../../viewhelpers'
 
 export default class SummaryTotalPrice extends Component {
 	render() {

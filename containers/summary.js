@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getSelectedTimeslot, getSelectedVariants, getTotalPrice } from '../reducers/selection'
-import SummaryDate from '../components/summary_date'
-import SummaryTimeslot from '../components/summary_timeslot'
-import { SummaryVariants, SummaryVariant } from '../components/summary_variant'
-import SummaryTotalPrice from '../components/summary_total_price'
+import SummaryDate from '../components/summary/date'
+import SummaryTimeslot from '../components/summary/timeslot'
+import { SummaryVariants, SummaryVariant } from '../components/summary/variant'
+import SummaryTotalPrice from '../components/summary/total_price'
 
 class SummaryContainer extends Component {
 	render() {

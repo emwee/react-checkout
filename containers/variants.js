@@ -4,7 +4,7 @@ import * as actions from '../actions'
 import { getMaxBookable } from '../reducers/product'
 import { getVariants, isVariantDisabled } from '../reducers/variants'
 import { getTotalQuantity } from '../reducers/selection'
-import { VariantItems, VariantItem } from '../components/variants'
+import { VariantItems, VariantItem } from '../components/form/variants'
 
 class VariantsContainer extends Component {
 	render() {

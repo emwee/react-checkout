@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 
-require('../css/timeslots.css')
+require('../../css/timeslots.css')
 
 export class TimeslotItems extends Component {
 	render() {
 		return (
-				<div>
+				<div className="timeslots">
 					{this.props.isFetching && <p>fetching timeslots...</p>}
 					{this.props.didInvalidate && <p>fetching timeslots failed...</p>}
 					{!this.props.children.length && !this.props.didInvalidate && <p>no timeslots fetched yet..</p>}

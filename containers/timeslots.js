@@ -4,7 +4,7 @@ import * as actions from '../actions'
 import { getMaxBookable } from '../reducers/product'
 import { hasTimeslots } from '../reducers/variants'
 import { isFetching, getTimeslots } from '../reducers/timeslots'
-import { TimeslotItems, TimeslotItem } from '../components/timeslots'
+import { TimeslotItems, TimeslotItem } from '../components/form/timeslots'
 
 class Timeslots extends Component {
 	render() {

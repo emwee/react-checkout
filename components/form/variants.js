@@ -1,17 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
-import { formatPrice } from '../viewhelpers'
+import { formatPrice } from '../../viewhelpers'
 
-require('../css/variants.css')
+require('../../css/variants.css')
 
 export class VariantItems extends Component {
 	render() {
 		const { totalQuantity, maxBookable } = this.props
 		const maxBookableExceeded = totalQuantity > maxBookable
 		return (
-			<div>
-				<h3>Select your variants..</h3>
+			<div className="variants">
 				{maxBookableExceeded && <p>you selected more tickets than the max bookable ({maxBookable}). please adjust.</p>}
 				<div>{this.props.children}</div>
 			</div>

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM, { findDOMNode } from 'react-dom'
 import Pikaday from 'pikaday'
 import moment from 'moment'
 
 require('pikaday/css/pikaday.css')
-require('../css/datepicker.css')
+require('../../css/datepicker.css')
 
 class Datepicker extends Component {
 	constructor() {
@@ -24,7 +24,7 @@ class Datepicker extends Component {
 	}
 	componentDidMount() {
 		const { availableDates, selectedDate, onSelectDate } = this.props
-		const node = ReactDOM.findDOMNode(this.refs.datepicker)
+		const node = findDOMNode(this.refs.datepicker)
 		this.picker = new Pikaday({
 			field: node,
 			bound: false,
@@ -39,7 +39,7 @@ class Datepicker extends Component {
 	}
 	render() {
 		return (
-			<div className="datepicker-wrapper">
+			<div className="datepicker">
 				<div ref="datepicker"></div>
 			</div>
 		)
