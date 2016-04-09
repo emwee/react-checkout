@@ -93,12 +93,24 @@ export function getSelectedVariants(state) {
 	})
 }
 
-export function getTotalPrice(state) {
+export function getSubtotalPrice(state) {
 	return getEnabledVariants(state).reduce((total, variantId) =>
 		total + getVariant(state.entities.variants, variantId).price *
 			state.selection.quantityByVariantId[variantId],
 		0
 	)
+}
+
+export function getBookingFee(state) {
+	const bookingFeeConfig = state.product.bookingFeeConfig
+	if (!bookingFeeConfig) {
+		return 0
+	}
+	return ((getSubtotalPrice(state) * bookingFeeConfig.percentage) / 100) + bookingFeeConfig.addon_amount
+}
+
+export function getTotalPrice(state) {
+	return getSubtotalPrice(state) + getBookingFee(state)
 }
 
 export function getTotalQuantity(state) {

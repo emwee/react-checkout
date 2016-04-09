@@ -39,17 +39,15 @@ class ConsumerForm extends Component {
 		setEmail(node.value)
 	}
 	renderField(field, title) {
-		console.log(field)
 		return (
 			<div className="form-row">
-				<label htmlFor="{ field.name }">{ title }</label>
-				<input type="text" id="{ field.name }" className={classNames('textfield', { 'textfield--error': field.touched && field.error })} placeholder={ title } { ...field } />
+				<label htmlFor={ field.name }>{ title }</label>
+				<input type="text" id={ field.name } className={classNames('textfield', { 'textfield--error': field.touched && field.error })} placeholder={ title } { ...field } />
 				{ field.touched && field.error && <div className="form-error">{field.error}</div> }
 			</div>
 			)
 	}
 	render() {
-		console.log('ConsumerForm', this.props)
 		const { fields: { firstName, lastName, email, phone }, handleSubmit } = this.props;
 		return (
 			<form>

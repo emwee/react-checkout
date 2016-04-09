@@ -27,6 +27,10 @@
 	],
 	"max_bookable": 9,
 	"has_timeslots": false,
+	"booking_fee_config" : {
+		"percentage": 5,
+		"addon_amount": 0
+	},
 	"selection": {
 		"date": "2016-04-02",
 		"variantIds": [101],

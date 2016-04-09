@@ -3,9 +3,13 @@ import { formatPrice } from '../../viewhelpers'
 
 export default class SummaryTotalPrice extends Component {
 	render() {
-		const { totalPrice } = this.props
-		return (totalPrice > 0 &&
-			<p>{ formatPrice(totalPrice) }</p>
+		const { subtotalPrice, bookingFee, totalPrice } = this.props
+		return (
+			<div>
+				{ subtotalPrice > 0 && <p>{ formatPrice(subtotalPrice) }</p> }
+				{ bookingFee > 0 && <p>{ formatPrice(bookingFee) }</p> }
+				{ bookingFee > 0 && totalPrice > 0 && <p>{ formatPrice(totalPrice) }</p> }
+			</div>
 		)
 	}
 }
