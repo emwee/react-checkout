@@ -29,15 +29,6 @@ const validate = values => {
 }
 
 class ConsumerForm extends Component {
-	constructor() {
-		super()
-		this.onChange = this.onChange.bind(this)
-	}
-	onChange() {
-		const { setEmail } = this.props
-		const node = findDOMNode(this.refs.email)
-		setEmail(node.value)
-	}
 	renderField(field, title) {
 		return (
 			<div className="form-row">
@@ -45,7 +36,7 @@ class ConsumerForm extends Component {
 				<input type="text" id={ field.name } className={classNames('textfield', { 'textfield--error': field.touched && field.error })} placeholder={ title } { ...field } />
 				{ field.touched && field.error && <div className="form-error">{field.error}</div> }
 			</div>
-			)
+		)
 	}
 	render() {
 		const { fields: { firstName, lastName, email, phone }, handleSubmit } = this.props;

@@ -11,8 +11,7 @@
 			"title": "Adults",
 			"price": 17.5,
 			"num_tickets": 40
-		},
-		{
+		},{
 			"id": 102,
 			"title": "Children",
 			"price": 12,
