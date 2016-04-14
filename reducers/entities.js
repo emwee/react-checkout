@@ -4,5 +4,5 @@ import { default as timeslots } from './timeslots'
 
 export default combineReducers({
 	variants,
-	timeslots
+	timeslots,
 })

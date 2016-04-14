@@ -8,5 +8,5 @@ export default combineReducers({
 	product,
 	entities,
 	selection,
-	form: formReducer
+	form: formReducer,
 })

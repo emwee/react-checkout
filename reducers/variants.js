@@ -1,18 +1,18 @@
 import { combineReducers } from 'redux'
-import { quantityByVariantId } from './selection'
 import * as types from '../constants/action_types'
 
 const initialState = {
 	variantIds: [],
-	variantsById: {}
+	variantsById: {},
 }
 
-const variantsById = (state=initialState.variantsById, action) => {
+const variantsById = (state = initialState.variantsById, action) => {
 	switch (action.type) {
 		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.variants.reduce((obj, variant) => {
-				obj[variant.id] = variant
-				return obj
+				const foo = obj
+				foo[variant.id] = variant
+				return foo
 			}, {})
 		default:
 			return state
@@ -30,7 +30,7 @@ const variantIds = (state = [], action) => {
 
 export default combineReducers({
 	variantsById,
-	variantIds
+	variantIds,
 })
 
 export function getVariant(state, variantId) {
@@ -38,13 +38,12 @@ export function getVariant(state, variantId) {
 }
 
 export function getVariants(state) {
-	return state.variantIds.map((variantId) => {
-		return getVariant(state, variantId)
-	})
+	return state.variantIds.map((variantId) =>
+		getVariant(state, variantId)
+	)
 }
 
 export function isVariantDisabled(state, variantId) {
-
 	if (!state.selection.selectedDate) {
 		return true
 	}
@@ -59,9 +58,8 @@ export function isVariantDisabled(state, variantId) {
 		return false
 	}
 
-	const validWithTotalQuantity = variant.valid_with.reduce((total, variantId) => {
-		return total + state.selection.quantityByVariantId[variantId]
-	}, 0)
+	const validWithTotalQuantity = variant.valid_with.reduce((total, id) =>
+		total + state.selection.quantityByVariantId[id], 0)
 
 	if (state.selection.selectedVariantIds.length && validWithTotalQuantity > 0) {
 		return false

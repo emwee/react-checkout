@@ -1,17 +1,15 @@
 import { combineReducers } from 'redux'
-import { default as entities } from './entities'
-import { default as selection } from './selection'
 import { getTimeslotById } from './timeslots'
 import * as types from '../constants/action_types'
 
-const initialState =  {
+const initialState = {
 	availableDates: [],
 	hasTimeslots: false,
 	maxBookable: null,
-	bookingFeeConfig: null
+	bookingFeeConfig: null,
 }
 
-const availableDates = (state=initialState.availableDates, action) => {
+const availableDates = (state = initialState.availableDates, action) => {
 	switch (action.type) {
 		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.available_dates
@@ -20,7 +18,7 @@ const availableDates = (state=initialState.availableDates, action) => {
 	}
 }
 
-const hasTimeslots = (state=initialState.hasTimeslots, action) => {
+const hasTimeslots = (state = initialState.hasTimeslots, action) => {
 	switch (action.type) {
 		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.has_timeslots
@@ -29,7 +27,7 @@ const hasTimeslots = (state=initialState.hasTimeslots, action) => {
 	}
 }
 
-const maxBookable = (state=initialState.maxBookable, action) => {
+const maxBookable = (state = initialState.maxBookable, action) => {
 	switch (action.type) {
 		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.max_bookable
@@ -40,7 +38,7 @@ const maxBookable = (state=initialState.maxBookable, action) => {
 	}
 }
 
-const bookingFeeConfig = (state=initialState.bookingFeeConfig, action) => {
+const bookingFeeConfig = (state = initialState.bookingFeeConfig, action) => {
 	switch (action.type) {
 		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.booking_fee_config
@@ -53,7 +51,7 @@ export default combineReducers({
 	availableDates,
 	hasTimeslots,
 	maxBookable,
-	bookingFeeConfig
+	bookingFeeConfig,
 })
 
 export function getMaxBookable(state) {

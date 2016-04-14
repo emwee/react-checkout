@@ -9,3 +9,7 @@ export default class SummaryTimeslot extends Component {
 		return <p>{timeslot.timeslot}</p>
 	}
 }
+
+SummaryTimeslot.propTypes = {
+	timeslot: PropTypes.object,
+}

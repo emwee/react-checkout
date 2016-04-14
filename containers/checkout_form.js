@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Datepicker from './datepicker'
-import Variants from './variants'
-import Timeslots from './timeslots'
+import DatepickerContainer from './datepicker'
+import VariantsContainer from './variants'
+import TimeslotsContainer from './timeslots'
 import ConsumerForm from '../components/form/consumer'
 
 class CheckoutForm extends Component {
@@ -12,11 +12,11 @@ class CheckoutForm extends Component {
 			<div className="checkout-form">
 				<div className="checkout-form__booking-details">
 					<div className="checkout-form__when">
-						<Datepicker />
-						{ hasTimeslots && <Timeslots />}
+						<DatepickerContainer />
+						{ hasTimeslots && <TimeslotsContainer />}
 					</div>
 					<div className="checkout-form__what">
-						<Variants />
+						<VariantsContainer />
 					</div>
 				</div>
 				<div className="checkout-personal-details">
@@ -33,6 +33,10 @@ function mapStateToProps(state) {
 	return {
 		hasTimeslots: state.product.hasTimeslots,
 	}
+}
+
+CheckoutForm.propTypes = {
+	hasTimeslots: React.PropTypes.bool,
 }
 
 export default connect(

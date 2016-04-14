@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { reduxForm } from 'redux-form'
-import { findDOMNode } from 'react-dom'
 import classNames from 'classnames'
 
 require('../../css/consumer.css')
@@ -8,24 +7,24 @@ require('../../css/consumer.css')
 const validate = values => {
 	const errors = {}
 	if (!values.firstName) {
-		errors.firstName = 'Required';
+		errors.firstName = 'Required'
 	}
 
 	if (!values.lastName) {
-		errors.lastName = 'Required';
+		errors.lastName = 'Required'
 	}
 
 	if (!values.email) {
-		errors.email = 'Required';
+		errors.email = 'Required'
 	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-		errors.email = 'Invalid email address';
+		errors.email = 'Invalid email address'
 	}
 
 	if (!values.phone) {
-		errors.phone = 'Required';
+		errors.phone = 'Required'
 	}
 
-	return errors;
+	return errors
 }
 
 class ConsumerForm extends Component {
@@ -33,15 +32,19 @@ class ConsumerForm extends Component {
 		return (
 			<div className="form-row">
 				<label htmlFor={ field.name }>{ title }</label>
-				<input type="text" id={ field.name } className={classNames('textfield', { 'textfield--error': field.touched && field.error })} placeholder={ title } { ...field } />
+				<input type="text"
+					id={ field.name }
+					className={classNames('textfield', { 'textfield--error': field.touched && field.error })}
+					placeholder={ title } { ...field }
+				/>
 				{ field.touched && field.error && <div className="form-error">{field.error}</div> }
 			</div>
 		)
 	}
 	render() {
-		const { fields: { firstName, lastName, email, phone }, handleSubmit } = this.props;
+		const { fields: { firstName, lastName, email, phone }, handleSubmit } = this.props
 		return (
-			<form>
+			<form onSubmit={handleSubmit}>
 				{ this.renderField(firstName, 'First name') }
 				{ this.renderField(lastName, 'Last name') }
 				{ this.renderField(email, 'Email address') }
@@ -54,7 +57,12 @@ class ConsumerForm extends Component {
 ConsumerForm = reduxForm({
 	form: 'consumer',
 	fields: ['firstName', 'lastName', 'email', 'phone'],
-	validate
+	validate,
 })(ConsumerForm)
+
+ConsumerForm.propTypes = {
+	fields: PropTypes.object,
+	handleSubmit: PropTypes.func,
+}
 
 export default ConsumerForm

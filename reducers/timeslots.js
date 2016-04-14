@@ -5,7 +5,7 @@ const initialState = {
 	isFetching: false,
 	didInvalidate: false,
 	timeslotsById: {},
-	timeslotIds: []
+	timeslotIds: [],
 }
 
 function isFetching(state = initialState.isFetching, action) {
@@ -46,9 +46,10 @@ const timeslotsById = (state = initialState.timeslotsById, action) => {
 	switch (action.type) {
 		case types.RECEIVE_TIMESLOTS_SUCCESS:
 			return action.timeslots.reduce((obj, timeslot) => {
-					obj[timeslot.id] = timeslot
-					return obj
-				}, {})
+				const foo = obj
+				foo[timeslot.id] = timeslot
+				return foo
+			}, {})
 		case types.RECEIVE_TIMESLOTS_FAILURE:
 			return {}
 		default:
@@ -60,7 +61,7 @@ export default combineReducers({
 	didInvalidate,
 	isFetching,
 	timeslotsById,
-	timeslotIds
+	timeslotIds,
 })
 
 export function getTimeslotById(state, id) {

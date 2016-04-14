@@ -2,14 +2,14 @@ import { combineReducers } from 'redux'
 import { getVariant, isVariantDisabled } from './variants'
 import * as types from '../constants/action_types'
 
-const initialState =  {
+const initialState = {
 	selectedDate: null,
 	selectedTimeslotId: null,
 	selectedVariantIds: [],
-	quantityByVariantId: {}
+	quantityByVariantId: {},
 }
 
-const selectedDate = (state=initialState.selectedDate, action) => {
+const selectedDate = (state = initialState.selectedDate, action) => {
 	switch (action.type) {
 		case types.PRESELECT_CHECKOUT_DETAILS:
 			return action.selection.date
@@ -20,7 +20,7 @@ const selectedDate = (state=initialState.selectedDate, action) => {
 	}
 }
 
-const selectedTimeslotId = (state=initialState.selectedTimeslotId, action) => {
+const selectedTimeslotId = (state = initialState.selectedTimeslotId, action) => {
 	switch (action.type) {
 		case types.SELECT_TIMESLOT:
 			return action.timeslotId
@@ -32,7 +32,7 @@ const selectedTimeslotId = (state=initialState.selectedTimeslotId, action) => {
 	}
 }
 
-const selectedVariantIds = (state=initialState.selectedVariantIds, action) => {
+const selectedVariantIds = (state = initialState.selectedVariantIds, action) => {
 	switch (action.type) {
 		case types.PRESELECT_CHECKOUT_DETAILS:
 			return action.selection.variantIds
@@ -40,7 +40,7 @@ const selectedVariantIds = (state=initialState.selectedVariantIds, action) => {
 			if (state.indexOf(action.variantId) !== -1) {
 				return state
 			}
-			return [ ...state, action.variantId ]
+			return [...state, action.variantId]
 		case types.SELECT_DATE:
 			return []
 		default:
@@ -48,15 +48,14 @@ const selectedVariantIds = (state=initialState.selectedVariantIds, action) => {
 	}
 }
 
-const quantityByVariantId = (state=initialState.quantityByVariantId, action) => {
+const quantityByVariantId = (state = initialState.quantityByVariantId, action) => {
 	switch (action.type) {
 		case types.PRESELECT_CHECKOUT_DETAILS:
 			return action.selection.quantityByVariantId
 		case types.SELECT_VARIANT:
-			const { variantId, quantity } = action
 			return {
 				...state,
-				[variantId]: quantity
+				[action.variantId]: action.quantity,
 			}
 		case types.SELECT_DATE:
 			return {}
@@ -69,7 +68,7 @@ export default combineReducers({
 	selectedDate,
 	selectedTimeslotId,
 	selectedVariantIds,
-	quantityByVariantId
+	quantityByVariantId,
 })
 
 function getEnabledVariants(state) {
@@ -77,6 +76,7 @@ function getEnabledVariants(state) {
 		if (!isVariantDisabled(state, variantId)) {
 			return variantId
 		}
+		return false
 	})
 }
 
@@ -85,10 +85,10 @@ export function getSelectedTimeslot(state) {
 }
 
 export function getSelectedVariants(state) {
-	return getEnabledVariants(state).map((variantId) => {
+	return getEnabledVariants(state).map(variantId => {
 		return {
 			...getVariant(state.entities.variants, variantId),
-			quantity: state.selection.quantityByVariantId[variantId]
+			quantity: state.selection.quantityByVariantId[variantId],
 		}
 	})
 }
@@ -96,9 +96,7 @@ export function getSelectedVariants(state) {
 export function getSubtotalPrice(state) {
 	return getEnabledVariants(state).reduce((total, variantId) =>
 		total + getVariant(state.entities.variants, variantId).price *
-			state.selection.quantityByVariantId[variantId],
-		0
-	)
+			state.selection.quantityByVariantId[variantId], 0)
 }
 
 export function getBookingFee(state) {
@@ -106,7 +104,8 @@ export function getBookingFee(state) {
 	if (!bookingFeeConfig) {
 		return 0
 	}
-	return ((getSubtotalPrice(state) * bookingFeeConfig.percentage) / 100) + bookingFeeConfig.addon_amount
+	return ((getSubtotalPrice(state) * bookingFeeConfig.percentage) / 100) +
+		bookingFeeConfig.addon_amount
 }
 
 export function getTotalPrice(state) {

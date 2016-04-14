@@ -1,25 +1,24 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { getMaxBookable } from '../reducers/product'
-import { hasTimeslots } from '../reducers/variants'
-import { isFetching, getTimeslots } from '../reducers/timeslots'
-import { TimeslotItems, TimeslotItem } from '../components/form/timeslots'
+import { getTimeslots } from '../reducers/timeslots'
+import { Timeslots } from '../components/form/timeslots'
+import { Timeslot } from '../components/form/timeslot'
 
-class Timeslots extends Component {
+class TimeslotsContainer extends Component {
 	render() {
 		const { isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = this.props
 
 		return (
-			<TimeslotItems isFetching={isFetching} didInvalidate={didInvalidate}>
+			<Timeslots isFetching={isFetching} didInvalidate={didInvalidate}>
 			{timeslots.map(timeslot =>
-				<TimeslotItem
+				<Timeslot
 					key={timeslot.id}
-					{...timeslot}
-					selected ={timeslot.id === selectedTimeslotId}
-					onSelect={() => selectTimeslot(timeslot.id)} />
+					{...timeslot} selected = {timeslot.id === selectedTimeslotId}
+					onSelect={() => selectTimeslot(timeslot.id)}
+				/>
 			)}
-		</TimeslotItems>
+		</Timeslots>
 		)
 	}
 }
@@ -30,7 +29,7 @@ function mapStateToProps(state) {
 		timeslots: getTimeslots(state.entities.timeslots),
 		isFetching: state.entities.timeslots.isFetching,
 		didInvalidate: state.entities.timeslots.didInvalidate,
-		hasTimeslots: state.product.hasTimeslots
+		hasTimeslots: state.product.hasTimeslots,
 	}
 }
 
@@ -38,11 +37,21 @@ function mapDispatchToProps(dispatch) {
 	return {
 		selectTimeslot: (timeslotId) => {
 			dispatch(actions.selectTimeslot(timeslotId))
-		}
+		},
 	}
+}
+
+TimeslotsContainer.propTypes = {
+	selectedTimeslotId: React.PropTypes.number,
+	timeslots: React.PropTypes.object,
+	isFetching: React.PropTypes.bool,
+	isDisabled: React.PropTypes.bool,
+	didInvalidate: React.PropTypes.bool,
+	hasTimeslots: React.PropTypes.bool,
+	selectTimeslot: React.PropTypes.func,
 }
 
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Timeslots)
+)(TimeslotsContainer)

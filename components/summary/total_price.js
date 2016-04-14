@@ -13,3 +13,9 @@ export default class SummaryTotalPrice extends Component {
 		)
 	}
 }
+
+SummaryTotalPrice.propTypes = {
+	subtotalPrice: PropTypes.number,
+	bookingFee: PropTypes.number,
+	totalPrice: PropTypes.number,
+}

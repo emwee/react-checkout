@@ -10,3 +10,7 @@ export default class SummaryDate extends Component {
 		return <p>{formatDate(date, 'LLLL')}</p>
 	}
 }
+
+SummaryDate.propTypes = {
+	date: PropTypes.string,
+}
