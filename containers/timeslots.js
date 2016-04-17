@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { getTimeslots } from '../reducers/timeslots'
@@ -8,7 +8,6 @@ import { Timeslot } from '../components/form/timeslot'
 class TimeslotsContainer extends Component {
 	render() {
 		const { isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = this.props
-
 		return (
 			<Timeslots isFetching={isFetching} didInvalidate={didInvalidate}>
 			{timeslots.map(timeslot =>
@@ -42,13 +41,20 @@ function mapDispatchToProps(dispatch) {
 }
 
 TimeslotsContainer.propTypes = {
-	selectedTimeslotId: React.PropTypes.number,
-	timeslots: React.PropTypes.object,
-	isFetching: React.PropTypes.bool,
-	isDisabled: React.PropTypes.bool,
-	didInvalidate: React.PropTypes.bool,
-	hasTimeslots: React.PropTypes.bool,
-	selectTimeslot: React.PropTypes.func,
+	selectedTimeslotId: PropTypes.number,
+	timeslots: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number,
+			time: PropTypes.string,
+			max_bookable: PropTypes.number,
+			enabled: PropTypes.bool,
+		})
+	),
+	isFetching: PropTypes.bool,
+	isDisabled: PropTypes.bool,
+	didInvalidate: PropTypes.bool,
+	hasTimeslots: PropTypes.bool,
+	selectTimeslot: PropTypes.func,
 }
 
 export default connect(

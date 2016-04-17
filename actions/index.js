@@ -1,6 +1,5 @@
 import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
-import moment from 'moment'
 import api from '../api/index'
 import * as types from '../constants/action_types'
 
@@ -72,9 +71,8 @@ export function receiveTimeslotsFailed(date, json) {
 export function fetchTimeslots(date) {
 	return function dispatchFetchTimeslots(dispatch) {
 		dispatch(requestTimeslots(date))
-		setTimeout(() => {
-			const formattedDate = moment(date).format('YYYYMMDD')
-			return fetch(`./api/timeslots.${formattedDate}.json`)
+		setTimeout(() =>
+			fetch(`./api/timeslots.${date}.json`)
 				.then(response => response.json())
 				.then(json => {
 					if (json.success) {
@@ -83,7 +81,7 @@ export function fetchTimeslots(date) {
 						dispatch(receiveTimeslotsFailed(date, json))
 					}
 				})
-		}, 300)
+		, 300)
 	}
 }
 

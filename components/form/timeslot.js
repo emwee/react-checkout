@@ -16,7 +16,7 @@ export class Timeslot extends Component {
 
 Timeslot.propTypes = {
 	id: PropTypes.number,
-	timeslot: PropTypes.object,
+	timeslot: PropTypes.string,
 	enabled: PropTypes.bool,
 	selected: PropTypes.bool,
 	onSelect: PropTypes.func,

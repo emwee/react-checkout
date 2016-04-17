@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { getVariant, isVariantDisabled } from './variants'
 import * as types from '../constants/action_types'
+import { merge } from 'lodash'
 
 const initialState = {
 	selectedDate: null,
@@ -85,12 +86,15 @@ export function getSelectedTimeslot(state) {
 }
 
 export function getSelectedVariants(state) {
-	return getEnabledVariants(state).map(variantId => {
-		return {
+	return getEnabledVariants(state).map(variantId =>
+		merge(
+			{},
 			...getVariant(state.entities.variants, variantId),
-			quantity: state.selection.quantityByVariantId[variantId],
-		}
-	})
+			{
+				quantity: state.selection.quantityByVariantId[variantId],
+			}
+		)
+	)
 }
 
 export function getSubtotalPrice(state) {

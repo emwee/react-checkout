@@ -3,8 +3,7 @@ var webpack = require('webpack')
 
 module.exports = {
   entry: {
-      app: './index.js',
-      vendor: ['pikaday']
+      app: './index.js'
   },
   output: {
       path: __dirname,
@@ -28,8 +27,5 @@ module.exports = {
       loader: 'json-loader'
     }]
   },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js')
-  ],
   devtool: 'cheap-module-eval-source-map'
 }

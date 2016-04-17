@@ -1,49 +1,24 @@
 import React, { Component, PropTypes } from 'react'
-import { findDOMNode } from 'react-dom'
-import Pikaday from 'pikaday'
+import DayPicker from 'react-day-picker'
 import { formatDate } from '../../viewhelpers'
 
-require('pikaday/css/pikaday.css')
-require('../../css/datepicker.css')
+import 'react-day-picker/lib/style.css'
 
-class Datepicker extends Component {
-	constructor() {
-		super()
-		this.picker = null
-	}
-	componentDidMount() {
-		const { availableDates, selectedDate, onSelectDate } = this.props
-		const node = findDOMNode(this.refs.pikaday)
-		this.picker = new Pikaday({
-			field: node,
-			bound: false,
-			setDefaultDate: !!selectedDate,
-			onSelect: date => {
-				onSelectDate(formatDate(date))
-			},
-			disableDayFn: date => !availableDates.includes(formatDate(date)),
-		})
-
-		this.updatePicker()
-	}
-	componentDidUpdate() {
-		this.updatePicker()
-	}
-	updatePicker() {
-		const { availableDates, selectedDate } = this.props
-
-		// set date range
-		this.picker.setMinDate(new Date(availableDates[0]))
-		this.picker.setMaxDate(new Date(availableDates[availableDates.length - 1]))
-
-		// set selected date and prevent onSelect callback
-		this.picker.setDate(selectedDate, true)
-	}
+export class Datepicker extends Component {
 	render() {
+		const { availableDates, selectedDate, onSelectDate } = this.props
+		const modifiers = {
+			disabled: day => !availableDates.includes(formatDate(day)),
+			selected: day => selectedDate === formatDate(day, 'YYYYMMDD'),
+		}
+
 		return (
-			<div className="datepicker">
-				<div ref="pikaday"></div>
-			</div>
+			<DayPicker
+				modifiers={ modifiers }
+				onDayClick={ (e, day) => {
+					onSelectDate(formatDate(day, 'YYYYMMDD'))
+				}}
+			/>
 		)
 	}
 }
@@ -53,5 +28,3 @@ Datepicker.propTypes = {
 	selectedDate: PropTypes.string,
 	onSelectDate: PropTypes.func,
 }
-
-export default Datepicker

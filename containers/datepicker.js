@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import Datepicker from '../components/form/datepicker'
+import { Datepicker } from '../components/form/datepicker'
 
 class DatepickerContainer extends Component {
 	render() {
