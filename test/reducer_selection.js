@@ -20,7 +20,7 @@ describe('selection reducer', () => {
 	it('should handle SELECT_DATE', () => {
 		const today = new Date()
 		expect(
-			reducer([], {
+			reducer({}, {
 				type: types.SELECT_DATE,
 				date: today
 			})

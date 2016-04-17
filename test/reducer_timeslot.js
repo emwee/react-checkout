@@ -19,7 +19,7 @@ describe('timeslots reducer', () => {
 describe('timeslots reducer', () => {
 	it('should handle RECEIVE_TIMESLOTS_SUCCESS', () => {
 		expect(
-			reducer([], {
+			reducer({}, {
 				type: types.RECEIVE_TIMESLOTS_SUCCESS,
 				timeslots: [{
 					id: 101,
