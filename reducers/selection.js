@@ -13,7 +13,7 @@ const initialState = {
 const selectedDate = (state = initialState.selectedDate, action) => {
 	switch (action.type) {
 		case types.PRESELECT_CHECKOUT_DETAILS:
-			return action.selection.date
+			return action.selection.selectedDate
 		case types.SELECT_DATE:
 			return action.date
 		default:
@@ -23,6 +23,8 @@ const selectedDate = (state = initialState.selectedDate, action) => {
 
 const selectedTimeslotId = (state = initialState.selectedTimeslotId, action) => {
 	switch (action.type) {
+		case types.PRESELECT_CHECKOUT_DETAILS:
+			return action.selection.selectedTimeslotId
 		case types.SELECT_TIMESLOT:
 			return action.timeslotId
 		case types.RECEIVE_TIMESLOTS_SUCCESS:
@@ -86,15 +88,12 @@ export function getSelectedTimeslot(state) {
 }
 
 export function getSelectedVariants(state) {
-	return getEnabledVariants(state).map(variantId =>
-		merge(
-			{},
-			...getVariant(state.entities.variants, variantId),
-			{
-				quantity: state.selection.quantityByVariantId[variantId],
-			}
-		)
-	)
+	return getEnabledVariants(state).map(variantId => {
+		const variant = getVariant(state.entities.variants, variantId)
+		return merge({}, variant, {
+			quantity: state.selection.quantityByVariantId[variantId],
+		})
+	})
 }
 
 export function getSubtotalPrice(state) {

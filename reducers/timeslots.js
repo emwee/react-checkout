@@ -8,6 +8,18 @@ const initialState = {
 	timeslotIds: [],
 }
 
+function parseTimeslotIds(timeslots) {
+	return timeslots.map(timeslot => timeslot.id)
+}
+
+function parseTimeslotsById(timeslots) {
+	return timeslots.reduce((obj, timeslot) => {
+		const timeslotObj = obj
+		timeslotObj[timeslot.id] = timeslot
+		return timeslotObj
+	}, {})
+}
+
 function isFetching(state = initialState.isFetching, action) {
 	switch (action.type) {
 		case types.REQUEST_TIMESLOTS:
@@ -33,8 +45,10 @@ function didInvalidate(state = initialState.didInvalidate, action) {
 
 function timeslotIds(state = initialState.timeslotIds, action) {
 	switch (action.type) {
+		case types.PRESELECT_CHECKOUT_DETAILS:
+			return parseTimeslotIds(action.selection.timeslots)
 		case types.RECEIVE_TIMESLOTS_SUCCESS:
-			return action.timeslots.map(timeslot => timeslot.id)
+			return parseTimeslotIds(action.timeslots)
 		case types.RECEIVE_TIMESLOTS_FAILURE:
 			return []
 		default:
@@ -44,12 +58,10 @@ function timeslotIds(state = initialState.timeslotIds, action) {
 
 const timeslotsById = (state = initialState.timeslotsById, action) => {
 	switch (action.type) {
+		case types.PRESELECT_CHECKOUT_DETAILS:
+			return parseTimeslotsById(action.selection.timeslots)
 		case types.RECEIVE_TIMESLOTS_SUCCESS:
-			return action.timeslots.reduce((obj, timeslot) => {
-				const foo = obj
-				foo[timeslot.id] = timeslot
-				return foo
-			}, {})
+			return parseTimeslotsById(action.timeslots)
 		case types.RECEIVE_TIMESLOTS_FAILURE:
 			return {}
 		default:
