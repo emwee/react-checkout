@@ -12,8 +12,6 @@ const initialState = {
 
 const selectedDate = (state = initialState.selectedDate, action) => {
 	switch (action.type) {
-		case types.PRESELECT_CHECKOUT_DETAILS:
-			return action.selection.selectedDate
 		case types.SELECT_DATE:
 			return action.date
 		default:

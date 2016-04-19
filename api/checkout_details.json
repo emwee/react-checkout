@@ -33,6 +33,7 @@
 	"selection": {
 		"selectedDate": "20160402",
 		"selectedTimeslotId": 201,
+		"selectedVariantIds": [101],
 		"variantIds": [101],
 		"quantityByVariantId": {
 			"101": 2

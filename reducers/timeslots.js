@@ -45,8 +45,7 @@ function didInvalidate(state = initialState.didInvalidate, action) {
 
 function timeslotIds(state = initialState.timeslotIds, action) {
 	switch (action.type) {
-		case types.PRESELECT_CHECKOUT_DETAILS:
-			return parseTimeslotIds(action.selection.timeslots)
+		case types.PRESELECT_TIMESLOTS:
 		case types.RECEIVE_TIMESLOTS_SUCCESS:
 			return parseTimeslotIds(action.timeslots)
 		case types.RECEIVE_TIMESLOTS_FAILURE:
@@ -58,8 +57,7 @@ function timeslotIds(state = initialState.timeslotIds, action) {
 
 const timeslotsById = (state = initialState.timeslotsById, action) => {
 	switch (action.type) {
-		case types.PRESELECT_CHECKOUT_DETAILS:
-			return parseTimeslotsById(action.selection.timeslots)
+		case types.PRESELECT_TIMESLOTS:
 		case types.RECEIVE_TIMESLOTS_SUCCESS:
 			return parseTimeslotsById(action.timeslots)
 		case types.RECEIVE_TIMESLOTS_FAILURE:
