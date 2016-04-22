@@ -1,7 +1,7 @@
 import 'babel-polyfill'
 import expect from 'expect'
-import reducer from '../reducers/selection'
-import * as types from '../constants/action_types'
+import reducer from '../../reducers/selection'
+import * as types from '../../constants/action_types'
 
 describe('selection reducer', () => {
 	it('should return the initial state', () => {

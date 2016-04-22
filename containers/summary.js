@@ -4,8 +4,8 @@ import { getSelectedTimeslot, getSelectedVariants, getSubtotalPrice, getBookingF
 	getTotalPrice } from '../reducers/selection'
 import SummaryDate from '../components/summary/date'
 import SummaryTimeslot from '../components/summary/timeslot'
-import { SummaryVariants } from '../components/summary/variants'
-import { SummaryVariant } from '../components/summary/variant'
+import SummaryVariants from '../components/summary/variants'
+import SummaryVariant from '../components/summary/variant'
 import SummaryTotalPrice from '../components/summary/total_price'
 
 class SummaryContainer extends Component {

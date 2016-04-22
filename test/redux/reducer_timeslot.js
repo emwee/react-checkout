@@ -1,7 +1,7 @@
 import 'babel-polyfill'
 import expect from 'expect'
-import reducer from '../reducers/timeslots'
-import * as types from '../constants/action_types'
+import reducer from '../../reducers/timeslots'
+import * as types from '../../constants/action_types'
 
 describe('timeslots reducer', () => {
 	it('should return the initial state', () => {

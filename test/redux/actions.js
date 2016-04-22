@@ -2,8 +2,8 @@ import 'babel-polyfill'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import expect from 'expect'
-import * as actions from '../actions'
-import * as types from '../constants/action_types'
+import * as actions from '../../actions'
+import * as types from '../../constants/action_types'
 import nock from 'nock'
 
 const middlewares = [ thunk ]

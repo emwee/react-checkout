@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 import expect from 'expect'
-import reducer from '../reducers/variants'
+import reducer from '../../reducers/variants'
 
 describe('variants reducer', () => {
 	it('should return the initial state', () => {

@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 
-export default class SummaryTimeslot extends Component {
-	render() {
-		const { timeslot } = this.props
-		if (!timeslot) {
-			return <p>no timeslot selected</p>
-		}
-		return <p>{timeslot.timeslot}</p>
+const SummaryTimeslot = (props) => {
+	const { timeslot } = props
+	if (!timeslot) {
+		return <p>no timeslot selected</p>
 	}
+	return <p>{timeslot.timeslot}</p>
 }
 
 SummaryTimeslot.propTypes = {
 	timeslot: PropTypes.object,
 }
+
+export default SummaryTimeslot

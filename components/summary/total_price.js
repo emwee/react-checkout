@@ -1,17 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 import { formatPrice } from '../../viewhelpers'
 
-export default class SummaryTotalPrice extends Component {
-	render() {
-		const { subtotalPrice, bookingFee, totalPrice } = this.props
-		return (
-			<div>
-				{ subtotalPrice > 0 && <p>{ formatPrice(subtotalPrice) }</p> }
-				{ bookingFee > 0 && <p>{ formatPrice(bookingFee) }</p> }
-				{ bookingFee > 0 && totalPrice > 0 && <p>{ formatPrice(totalPrice) }</p> }
-			</div>
-		)
-	}
+const SummaryTotalPrice = (props) => {
+	const { subtotalPrice, bookingFee, totalPrice } = props
+	return (
+		<div>
+			{ subtotalPrice > 0 && <p className="subtotal">{ formatPrice(subtotalPrice) }</p> }
+			{ bookingFee > 0 && <p className="booking_fee">{ formatPrice(bookingFee) }</p> }
+			{ bookingFee > 0 && totalPrice > 0 && <p className="total_price">{ formatPrice(totalPrice) }</p> }
+		</div>
+	)
 }
 
 SummaryTotalPrice.propTypes = {
@@ -19,3 +17,5 @@ SummaryTotalPrice.propTypes = {
 	bookingFee: PropTypes.number,
 	totalPrice: PropTypes.number,
 }
+
+export default SummaryTotalPrice

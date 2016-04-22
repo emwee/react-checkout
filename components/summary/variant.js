@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { formatPrice } from '../../viewhelpers'
 
-export class SummaryVariant extends Component {
-	render() {
-		const { title, price, quantity } = this.props
-		return (quantity > 0 &&
-			<div>
-				<p>{quantity}x {title} {formatPrice(price)} {formatPrice(price * quantity)}</p>
-			</div>
-		)
-	}
+const SummaryVariant = (props) => {
+	const { title, price, quantity } = props
+	return (
+		<div>
+			{quantity > 0 && <p>{quantity}x {title} {formatPrice(price)} {formatPrice(price * quantity)}</p>}
+		</div>
+	)
 }
 
 SummaryVariant.propTypes = {
@@ -17,3 +15,5 @@ SummaryVariant.propTypes = {
 	price: PropTypes.number,
 	quantity: PropTypes.number,
 }
+
+export default SummaryVariant
