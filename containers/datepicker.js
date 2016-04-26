@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { Datepicker } from '../components/form/datepicker'
@@ -33,9 +33,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 DatepickerContainer.propTypes = {
-	availableDates: React.PropTypes.array,
-	selectedDate: React.PropTypes.string,
-	selectDate: React.PropTypes.func,
+	availableDates: PropTypes.array,
+	selectedDate: PropTypes.string,
+	selectDate: PropTypes.func,
 }
 
 export default connect(

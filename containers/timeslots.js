@@ -12,9 +12,10 @@ class TimeslotsContainer extends Component {
 			<Timeslots isFetching={isFetching} didInvalidate={didInvalidate}>
 			{timeslots.map(timeslot =>
 				<Timeslot
-					key={timeslot.id}
-					{...timeslot} selected = {timeslot.id === selectedTimeslotId}
-					onSelect={() => selectTimeslot(timeslot.id)}
+					key = {timeslot.id}
+					{...timeslot}
+					selected = {timeslot.id === selectedTimeslotId}
+					onSelect = {() => selectTimeslot(timeslot.id)}
 				/>
 			)}
 		</Timeslots>

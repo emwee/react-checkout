@@ -22,6 +22,11 @@
 			"title": "Aliens",
 			"price": 7,
 			"num_tickets": 40
+		},{
+			"id": 104,
+			"title": "Free",
+			"price": 0,
+			"num_tickets": 40
 		}
 	],
 	"max_bookable": 9,
@@ -33,11 +38,9 @@
 	"selection": {
 		"selectedDate": "20160402",
 		"selectedTimeslotId": 201,
-		"selectedVariantIds": [101],
-		"variantIds": [101],
-		"quantityByVariantId": {
-			"101": 2
-		},
+		"selectedVariantIds": [102],
+		"variantIds": [],
+		"quantityByVariantId": {"102": 1},
 		"timeslots": [
 			{
 				"id": 201,

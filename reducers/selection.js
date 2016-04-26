@@ -114,7 +114,7 @@ export function getTotalPrice(state) {
 }
 
 export function getTotalQuantity(state) {
-	return state.selection.selectedVariantIds.reduce((total, variantId) =>
+	return getEnabledVariants(state).reduce((total, variantId) =>
 		total + state.selection.quantityByVariantId[variantId],
 		0
 	)

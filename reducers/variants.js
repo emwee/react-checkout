@@ -10,9 +10,8 @@ const variantsById = (state = initialState.variantsById, action) => {
 	switch (action.type) {
 		case types.RECEIVE_CHECKOUT_DETAILS:
 			return action.variants.reduce((obj, variant) => {
-				const foo = obj
-				foo[variant.id] = variant
-				return foo
+				obj[variant.id] = variant
+				return obj
 			}, {})
 		default:
 			return state
