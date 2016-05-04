@@ -1,39 +1,18 @@
 {
-	"available_dates": [
-		"2016-04-01",
-		"2016-04-02",
-		"2016-04-03",
-		"2016-04-04"
-	],
-	"variants": [
-		{
-			"id": 101,
-			"title": "Adults",
-			"price": 17.5,
-			"num_tickets": 40
-		},{
-			"id": 102,
-			"title": "Children",
-			"price": 12,
-			"num_tickets": 40,
-			"valid_with": [101]
-		},{
-			"id": 103,
-			"title": "Aliens",
-			"price": 7,
-			"num_tickets": 40
-		},{
-			"id": 104,
-			"title": "Free",
-			"price": 0,
-			"num_tickets": 40
+	"product": {
+		"id": 123,
+		"available_dates": [
+			"2016-04-01",
+			"2016-04-02",
+			"2016-04-03",
+			"2016-04-04"
+		],
+		"max_bookable": 9,
+		"has_timeslots": true,
+		"booking_fee_config" : {
+			"percentage": 5,
+			"addon_amount": 0
 		}
-	],
-	"max_bookable": 9,
-	"has_timeslots": true,
-	"booking_fee_config" : {
-		"percentage": 5,
-		"addon_amount": 0
 	},
 	"selection": {
 		"selectedDate": "20160402",

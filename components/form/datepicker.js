@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import DayPicker from 'react-day-picker'
+import moment from 'moment'
 import { formatDate } from '../../viewhelpers'
 
 import 'react-day-picker/lib/style.css'
@@ -15,6 +16,7 @@ export class Datepicker extends Component {
 		return (
 			<DayPicker
 				modifiers={ modifiers }
+				initialMonth={ moment(availableDates[0]).toDate() }
 				onDayClick={ (e, day) => {
 					onSelectDate(formatDate(day, 'YYYYMMDD'))
 				}}

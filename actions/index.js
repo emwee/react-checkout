@@ -17,6 +17,28 @@ export function invalidateDate(date) {
 	}
 }
 
+export function requestVariants() {
+	return {
+		type: types.REQUEST_VARIANTS,
+	}
+}
+
+export function receiveVariants(variants) {
+	return {
+		type: types.RECEIVE_VARIANTS_SUCCESS,
+		variants,
+		receivedAt: Date.now(),
+	}
+}
+
+export function receiveVariantsFailed(variants) {
+	return {
+		type: types.RECEIVE_VARIANTS_FAILURE,
+		variants,
+		receivedAt: Date.now(),
+	}
+}
+
 export function requestTimeslots(date) {
 	return {
 		type: types.REQUEST_TIMESLOTS,
@@ -73,13 +95,6 @@ export function selectTimeslot(timeslotId) {
 	}
 }
 
-export function setMaxBookable(maxBookable) {
-	return {
-		type: types.SET_MAX_BOOKABLE,
-		maxBookable,
-	}
-}
-
 export function selectVariant(variantId, quantity) {
 	return {
 		type: types.SELECT_VARIANT,
@@ -88,10 +103,25 @@ export function selectVariant(variantId, quantity) {
 	}
 }
 
-function receiveCheckoutDetails(details) {
+export function fetchVariants() {
+	return (dispatch) => {
+		dispatch(requestVariants())
+		fetch(`./api/variants.json`)
+			.then(response => response.json())
+			.then(json => {
+				if (json.success) {
+					dispatch(receiveVariants(json.variants))
+				} else {
+					dispatch(receiveVariantsFailed(json.variants))
+				}
+			})
+	}
+}
+
+export function setProduct(product) {
 	return {
-		type: types.RECEIVE_CHECKOUT_DETAILS,
-		...details,
+		type: types.SET_PRODUCT,
+		...product,
 	}
 }
 
@@ -103,7 +133,7 @@ function preselectCheckoutDetails(selection) {
 		dispatch(selectDate(selectedDate))
 		dispatch(receiveTimeslots(selectedDate, timeslots))
 		dispatch(selectTimeslot(selectedTimeslotId))
-		for (const variantId of selectedVariantIds) {
+		for (let variantId of selectedVariantIds) {
 			dispatch(selectVariant(variantId, quantityByVariantId[variantId]))
 		}
 	}
@@ -112,11 +142,11 @@ function preselectCheckoutDetails(selection) {
 export function getCheckoutDetails() {
 	return dispatch => {
 		api.getCheckoutDetails(details => {
-			dispatch(receiveCheckoutDetails(details))
+			dispatch(setProduct(details.product))
 
-			if (details.selection) {
-				dispatch(preselectCheckoutDetails(details.selection))
-			}
+			// if (details.selection) {
+			// 	dispatch(preselectCheckoutDetails(details.selection))
+			// }
 		})
 	}
 }

@@ -30,9 +30,7 @@ class App extends Component {
 							{ bookingDetailsCompleted && <ConsumerForm />}
 						</div>
 					</div>
-					<div className="action-bar">
-						<ActionBarContainer />
-					</div>
+					<ActionBarContainer />
 				</div>
 				<SummaryContainer />
 			</div>

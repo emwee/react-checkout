@@ -59,3 +59,12 @@ p {
 	float: right;
 	background-color: #f6f6f6;
 }
+
+.action-bar {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding: 1rem;
+	opacity: 0.8;
+	background-color: #eee;
+}

@@ -7,9 +7,12 @@ import { Timeslot } from '../components/form/timeslot'
 
 class TimeslotsContainer extends Component {
 	render() {
-		const { isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = this.props
+		const { productId, isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = this.props
 		return (
-			<Timeslots isFetching={isFetching} didInvalidate={didInvalidate}>
+			<Timeslots
+				isFetching={isFetching}
+				didInvalidate={didInvalidate}
+			>
 			{timeslots.map(timeslot =>
 				<Timeslot
 					key = {timeslot.id}
@@ -29,7 +32,6 @@ function mapStateToProps(state) {
 		timeslots: getTimeslots(state.entities.timeslots),
 		isFetching: state.entities.timeslots.isFetching,
 		didInvalidate: state.entities.timeslots.didInvalidate,
-		hasTimeslots: state.product.hasTimeslots,
 	}
 }
 
@@ -37,6 +39,7 @@ function mapDispatchToProps(dispatch) {
 	return {
 		selectTimeslot: (timeslotId) => {
 			dispatch(actions.selectTimeslot(timeslotId))
+			dispatch(actions.fetchVariants())
 		},
 	}
 }
@@ -54,7 +57,6 @@ TimeslotsContainer.propTypes = {
 	isFetching: PropTypes.bool,
 	isDisabled: PropTypes.bool,
 	didInvalidate: PropTypes.bool,
-	hasTimeslots: PropTypes.bool,
 	selectTimeslot: PropTypes.func,
 }
 

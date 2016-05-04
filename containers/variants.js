@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { getMaxBookable } from '../reducers'
@@ -9,10 +9,15 @@ import { Variant } from '../components/form/variant'
 
 class VariantsContainer extends Component {
 	render() {
-		const { variants, quantityByVariantId, totalQuantity, isDisabled, maxBookable,
+		const { isFetching, didInvalidate, variants, quantityByVariantId, totalQuantity, isDisabled, maxBookable,
 			selectVariant } = this.props
 		return (
-			<Variants totalQuantity={totalQuantity} maxBookable={maxBookable}>
+			<Variants
+				isFetching={isFetching}
+				didInvalidate={didInvalidate}
+				totalQuantity={totalQuantity}
+				maxBookable={maxBookable}
+			>
 			{variants.map(variant =>
 				<Variant key = {variant.id}
 					{...variant}
@@ -30,6 +35,8 @@ function mapStateToProps(state) {
 	return {
 		quantityByVariantId: state.selection.quantityByVariantId,
 		variants: getVariants(state.entities.variants),
+		isFetching: state.entities.variants.isFetching,
+		didInvalidate: state.entities.variants.didInvalidate,
 		totalQuantity: getTotalQuantity(state),
 		maxBookable: getMaxBookable(state),
 		isDisabled: (variantId) => isVariantDisabled(state, variantId),
@@ -45,12 +52,14 @@ function mapDispatchToProps(dispatch) {
 }
 
 VariantsContainer.propTypes = {
-	quantityByVariantId: React.PropTypes.object,
-	variants: React.PropTypes.array,
-	totalQuantity: React.PropTypes.number,
-	isDisabled: React.PropTypes.func,
-	maxBookable: React.PropTypes.number,
-	selectVariant: React.PropTypes.func,
+	isFetching: PropTypes.bool,
+	didInvalidate: PropTypes.bool,
+	quantityByVariantId: PropTypes.object,
+	variants: PropTypes.array,
+	totalQuantity: PropTypes.number,
+	isDisabled: PropTypes.func,
+	maxBookable: PropTypes.number,
+	selectVariant: PropTypes.func,
 }
 
 export default connect(

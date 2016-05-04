@@ -6,9 +6,10 @@ import { bookingDetailsCompleted } from '../reducers'
 
 class ActionBarContainer extends Component {
 	render() {
-		const { bookingDetailsCompleted } = this.props
+		const { showPersonalDetails, bookingDetailsCompleted } = this.props
 		return (
 			<ActionBar
+				showPersonalDetails={showPersonalDetails}
 				bookingDetailsCompleted={bookingDetailsCompleted}
 			/>
 		)
@@ -22,7 +23,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return {}
+	return {
+		showPersonalDetails: () => {},
+	}
+
 }
 
 ActionBarContainer.propTypes = {

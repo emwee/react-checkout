@@ -13,15 +13,16 @@ export default combineReducers({
 })
 
 export function bookingDetailsCompleted(state) {
-	if (!state.selection.selectedDate) {
-		return false
-	}
+	return false
+	// if (!state.selection.selectedDate) {
+	// 	return false
+	// }
 
-	if (state.product.hasTimeslots && !state.selection.selectedTimeslotId) {
-		return false
-	}
+	// if (state.product.hasTimeslots && !state.selection.selectedTimeslotId) {
+	// 	return false
+	// }
 
-	return getTotalQuantity(state) > 0
+	// return getTotalQuantity(state) > 0
 }
 
 export function getMaxBookable(state) {
@@ -30,5 +31,5 @@ export function getMaxBookable(state) {
 		const timeslot = getTimeslotById(state.entities.timeslots, selectedTimeslotId)
 		return timeslot.max_bookable
 	}
-	return state.maxBookable
+	return state.product.maxBookable
 }
