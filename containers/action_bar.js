@@ -1,36 +1,26 @@
-import React, { Component } from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { ActionBar } from '../components/form/action_bar'
-import { bookingDetailsCompleted } from '../reducers'
+import ActionBar from '../components/form/action_bar'
 
-class ActionBarContainer extends Component {
-	render() {
-		const { showPersonalDetails, bookingDetailsCompleted } = this.props
-		return (
-			<ActionBar
-				showPersonalDetails={showPersonalDetails}
-				bookingDetailsCompleted={bookingDetailsCompleted}
-			/>
-		)
-	}
-}
+const ActionBarContainer = (props) =>
+	<ActionBar {...props} />
 
 function mapStateToProps(state) {
 	return {
-		bookingDetailsCompleted: bookingDetailsCompleted(state),
+		activeStepIndex: state.selection.activeStepIndex,
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		showPersonalDetails: () => {},
+		goToPersonalDetails: () => dispatch(actions.goToPersonalDetails()),
 	}
-
 }
 
 ActionBarContainer.propTypes = {
-	bookingDetailsCompleted: React.PropTypes.bool,
+	activeStepIndex: PropTypes.number,
+	goToPersonalDetails: PropTypes.func,
 }
 
 export default connect(

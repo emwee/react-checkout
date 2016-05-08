@@ -1,17 +1,16 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 
-export class Timeslot extends Component {
-	render() {
-		const { id, timeslot, enabled, selected, onSelect } = this.props
-		return (
-			<button className={classNames('timeslot-btn', { 'timeslot-btn--selected': selected })}
-				onClick={onSelect} disabled={!enabled}
-			>
-				{id} / {timeslot}
-			</button>
-		)
-	}
+const Timeslot = (props) => {
+	const { id, timeslot, enabled, selected, onSelect } = props
+	return (
+		<button
+			className={classNames('timeslot-btn', { 'timeslot-btn--selected': selected })}
+			onClick={onSelect} disabled={!enabled}
+		>
+			{id} / {timeslot}
+		</button>
+	)
 }
 
 Timeslot.propTypes = {
@@ -21,3 +20,5 @@ Timeslot.propTypes = {
 	selected: PropTypes.bool,
 	onSelect: PropTypes.func,
 }
+
+export default Timeslot

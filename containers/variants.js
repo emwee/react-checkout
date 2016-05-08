@@ -1,42 +1,41 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { getMaxBookable } from '../reducers'
 import { getVariants, isVariantDisabled } from '../reducers/variants'
 import { getTotalQuantity } from '../reducers/selection'
-import { Variants } from '../components/form/variants'
+import Variants from '../components/form/variants'
 import { Variant } from '../components/form/variant'
 
-class VariantsContainer extends Component {
-	render() {
-		const { isFetching, didInvalidate, variants, quantityByVariantId, totalQuantity, isDisabled, maxBookable,
-			selectVariant } = this.props
-		return (
-			<Variants
-				isFetching={isFetching}
-				didInvalidate={didInvalidate}
-				totalQuantity={totalQuantity}
-				maxBookable={maxBookable}
-			>
-			{variants.map(variant =>
-				<Variant key = {variant.id}
-					{...variant}
-					quantity = {quantityByVariantId[variant.id] || 0}
-					disabled = {isDisabled(variant.id)}
-					selectVariant = {selectVariant}
-				/>
-			)}
-		</Variants>
-		)
-	}
+const VariantsContainer = (props) => {
+	const { isFetching, didInvalidate, variants, quantityByVariantId, totalQuantity, isDisabled,
+		maxBookable, selectVariant } = props
+	return (
+		<Variants
+			isFetching={isFetching}
+			didInvalidate={didInvalidate}
+			totalQuantity={totalQuantity}
+			maxBookable={maxBookable}
+		>
+		{variants.map(variant =>
+			<Variant
+				key={variant.id}
+				{...variant}
+				quantity={quantityByVariantId[variant.id] || 0}
+				disabled={isDisabled(variant.id)}
+				selectVariant={selectVariant}
+			/>
+		)}
+	</Variants>
+	)
 }
 
 function mapStateToProps(state) {
 	return {
 		quantityByVariantId: state.selection.quantityByVariantId,
-		variants: getVariants(state.entities.variants),
-		isFetching: state.entities.variants.isFetching,
-		didInvalidate: state.entities.variants.didInvalidate,
+		variants: getVariants(state.variants),
+		isFetching: state.variants.isFetching,
+		didInvalidate: state.variants.didInvalidate,
 		totalQuantity: getTotalQuantity(state),
 		maxBookable: getMaxBookable(state),
 		isDisabled: (variantId) => isVariantDisabled(state, variantId),

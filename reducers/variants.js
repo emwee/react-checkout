@@ -87,7 +87,7 @@ export function isVariantDisabled(state, variantId) {
 		return true
 	}
 
-	const variant = getVariant(state.entities.variants, variantId)
+	const variant = getVariant(state.variants, variantId)
 
 	if (!variant.valid_with) {
 		return false

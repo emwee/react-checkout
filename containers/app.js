@@ -1,52 +1,38 @@
-import React, { Component } from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import CheckoutStepsContainer from './checkout_steps'
 import SummaryContainer from './summary'
-import DatepickerContainer from './datepicker'
-import VariantsContainer from './variants'
-import TimeslotsContainer from './timeslots'
+import BookingDetailsContainer from './booking_details'
+import CustomerDetailsContainer from './customer_details'
 import ActionBarContainer from './action_bar'
-import ConsumerForm from '../components/form/consumer'
-import { bookingDetailsCompleted } from '../reducers'
 
 require('../css/checkout.css')
 
-class App extends Component {
-	render() {
-		const { hasTimeslots, bookingDetailsCompleted } = this.props
-		return (
-			<div className="checkout-app">
+const App = (props) => {
+	const { activeStepIndex } = props
+	return (
+		<div className="checkout-app">
+			<CheckoutStepsContainer />
+			<div className="checkout-form-wrapper">
 				<div className="checkout-form">
-					<div className="checkout-form__booking-details">
-						<div className="checkout-form__when">
-							<DatepickerContainer />
-							{ hasTimeslots && <TimeslotsContainer />}
-						</div>
-						<div className="checkout-form__what">
-							<VariantsContainer />
-						</div>
-					</div>
-					<div className="checkout-personal-details">
-						<div className="checkout-form__who">
-							{ bookingDetailsCompleted && <ConsumerForm />}
-						</div>
-					</div>
+					{activeStepIndex === 0 && <BookingDetailsContainer />}
+					{activeStepIndex === 1 && <CustomerDetailsContainer />}
 					<ActionBarContainer />
 				</div>
 				<SummaryContainer />
 			</div>
-		)
-	}
+		</div>
+	)
 }
 
 function mapStateToProps(state) {
 	return {
-		hasTimeslots: state.product.hasTimeslots,
-		bookingDetailsCompleted: bookingDetailsCompleted(state),
+		activeStepIndex: state.selection.activeStepIndex,
 	}
 }
 
 App.propTypes = {
-	hasTimeslots: React.PropTypes.bool,
+	activeStepIndex: PropTypes.number,
 }
 
 export default connect(

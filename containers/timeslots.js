@@ -1,37 +1,35 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
 import { getTimeslots } from '../reducers/timeslots'
-import { Timeslots } from '../components/form/timeslots'
-import { Timeslot } from '../components/form/timeslot'
+import Timeslots from '../components/form/timeslots'
+import Timeslot from '../components/form/timeslot'
 
-class TimeslotsContainer extends Component {
-	render() {
-		const { productId, isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = this.props
-		return (
-			<Timeslots
-				isFetching={isFetching}
-				didInvalidate={didInvalidate}
-			>
-			{timeslots.map(timeslot =>
-				<Timeslot
-					key = {timeslot.id}
-					{...timeslot}
-					selected = {timeslot.id === selectedTimeslotId}
-					onSelect = {() => selectTimeslot(timeslot.id)}
-				/>
-			)}
-		</Timeslots>
-		)
-	}
+const TimeslotsContainer = (props) => {
+	const { isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = props
+	return (
+		<Timeslots
+			isFetching={isFetching}
+			didInvalidate={didInvalidate}
+		>
+		{timeslots.map(timeslot =>
+			<Timeslot
+				key={timeslot.id}
+				{...timeslot}
+				selected={timeslot.id === selectedTimeslotId}
+				onSelect={() => selectTimeslot(timeslot.id)}
+			/>
+		)}
+	</Timeslots>
+	)
 }
 
 function mapStateToProps(state) {
 	return {
 		selectedTimeslotId: state.selection.selectedTimeslotId,
-		timeslots: getTimeslots(state.entities.timeslots),
-		isFetching: state.entities.timeslots.isFetching,
-		didInvalidate: state.entities.timeslots.didInvalidate,
+		timeslots: getTimeslots(state.timeslots),
+		isFetching: state.timeslots.isFetching,
+		didInvalidate: state.timeslots.didInvalidate,
 	}
 }
 

@@ -4,10 +4,20 @@ import * as types from '../constants/action_types'
 import { merge } from 'lodash'
 
 const initialState = {
+	activeStepIndex: 0,
 	selectedDate: null,
 	selectedTimeslotId: null,
 	selectedVariantIds: [],
 	quantityByVariantId: {},
+}
+
+const activeStepIndex = (state = initialState.activeStepIndex, action) => {
+	switch (action.type) {
+		case types.SET_STEP_INDEX:
+			return action.stepIndex
+		default:
+			return state
+	}
 }
 
 const selectedDate = (state = initialState.selectedDate, action) => {
@@ -66,6 +76,7 @@ const quantityByVariantId = (state = initialState.quantityByVariantId, action) =
 }
 
 export default combineReducers({
+	activeStepIndex,
 	selectedDate,
 	selectedTimeslotId,
 	selectedVariantIds,
@@ -82,12 +93,12 @@ function getEnabledVariants(state) {
 }
 
 export function getSelectedTimeslot(state) {
-	return state.entities.timeslots.timeslotsById[state.selection.selectedTimeslotId]
+	return state.timeslots.timeslotsById[state.selection.selectedTimeslotId]
 }
 
 export function getSelectedVariants(state) {
 	return getEnabledVariants(state).map(variantId => {
-		const variant = getVariant(state.entities.variants, variantId)
+		const variant = getVariant(state.variants, variantId)
 		return merge({}, variant, {
 			quantity: state.selection.quantityByVariantId[variantId],
 		})
@@ -96,7 +107,7 @@ export function getSelectedVariants(state) {
 
 export function getSubtotalPrice(state) {
 	return getEnabledVariants(state).reduce((total, variantId) =>
-		total + getVariant(state.entities.variants, variantId).price *
+		total + getVariant(state.variants, variantId).price *
 			state.selection.quantityByVariantId[variantId], 0)
 }
 

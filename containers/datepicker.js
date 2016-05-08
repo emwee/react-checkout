@@ -1,19 +1,17 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { Datepicker } from '../components/form/datepicker'
+import Datepicker from '../components/form/datepicker'
 
-class DatepickerContainer extends Component {
-	render() {
-		const { availableDates, selectedDate, selectDate } = this.props
-		return (
-			<Datepicker
-				availableDates={availableDates}
-				selectedDate={selectedDate}
-				onSelectDate={selectDate}
-			/>
-		)
-	}
+const DatepickerContainer = (props) => {
+	const { availableDates, selectedDate, selectDate } = props
+	return (
+		<Datepicker
+			availableDates={availableDates}
+			selectedDate={selectedDate}
+			onSelectDate={selectDate}
+		/>
+	)
 }
 
 function mapStateToProps(state) {

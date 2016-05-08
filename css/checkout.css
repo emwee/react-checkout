@@ -8,6 +8,9 @@ p {
 
 .checkout-app {
 	width: 100%;
+}
+
+.checkout-form-wrapper {
 	display: flex;
 }
 

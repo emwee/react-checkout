@@ -31,13 +31,15 @@ class ConsumerForm extends Component {
 	renderField(field, title) {
 		return (
 			<div className="form-row">
-				<label htmlFor={ field.name }>{ title }</label>
-				<input type="text"
-					id={ field.name }
+				<label htmlFor={field.name}>{title}</label>
+				<input
+					type="text"
+					id={field.name}
 					className={classNames('textfield', { 'textfield--error': field.touched && field.error })}
-					placeholder={ title } { ...field }
+					placeholder={title}
+					{ ...field }
 				/>
-				{ field.touched && field.error && <div className="form-error">{field.error}</div> }
+				{field.touched && field.error && <div className="form-error">{field.error}</div>}
 			</div>
 		)
 	}
@@ -45,10 +47,10 @@ class ConsumerForm extends Component {
 		const { fields: { firstName, lastName, email, phone }, handleSubmit } = this.props
 		return (
 			<form onSubmit={handleSubmit}>
-				{ this.renderField(firstName, 'First name') }
-				{ this.renderField(lastName, 'Last name') }
-				{ this.renderField(email, 'Email address') }
-				{ this.renderField(phone, 'Phone number') }
+				{this.renderField(firstName, 'First name')}
+				{this.renderField(lastName, 'Last name')}
+				{this.renderField(email, 'Email address')}
+				{this.renderField(phone, 'Phone number')}
 			</form>
 		)
 	}

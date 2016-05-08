@@ -1,19 +1,17 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
 require('../../css/timeslots.css')
 
-export class Timeslots extends Component {
-	render() {
-		const { isFetching, didInvalidate, children } = this.props
-		return (
-				<div className="timeslots">
-					{isFetching && <p>fetching timeslots...</p>}
-					{didInvalidate && <p>fetching timeslots failed...</p>}
-					{!children.length && !didInvalidate && <p>no timeslots fetched yet..</p>}
-					{children}
-				</div>
-		)
-	}
+const Timeslots = (props) => {
+	const { isFetching, didInvalidate, children } = props
+	return (
+		<div className="timeslots">
+			{isFetching && <p>fetching timeslots...</p>}
+			{didInvalidate && <p>fetching timeslots failed...</p>}
+			{!children.length && !didInvalidate && <p>no timeslots fetched yet..</p>}
+			{children}
+		</div>
+	)
 }
 
 Timeslots.propTypes = {
@@ -21,3 +19,5 @@ Timeslots.propTypes = {
 	didInvalidate: PropTypes.bool,
 	children: PropTypes.array,
 }
+
+export default Timeslots

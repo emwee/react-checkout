@@ -1,20 +1,19 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
-export class ActionBar extends Component {
-	render() {
-		const { showPersonalDetails, bookingDetailsCompleted } = this.props
-		return (
-			<div className="action-bar">
-				{!bookingDetailsCompleted && <button onClick={showPersonalDetails}>Go to personal details</button>}
-				{bookingDetailsCompleted && <button>Submit order</button>}
-			</div>
-		)
-	}
+const ActionBar = (props) => {
+	const { activeStepIndex, goToPersonalDetails } = props
+	return (
+		<div className="action-bar">
+			{activeStepIndex === 0 &&
+				<button onClick={goToPersonalDetails}>Go to personal details</button>}
+			{activeStepIndex === 1 && <button>Submit order</button>}
+		</div>
+	)
 }
 
 ActionBar.propTypes = {
-	bookingDetailsCompleted: PropTypes.bool,
-	showPersonalDetails: PropTypes.func,
+	activeStepIndex: PropTypes.number,
+	goToPersonalDetails: PropTypes.func,
 }
 
 export default ActionBar

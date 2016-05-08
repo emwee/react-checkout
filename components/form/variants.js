@@ -1,22 +1,20 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
 require('../../css/variants.css')
 
-export class Variants extends Component {
-	render() {
-		const { isFetching, didInvalidate, totalQuantity, maxBookable, children } = this.props
-		const maxBookableExceeded = totalQuantity > maxBookable
-		return (
-			<div className="variants">
-				{maxBookableExceeded &&
-					<p>you selected more tickets than the max bookable ({maxBookable}). please adjust.</p>}
-					{isFetching && <p>fetching variants...</p>}
-					{didInvalidate && <p>fetching variants failed...</p>}
-					{!children.length && !didInvalidate && <p>no variants fetched yet..</p>}
-				<div>{children}</div>
-			</div>
-		)
-	}
+const Variants = (props) => {
+	const { isFetching, didInvalidate, totalQuantity, maxBookable, children } = props
+	const maxBookableExceeded = totalQuantity > maxBookable
+	return (
+		<div className="variants">
+			{maxBookableExceeded &&
+				<p>you selected more tickets than the max bookable ({maxBookable}). please adjust.</p>}
+				{isFetching && <p>fetching variants...</p>}
+				{didInvalidate && <p>fetching variants failed...</p>}
+				{!children.length && !didInvalidate && <p>no variants fetched yet..</p>}
+			<div>{children}</div>
+		</div>
+	)
 }
 
 Variants.propTypes = {
@@ -26,3 +24,5 @@ Variants.propTypes = {
 	maxBookable: PropTypes.number,
 	children: PropTypes.array,
 }
+
+export default Variants

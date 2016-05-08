@@ -2,6 +2,7 @@ import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
 import api from '../api/index'
 import * as types from '../constants/action_types'
+import { isStepUnlocked } from '../reducers'
 
 export function selectDate(date) {
 	return {
@@ -106,7 +107,7 @@ export function selectVariant(variantId, quantity) {
 export function fetchVariants() {
 	return (dispatch) => {
 		dispatch(requestVariants())
-		fetch(`./api/variants.json`)
+		fetch('./api/variants.json')
 			.then(response => response.json())
 			.then(json => {
 				if (json.success) {
@@ -125,20 +126,6 @@ export function setProduct(product) {
 	}
 }
 
-function preselectCheckoutDetails(selection) {
-	const { selectedDate, selectedTimeslotId, selectedVariantIds, quantityByVariantId,
-		timeslots } = selection
-
-	return dispatch => {
-		dispatch(selectDate(selectedDate))
-		dispatch(receiveTimeslots(selectedDate, timeslots))
-		dispatch(selectTimeslot(selectedTimeslotId))
-		for (let variantId of selectedVariantIds) {
-			dispatch(selectVariant(variantId, quantityByVariantId[variantId]))
-		}
-	}
-}
-
 export function getCheckoutDetails() {
 	return dispatch => {
 		api.getCheckoutDetails(details => {
@@ -148,5 +135,40 @@ export function getCheckoutDetails() {
 			// 	dispatch(preselectCheckoutDetails(details.selection))
 			// }
 		})
+	}
+}
+
+function preselectCheckoutDetails(selection) {
+	const { selectedDate, selectedTimeslotId, selectedVariantIds, quantityByVariantId,
+		timeslots } = selection
+
+	return dispatch => {
+		dispatch(selectDate(selectedDate))
+		dispatch(receiveTimeslots(selectedDate, timeslots))
+		dispatch(selectTimeslot(selectedTimeslotId))
+		for (const variantId of selectedVariantIds) {
+			dispatch(selectVariant(variantId, quantityByVariantId[variantId]))
+		}
+	}
+}
+
+export function setStepIndex(stepIndex) {
+	return {
+		type: types.SET_STEP_INDEX,
+		stepIndex,
+	}
+}
+
+export function goToStep(stepIndex) {
+	return (dispatch, getState) => {
+		if (isStepUnlocked(getState(), stepIndex)) {
+			dispatch(setStepIndex(stepIndex))
+		}
+	}
+}
+
+export function goToPersonalDetails() {
+	return dispatch => {
+		dispatch(goToStep(1))
 	}
 }

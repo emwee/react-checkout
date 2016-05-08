@@ -19,7 +19,6 @@ const id = (state = initialState.id, action) => {
 }
 
 const availableDates = (state = initialState.availableDates, action) => {
-	console.log('availableDates', action)
 	switch (action.type) {
 		case types.SET_PRODUCT:
 			return action.available_dates
