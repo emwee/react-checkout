@@ -126,30 +126,30 @@ export function setProduct(product) {
 	}
 }
 
-export function getCheckoutDetails() {
-	return dispatch => {
-		api.getCheckoutDetails(details => {
-			dispatch(setProduct(details.product))
-			/*
-			if (details.selection) {
-				dispatch(preselectCheckoutDetails(details.selection))
-			}
-			*/
-		})
-	}
-}
-
 function preselectCheckoutDetails(selection) {
-	const { selectedDate, selectedTimeslotId, selectedVariantIds, quantityByVariantId,
-		timeslots } = selection
+	const { selectedDate,
+		selectedTimeslotId, timeslots,
+		selectedVariantIds, quantityByVariantId, variants } = selection
 
 	return dispatch => {
 		dispatch(selectDate(selectedDate))
 		dispatch(receiveTimeslots(selectedDate, timeslots))
 		dispatch(selectTimeslot(selectedTimeslotId))
+		dispatch(receiveVariants(variants))
 		for (const variantId of selectedVariantIds) {
 			dispatch(selectVariant(variantId, quantityByVariantId[variantId]))
 		}
+	}
+}
+
+export function getCheckoutDetails() {
+	return dispatch => {
+		api.getCheckoutDetails(details => {
+			dispatch(setProduct(details.product))
+			if (details.selection) {
+				dispatch(preselectCheckoutDetails(details.selection))
+			}
+		})
 	}
 }
 
