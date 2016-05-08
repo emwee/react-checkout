@@ -26,7 +26,7 @@ const VariantsContainer = (props) => {
 				selectVariant={selectVariant}
 			/>
 		)}
-	</Variants>
+		</Variants>
 	)
 }
 

@@ -50,8 +50,9 @@ const variantsById = (state = initialState.variantsById, action) => {
 	switch (action.type) {
 		case types.RECEIVE_VARIANTS_SUCCESS:
 			return action.variants.reduce((obj, variant) => {
-				obj[variant.id] = variant
-				return obj
+				const variantObj = obj
+				variantObj[variant.id] = variant
+				return variantObj
 			}, {})
 		case types.RECEIVE_VARIANTS_FAILURE:
 		case types.SELECT_DATE:

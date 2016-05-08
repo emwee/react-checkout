@@ -130,10 +130,11 @@ export function getCheckoutDetails() {
 	return dispatch => {
 		api.getCheckoutDetails(details => {
 			dispatch(setProduct(details.product))
-
-			// if (details.selection) {
-			// 	dispatch(preselectCheckoutDetails(details.selection))
-			// }
+			/*
+			if (details.selection) {
+				dispatch(preselectCheckoutDetails(details.selection))
+			}
+			*/
 		})
 	}
 }

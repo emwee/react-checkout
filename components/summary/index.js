@@ -25,7 +25,7 @@ const Summary = (props) => {
 				{bookingFee > 0 && <p className="booking_fee">{formatPrice(bookingFee)}</p>}
 				{bookingFee > 0 && totalPrice > 0 &&
 					<p className="total_price">{formatPrice(totalPrice)}</p>}
-	</div>
+			</div>
 		</div>
 	)
 }

@@ -20,7 +20,7 @@ const TimeslotsContainer = (props) => {
 				onSelect={() => selectTimeslot(timeslot.id)}
 			/>
 		)}
-	</Timeslots>
+		</Timeslots>
 	)
 }
 
