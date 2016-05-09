@@ -23,7 +23,15 @@ const CheckoutStepsContainer = (props) => {
 
 function mapStateToProps(state) {
 	return {
-		steps: state.steps,
+		steps: [{
+			title: 'Booking Details',
+		}, {
+			title: 'Personal Details',
+		}, {
+			title: 'Payment',
+		}, {
+			title: 'Confirmation',
+		}],
 		activeStepIndex: state.selection.activeStepIndex,
 	}
 }

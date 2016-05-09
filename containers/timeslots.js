@@ -4,13 +4,16 @@ import * as actions from '../actions'
 import { getTimeslots } from '../reducers/timeslots'
 import Timeslots from '../components/form/timeslots'
 import Timeslot from '../components/form/timeslot'
+import { isFieldAlerted } from '../reducers/alerted_field'
 
 const TimeslotsContainer = (props) => {
-	const { isFetching, didInvalidate, timeslots, selectedTimeslotId, selectTimeslot } = props
+	const { isFetching, didInvalidate, isAlerted,
+		timeslots, selectedTimeslotId, selectTimeslot } = props
 	return (
 		<Timeslots
 			isFetching={isFetching}
 			didInvalidate={didInvalidate}
+			isFieldAlerted={isAlerted}
 		>
 		{timeslots.map(timeslot =>
 			<Timeslot
@@ -30,6 +33,7 @@ function mapStateToProps(state) {
 		timeslots: getTimeslots(state.timeslots),
 		isFetching: state.timeslots.isFetching,
 		didInvalidate: state.timeslots.didInvalidate,
+		isAlerted: isFieldAlerted(state, 'timeslot'),
 	}
 }
 
@@ -53,6 +57,7 @@ TimeslotsContainer.propTypes = {
 		})
 	),
 	isFetching: PropTypes.bool,
+	isAlerted: PropTypes.bool,
 	isDisabled: PropTypes.bool,
 	didInvalidate: PropTypes.bool,
 	selectTimeslot: PropTypes.func,

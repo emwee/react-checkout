@@ -3,7 +3,8 @@ import React, { PropTypes } from 'react'
 require('../../css/variants.css')
 
 const Variants = (props) => {
-	const { isFetching, didInvalidate, totalQuantity, maxBookable, children } = props
+	const { isFetching, didInvalidate, isFieldAlerted,
+		totalQuantity, maxBookable, children } = props
 	const maxBookableExceeded = totalQuantity > maxBookable
 	return (
 		<div className="variants">
@@ -13,6 +14,7 @@ const Variants = (props) => {
 				{didInvalidate && <p>fetching variants failed...</p>}
 				{!children.length && !didInvalidate && <p>no variants fetched yet..</p>}
 			<div>{children}</div>
+			{isFieldAlerted && <p>pick at least one variant!</p>}
 		</div>
 	)
 }
@@ -20,6 +22,7 @@ const Variants = (props) => {
 Variants.propTypes = {
 	isFetching: PropTypes.bool,
 	didInvalidate: PropTypes.bool,
+	isFieldAlerted: PropTypes.bool,
 	totalQuantity: PropTypes.number,
 	maxBookable: PropTypes.number,
 	children: PropTypes.array,

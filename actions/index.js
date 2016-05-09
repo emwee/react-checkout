@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch'
 import api from '../api/index'
 import * as types from '../constants/action_types'
 import { isStepUnlocked } from '../reducers'
+import { getTotalQuantity } from '../reducers/selection'
 
 export function selectDate(date) {
 	return {
@@ -160,16 +161,37 @@ export function setStepIndex(stepIndex) {
 	}
 }
 
+export function alertField(fieldName) {
+	return {
+		type: types.ALERT_FIELD,
+		fieldName,
+	}
+}
+
 export function goToStep(stepIndex) {
 	return (dispatch, getState) => {
-		if (isStepUnlocked(getState(), stepIndex)) {
+		const state = getState()
+		if (isStepUnlocked(state, stepIndex)) {
 			dispatch(setStepIndex(stepIndex))
 		}
 	}
 }
 
 export function goToPersonalDetails() {
-	return dispatch => {
-		dispatch(goToStep(1))
+	return (dispatch, getState) => {
+		const state = getState()
+		if (!state.selection.selectedDate) {
+			return dispatch(alertField('date'))
+		}
+
+		if (state.product.hasTimeslots && !state.selection.selectedTimeslotId) {
+			return dispatch(alertField('timeslot'))
+		}
+
+		if (getTotalQuantity(state) === 0) {
+			return dispatch(alertField('variants'))
+		}
+
+		return dispatch(goToStep(1))
 	}
 }

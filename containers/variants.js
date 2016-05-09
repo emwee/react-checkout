@@ -6,15 +6,17 @@ import { getVariants, isVariantDisabled } from '../reducers/variants'
 import { getTotalQuantity } from '../reducers/selection'
 import Variants from '../components/form/variants'
 import { Variant } from '../components/form/variant'
+import { isFieldAlerted } from '../reducers/alerted_field'
 
 const VariantsContainer = (props) => {
-	const { isFetching, didInvalidate, variants, quantityByVariantId, totalQuantity, isDisabled,
-		maxBookable, selectVariant } = props
+	const { isFetching, didInvalidate, totalQuantity, isAlerted, maxBookable,
+		variants, quantityByVariantId, isDisabled, selectVariant } = props
 	return (
 		<Variants
 			isFetching={isFetching}
 			didInvalidate={didInvalidate}
 			totalQuantity={totalQuantity}
+			isFieldAlerted={isAlerted}
 			maxBookable={maxBookable}
 		>
 		{variants.map(variant =>
@@ -38,6 +40,7 @@ function mapStateToProps(state) {
 		didInvalidate: state.variants.didInvalidate,
 		totalQuantity: getTotalQuantity(state),
 		maxBookable: getMaxBookable(state),
+		isAlerted: isFieldAlerted(state, 'variants'),
 		isDisabled: (variantId) => isVariantDisabled(state, variantId),
 	}
 }
@@ -53,6 +56,7 @@ function mapDispatchToProps(dispatch) {
 VariantsContainer.propTypes = {
 	isFetching: PropTypes.bool,
 	didInvalidate: PropTypes.bool,
+	isAlerted: PropTypes.bool,
 	quantityByVariantId: PropTypes.object,
 	variants: PropTypes.array,
 	totalQuantity: PropTypes.number,
