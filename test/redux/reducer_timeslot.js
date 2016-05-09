@@ -14,21 +14,21 @@ describe('timeslots reducer', () => {
 			timeslotsById: {}
 		})
 	})
-})
 
-describe('timeslots reducer', () => {
 	it('should handle RECEIVE_TIMESLOTS_SUCCESS', () => {
 		expect(
 			reducer({}, {
 				type: types.RECEIVE_TIMESLOTS_SUCCESS,
-				timeslots: [{
-					id: 101,
-					timeslot: '9:15'
-				},
-				{
-					id: 102,
-					timeslot: '10:15'
-				}]
+				timeslots: [
+					{
+						id: 101,
+						timeslot: '9:15'
+					},
+					{
+						id: 102,
+						timeslot: '10:15'
+					}
+				]
 			})
 		).toEqual({
 			isFetching: false,

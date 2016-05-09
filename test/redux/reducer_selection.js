@@ -8,15 +8,14 @@ describe('selection reducer', () => {
 		expect(
 			reducer(undefined, {})
 		).toEqual({
+			activeStepIndex: 0,
 			selectedDate: null,
 			selectedTimeslotId: null,
 			selectedVariantIds: [],
 			quantityByVariantId: {},
 		})
 	})
-})
 
-describe('selection reducer', () => {
 	it('should handle SELECT_DATE', () => {
 		const today = new Date()
 		expect(
@@ -25,6 +24,7 @@ describe('selection reducer', () => {
 				date: today
 			})
 		).toEqual({
+			activeStepIndex: 0,
 			selectedDate: today,
 			selectedTimeslotId: null,
 			selectedVariantIds: [],
@@ -34,12 +34,19 @@ describe('selection reducer', () => {
 
 	it('should handle SELECT_VARIANT', () => {
 		expect(
-			reducer({}, {
+			reducer({
+				activeStepIndex: 0,
+				selectedDate: null,
+				selectedTimeslotId: null,
+				selectedVariantIds: [],
+				quantityByVariantId: {},
+			}, {
 				type: types.SELECT_VARIANT,
 				variantId: 101,
 				quantity: 3
 			})
 		).toEqual({
+			activeStepIndex: 0,
 			selectedDate: null,
 			selectedTimeslotId: null,
 			selectedVariantIds: [ 101 ],
@@ -48,6 +55,7 @@ describe('selection reducer', () => {
 
 		expect(
 			reducer({
+				activeStepIndex: 0,
 				selectedDate: null,
 				selectedTimeslotId: null,
 				selectedVariantIds: [ 101 ],
@@ -58,6 +66,7 @@ describe('selection reducer', () => {
 				quantity: 5
 			})
 		).toEqual({
+			activeStepIndex: 0,
 			selectedDate: null,
 			selectedTimeslotId: null,
 			selectedVariantIds: [ 101 ],
