@@ -14,7 +14,7 @@
 			"addon_amount": 0
 		}
 	},
-	"xselection": {
+	"selection": {
 		"selectedDate": "20160402",
 		"selectedTimeslotId": 201,
 		"selectedVariantIds": [101, 102],

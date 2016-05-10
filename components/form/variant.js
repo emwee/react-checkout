@@ -22,7 +22,7 @@ export class Variant extends Component {
 		return nodes
 	}
 	render() {
-		const { title, price, quantity, disabled } = this.props
+		const { title, price, quantity, maxBookable, disabled } = this.props
 		return (
 			<div className={classNames('variant', { 'variant--disabled': disabled })}>
 				<p className="variant__title">{title}</p>
@@ -34,7 +34,7 @@ export class Variant extends Component {
 					value={quantity}
 					onChange={this.onChangeVariant}
 				>
-					{this.renderOptions(10)}
+					{this.renderOptions(maxBookable)}
 				</select>
 			</div>
 		)
@@ -47,5 +47,6 @@ Variant.propTypes = {
 	price: PropTypes.number,
 	quantity: PropTypes.number,
 	disabled: PropTypes.bool,
+	maxBookable: PropTypes.bool,
 	selectVariant: PropTypes.func,
 }

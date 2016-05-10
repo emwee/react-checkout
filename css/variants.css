@@ -19,3 +19,18 @@
 .variant__quantity-selector {
 	flex: 1;
 }
+
+.stepper {
+	width: 8rem;
+	display: flex;
+}
+
+.stepper__btn {
+	font-size: 1.125rem;
+	border: 1px solid #ccc;
+	background: #fff;
+}
+
+.stepper__btn[disabled] {
+	color: #ccc;
+}

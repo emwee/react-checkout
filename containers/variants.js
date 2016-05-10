@@ -5,7 +5,8 @@ import { getMaxBookable } from '../reducers'
 import { getVariants, isVariantDisabled } from '../reducers/variants'
 import { getTotalQuantity } from '../reducers/selection'
 import Variants from '../components/form/variants'
-import { Variant } from '../components/form/variant'
+// import { Variant } from '../components/form/variant'
+import { VariantStepper } from '../components/form/variant_stepper'
 import { isFieldAlerted } from '../reducers/alerted_field'
 
 const VariantsContainer = (props) => {
@@ -20,11 +21,12 @@ const VariantsContainer = (props) => {
 			maxBookable={maxBookable}
 		>
 		{variants.map(variant =>
-			<Variant
+			<VariantStepper
 				key={variant.id}
 				{...variant}
 				quantity={quantityByVariantId[variant.id] || 0}
 				disabled={isDisabled(variant.id)}
+				maxBookable={maxBookable}
 				selectVariant={selectVariant}
 			/>
 		)}
