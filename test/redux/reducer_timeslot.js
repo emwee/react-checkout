@@ -3,6 +3,8 @@ import expect from 'expect'
 import reducer from '../../reducers/timeslots'
 import * as types from '../../constants/action_types'
 
+import TIMESLOTS_STUB from '../../api/timeslots.20160401.json'
+
 describe('timeslots reducer', () => {
 	it('should return the initial state', () => {
 		expect(
@@ -19,16 +21,7 @@ describe('timeslots reducer', () => {
 		expect(
 			reducer({}, {
 				type: types.RECEIVE_TIMESLOTS_SUCCESS,
-				timeslots: [
-					{
-						id: 101,
-						timeslot: '9:15'
-					},
-					{
-						id: 102,
-						timeslot: '10:15'
-					}
-				]
+				timeslots: TIMESLOTS_STUB.timeslots,
 			})
 		).toEqual({
 			isFetching: false,
@@ -37,11 +30,15 @@ describe('timeslots reducer', () => {
 			timeslotsById: {
 				101: {
 					id: 101,
-					timeslot: '9:15'
+					timeslot: '9:01',
+					"enabled": true,
+					"max_bookable": 11
 				},
 				102: {
 					id: 102,
-					timeslot: '10:15'
+					timeslot: '10:01',
+					"enabled": true,
+					"max_bookable": 12
 				}
 			}
 		})

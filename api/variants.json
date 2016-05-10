@@ -4,24 +4,20 @@
 		{
 			"id": 101,
 			"title": "Adults",
-			"price": 17.5,
-			"num_tickets": 40
+			"price": 17.5
 		},{
 			"id": 102,
 			"title": "Children",
 			"price": 12,
-			"num_tickets": 40,
 			"valid_with": [101]
 		},{
 			"id": 103,
 			"title": "Aliens",
-			"price": 7,
-			"num_tickets": 40
+			"price": 7
 		},{
 			"id": 104,
 			"title": "Free",
-			"price": 0,
-			"num_tickets": 40
+			"price": 0
 		}
 	]
 }

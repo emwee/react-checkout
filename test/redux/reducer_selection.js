@@ -1,12 +1,17 @@
 import 'babel-polyfill'
 import expect from 'expect'
-import reducer from '../../reducers/selection'
+import { createStore } from 'redux'
+import rootReducer from '../../reducers/index'
+import { default as selectionReducer, getTotalQuantity } from '../../reducers/selection'
+import * as actions from '../../actions'
 import * as types from '../../constants/action_types'
+
+import VARIANTS_STUB from '../../api/variants.json'
 
 describe('selection reducer', () => {
 	it('should return the initial state', () => {
 		expect(
-			reducer(undefined, {})
+			selectionReducer(undefined, {})
 		).toEqual({
 			activeStepIndex: 0,
 			selectedDate: null,
@@ -19,7 +24,7 @@ describe('selection reducer', () => {
 	it('should handle SELECT_DATE', () => {
 		const today = new Date()
 		expect(
-			reducer({}, {
+			selectionReducer({}, {
 				type: types.SELECT_DATE,
 				date: today
 			})
@@ -34,7 +39,7 @@ describe('selection reducer', () => {
 
 	it('should handle SELECT_VARIANT', () => {
 		expect(
-			reducer({
+			selectionReducer({
 				activeStepIndex: 0,
 				selectedDate: null,
 				selectedTimeslotId: null,
@@ -54,7 +59,7 @@ describe('selection reducer', () => {
 		})
 
 		expect(
-			reducer({
+			selectionReducer({
 				activeStepIndex: 0,
 				selectedDate: null,
 				selectedTimeslotId: null,
@@ -72,5 +77,19 @@ describe('selection reducer', () => {
 			selectedVariantIds: [ 101 ],
 			quantityByVariantId: { 101:5 },
 		})
+	})
+
+	it('should handle getTotalQuantity', () => {
+		const store = createStore(rootReducer);
+		store.dispatch(actions.selectDate('2016-04-01'));
+		store.dispatch(actions.receiveVariants(VARIANTS_STUB.variants));
+		store.dispatch(actions.selectVariant(102, 2));
+
+		// Children depends on Adults, so should not be counted
+		expect(getTotalQuantity(store.getState())).toEqual(0)
+
+		// select 3 tickets for Adults
+		store.dispatch(actions.selectVariant(101, 3));
+		expect(getTotalQuantity(store.getState())).toEqual(5)
 	})
 })
