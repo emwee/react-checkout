@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { formatDate, formatPrice } from '../../viewhelpers'
+import { formatDate, formatPrice } from '../../helpers/viewhelpers'
 
 const Summary = (props) => {
 	const { selectedDate, hasTimeslots, selectedTimeslot, selectedVariants,

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
-import { formatPrice } from '../../viewhelpers'
+import { formatPrice } from '../../helpers/viewhelpers'
 
 export class Variant extends Component {
 	constructor() {
