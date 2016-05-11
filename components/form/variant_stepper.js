@@ -56,6 +56,6 @@ VariantStepper.propTypes = {
 	price: PropTypes.number,
 	quantity: PropTypes.number,
 	disabled: PropTypes.bool,
-	maxBookable: PropTypes.bool,
+	maxBookable: PropTypes.number,
 	selectVariant: PropTypes.func,
 }

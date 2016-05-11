@@ -10,8 +10,8 @@ import { getCheckoutDetails } from './actions'
 import App from './containers/App'
 
 const middleware = process.env.NODE_ENV === 'production' ?
-	[ thunk ] :
-	[ thunk, logger() ]
+	[thunk] :
+	[thunk, logger()]
 
 const store = createStore(
 	reducer,
@@ -19,7 +19,7 @@ const store = createStore(
 		applyMiddleware(
 			...middleware
 		),
-		window.devToolsExtension ? window.devToolsExtension() : f => f
+		window.devToolsExtension ? window.devToolsExtension() : func => func
 	)
 )
 

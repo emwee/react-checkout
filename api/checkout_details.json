@@ -15,10 +15,17 @@
 		}
 	},
 	"selection": {
+		"activeStepIndex": 1,
 		"selectedDate": "20160402",
 		"selectedTimeslotId": 201,
 		"selectedVariantIds": [101, 102],
 		"quantityByVariantId": {"101": 1, "102": 1},
+		"customer": {
+			"firstName": "Maarten",
+			"lastName": "Wierda",
+			"email": "mwierda+test@tiqets.com",
+			"phone": "+31630743407"
+		},
 		"timeslots": [
 			{
 				"id": 201,

@@ -17,4 +17,4 @@ test_react_watch:
 	mocha -w test/react/helpers/browser.js test/react/*.spec.js; \
 
 eslint:
-	./node_modules/.bin/eslint containers/ components/ actions/ reducers/ constants/ helpers
+	./node_modules/.bin/eslint index.js containers/ components/ actions/ reducers/ constants/ helpers/

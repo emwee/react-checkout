@@ -5,6 +5,13 @@ import * as types from '../constants/action_types'
 import { isStepUnlocked } from '../reducers'
 import { getTotalQuantity } from '../reducers/selection'
 
+export function setStepIndex(stepIndex) {
+	return {
+		type: types.SET_STEP_INDEX,
+		stepIndex,
+	}
+}
+
 export function selectDate(date) {
 	return {
 		type: types.SELECT_DATE,
@@ -127,12 +134,24 @@ export function setProduct(product) {
 	}
 }
 
+export function setCustomerDetails(customerDetails) {
+	return {
+		type: types.SET_CUSTOMER_DETAILS,
+		customerDetails,
+	}
+}
+
 function preselectCheckoutDetails(selection) {
-	const { selectedDate,
+	const {
+		activeStepIndex,
+		selectedDate,
 		selectedTimeslotId, timeslots,
-		selectedVariantIds, quantityByVariantId, variants } = selection
+		selectedVariantIds, quantityByVariantId, variants,
+		customer,
+	} = selection
 
 	return dispatch => {
+		dispatch(setStepIndex(activeStepIndex))
 		dispatch(selectDate(selectedDate))
 		dispatch(receiveTimeslots(selectedDate, timeslots))
 		dispatch(selectTimeslot(selectedTimeslotId))
@@ -140,6 +159,7 @@ function preselectCheckoutDetails(selection) {
 		for (const variantId of selectedVariantIds) {
 			dispatch(selectVariant(variantId, quantityByVariantId[variantId]))
 		}
+		dispatch(setCustomerDetails(customer))
 	}
 }
 
@@ -151,13 +171,6 @@ export function getCheckoutDetails() {
 				dispatch(preselectCheckoutDetails(details.selection))
 			}
 		})
-	}
-}
-
-export function setStepIndex(stepIndex) {
-	return {
-		type: types.SET_STEP_INDEX,
-		stepIndex,
 	}
 }
 
@@ -193,5 +206,39 @@ export function goToPersonalDetails() {
 		}
 
 		return dispatch(goToStep(1))
+	}
+}
+
+export function submitOrder() {
+	return (dispatch, getState) => {
+		const state = getState()
+		const requestParams = {
+			booking_date: state.selection.selectedDate,
+			timeslot_id: state.selection.selectedTimeslotId,
+			'contact-firstname': state.form.customer.firstName.value,
+			'contact-surname': state.form.customer.lastName.value,
+			'contact-email': state.form.customer.email.value,
+			'contact-phone': state.form.customer.phone.value,
+			'contact-sms_notification_enabled': true,
+
+			// TODO: implement these fields
+			csrf_token: 'TODO',
+			discount_code: 'TODO',
+
+			// TODO: check if these fields are really necessary
+			country: '?', // should be set by backend IMO
+			timeslot: '?', // timeslot id should be sufficient
+			booking_fee: '?',
+			subtotal: '?',
+			total_price: '?',
+		}
+
+		state.selection.selectedVariantIds.forEach((variantId, index) => {
+			requestParams[`product_variant-${index + 1}-id`] = variantId
+			requestParams[`product_variant-${index + 1}-num_tickets`] =
+				state.selection.quantityByVariantId[variantId]
+		})
+
+		console.log(requestParams)
 	}
 }

@@ -9,6 +9,7 @@ const initialState = {
 	selectedTimeslotId: null,
 	selectedVariantIds: [],
 	quantityByVariantId: {},
+	customerDetails: {},
 }
 
 const activeStepIndex = (state = initialState.activeStepIndex, action) => {
@@ -75,12 +76,27 @@ const quantityByVariantId = (state = initialState.quantityByVariantId, action) =
 	}
 }
 
+const customerDetails = (state = initialState.customerDetails, action) => {
+	switch (action.type) {
+		case types.SET_CUSTOMER_DETAILS:
+			return action.customerDetails
+		case 'redux-form/CHANGE':
+			return {
+				...state,
+				[action.field]: action.value,
+			}
+		default:
+			return state
+	}
+}
+
 export default combineReducers({
 	activeStepIndex,
 	selectedDate,
 	selectedTimeslotId,
 	selectedVariantIds,
 	quantityByVariantId,
+	customerDetails,
 })
 
 function getEnabledVariants(state) {

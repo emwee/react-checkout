@@ -26,6 +26,5 @@ module.exports = {
       test: /\.json$/,
       loader: 'json-loader'
     }]
-  },
-  devtool: 'cheap-module-eval-source-map'
+  }
 }

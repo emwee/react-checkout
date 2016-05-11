@@ -2,9 +2,11 @@ import React, { Component, PropTypes } from 'react'
 import { reduxForm } from 'redux-form'
 import classNames from 'classnames'
 
-require('../../css/consumer.css')
+require('../../css/customer.css')
 
-const validate = values => {
+const fields = ['firstName', 'lastName', 'email', 'phone']
+
+const validate = (values) => {
 	const errors = {}
 	if (!values.firstName) {
 		errors.firstName = 'Required'
@@ -27,7 +29,7 @@ const validate = values => {
 	return errors
 }
 
-class ConsumerForm extends Component {
+class CustomerForm extends Component {
 	renderField(field, title) {
 		return (
 			<div className="form-row">
@@ -56,15 +58,19 @@ class ConsumerForm extends Component {
 	}
 }
 
-ConsumerForm = reduxForm({
-	form: 'consumer',
-	fields: ['firstName', 'lastName', 'email', 'phone'],
+CustomerForm = reduxForm({
+	form: 'customer',
+	fields,
 	validate,
-})(ConsumerForm)
+},
+state => ({ // mapStateToProps
+	initialValues: state.selection.customerDetails,
+})
+)(CustomerForm)
 
-ConsumerForm.propTypes = {
+CustomerForm.propTypes = {
 	fields: PropTypes.object,
 	handleSubmit: PropTypes.func,
 }
 
-export default ConsumerForm
+export default CustomerForm
