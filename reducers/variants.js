@@ -80,14 +80,6 @@ export function getVariants(state) {
 }
 
 export function isVariantDisabled(state, variantId) {
-	if (!state.selection.selectedDate) {
-		return true
-	}
-
-	if (state.product.hasTimeslots && !state.selection.selectedTimeslotId) {
-		return true
-	}
-
 	const variant = getVariant(state.variants, variantId)
 
 	if (!variant.valid_with) {

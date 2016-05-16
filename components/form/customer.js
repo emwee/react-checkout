@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { reduxForm } from 'redux-form'
 import classNames from 'classnames'
-
-require('../../css/customer.css')
+import '../../css/customer.css'
 
 const fields = ['firstName', 'lastName', 'email', 'phone']
 

@@ -2,8 +2,7 @@ import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
 import api from '../api/index'
 import * as types from '../constants/action_types'
-import { isStepUnlocked } from '../reducers'
-import { getTotalQuantity } from '../reducers/selection'
+import * as selectionReducer from '../reducers/selection'
 
 export function setStepIndex(stepIndex) {
 	return {
@@ -174,38 +173,65 @@ export function getCheckoutDetails() {
 	}
 }
 
-export function alertField(fieldName) {
-	return {
-		type: types.ALERT_FIELD,
-		fieldName,
-	}
-}
-
 export function goToStep(stepIndex) {
 	return (dispatch, getState) => {
 		const state = getState()
-		if (isStepUnlocked(state, stepIndex)) {
+		if (selectionReducer.isStepUnlocked(state, stepIndex)) {
 			dispatch(setStepIndex(stepIndex))
 		}
 	}
 }
 
+export function goToStepIfValid(stepIndex) {
+	return (dispatch, getState) => {
+		const state = getState()
+		switch (stepIndex) {
+			case 0:
+			case 1:
+				if (selectionReducer.bookingDetailsCompleted(state)) {
+					dispatch(setStepIndex(stepIndex))
+				}
+				break
+			default:
+				return false
+		}
+		return false
+	}
+}
+
+function validateBookingDetails(state) {
+	const validationFields = [
+		{
+			fieldName: 'date',
+			fieldValidation: selectionReducer.isDateSelected,
+		},
+		{
+			fieldName: 'timeslots',
+			fieldValidation: selectionReducer.isTimeslotSelected,
+		},
+		{
+			fieldName: 'variants',
+			fieldValidation: selectionReducer.areVariantsValid,
+		},
+	]
+
+	for (const field of validationFields) {
+		if (!field.fieldValidation(state)) {
+			const event = new CustomEvent(`validateField:${field.fieldName}`)
+			window.dispatchEvent(event)
+			return false
+		}
+	}
+
+	return true
+}
+
 export function goToPersonalDetails() {
 	return (dispatch, getState) => {
 		const state = getState()
-		if (!state.selection.selectedDate) {
-			return dispatch(alertField('date'))
+		if (validateBookingDetails(state)) {
+			dispatch(setStepIndex(1))
 		}
-
-		if (state.product.hasTimeslots && !state.selection.selectedTimeslotId) {
-			return dispatch(alertField('timeslot'))
-		}
-
-		if (getTotalQuantity(state) === 0) {
-			return dispatch(alertField('variants'))
-		}
-
-		return dispatch(goToStep(1))
 	}
 }
 
@@ -238,7 +264,5 @@ export function submitOrder() {
 			requestParams[`product_variant-${index + 1}-num_tickets`] =
 				state.selection.quantityByVariantId[variantId]
 		})
-
-		console.log(requestParams)
 	}
 }

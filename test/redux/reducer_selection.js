@@ -14,6 +14,7 @@ describe('selection reducer', () => {
 			selectionReducer(undefined, {})
 		).toEqual({
 			activeStepIndex: 0,
+			customerDetails: {},
 			selectedDate: null,
 			selectedTimeslotId: null,
 			selectedVariantIds: [],
@@ -30,6 +31,7 @@ describe('selection reducer', () => {
 			})
 		).toEqual({
 			activeStepIndex: 0,
+			customerDetails: {},
 			selectedDate: today,
 			selectedTimeslotId: null,
 			selectedVariantIds: [],
@@ -41,6 +43,7 @@ describe('selection reducer', () => {
 		expect(
 			selectionReducer({
 				activeStepIndex: 0,
+				customerDetails: {},
 				selectedDate: null,
 				selectedTimeslotId: null,
 				selectedVariantIds: [],
@@ -52,6 +55,7 @@ describe('selection reducer', () => {
 			})
 		).toEqual({
 			activeStepIndex: 0,
+			customerDetails: {},
 			selectedDate: null,
 			selectedTimeslotId: null,
 			selectedVariantIds: [ 101 ],
@@ -72,6 +76,7 @@ describe('selection reducer', () => {
 			})
 		).toEqual({
 			activeStepIndex: 0,
+			customerDetails: {},
 			selectedDate: null,
 			selectedTimeslotId: null,
 			selectedVariantIds: [ 101 ],

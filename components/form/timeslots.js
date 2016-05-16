@@ -1,24 +1,18 @@
 import React, { PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import { scrollToField } from '../../helpers/utils'
+import AlertField from './alert'
 
-require('../../css/timeslots.css')
+import '../../css/timeslots.css'
 
 class Timeslots extends React.Component {
-	componentDidUpdate() {
-		if (this.props.isFieldAlerted) {
-			scrollToField(ReactDOM.findDOMNode(this.refs.field))
-		}
-	}
 	render() {
-		const { isFetching, didInvalidate, isFieldAlerted, children } = this.props
+		const { isFetching, didInvalidate, isValid, children, isValidated } = this.props
 		return (
-			<div className="timeslots" ref="field">
+			<div className="timeslots" ref="timeslots">
 				{isFetching && <p>fetching timeslots...</p>}
 				{didInvalidate && <p>fetching timeslots failed...</p>}
 				{!children.length && !didInvalidate && <p>no timeslots fetched yet..</p>}
 				{children}
-				{isFieldAlerted && <p>choose a timeslot!</p>}
+				{isValidated && !isValid && <p>choose a timeslot!</p>}
 			</div>
 		)
 	}
@@ -27,8 +21,9 @@ class Timeslots extends React.Component {
 Timeslots.propTypes = {
 	isFetching: PropTypes.bool,
 	didInvalidate: PropTypes.bool,
-	isFieldAlerted: PropTypes.bool,
+	isValid: PropTypes.bool,
+	isValidated: PropTypes.bool,
 	children: PropTypes.array,
 }
 
-export default Timeslots
+export default new AlertField('timeslots', Timeslots)

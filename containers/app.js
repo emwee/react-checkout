@@ -9,7 +9,7 @@ import CustomerForm from '../components/form/customer'
 import ActionBar from '../components/action_bar'
 import * as actions from '../actions'
 
-require('../css/checkout.css')
+import '../css/checkout.css'
 
 class App extends Component {
 	constructor(props) {
@@ -77,8 +77,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		goToPersonalDetails: () => dispatch(actions.goToPersonalDetails()),
 		submitOrder: () => dispatch(actions.submitOrder()),
+		goToPersonalDetails: () => dispatch(actions.goToPersonalDetails()),
 	}
 }
 

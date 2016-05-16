@@ -1,5 +1,6 @@
 body {
 	font-family: sans-serif;
+	/*height: 1000px*/
 }
 
 p {
@@ -12,6 +13,7 @@ p {
 
 .checkout-form-wrapper {
 	display: flex;
+	/*margin-top: 400px;*/
 }
 
 .checkout-form {

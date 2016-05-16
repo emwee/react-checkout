@@ -1,19 +1,19 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
+import { isTimeslotSelected } from '../reducers/selection'
 import { getTimeslots } from '../reducers/timeslots'
 import Timeslots from '../components/form/timeslots'
 import Timeslot from '../components/form/timeslot'
-import { isFieldAlerted } from '../reducers/alerted_field'
 
 const TimeslotsContainer = (props) => {
-	const { isFetching, didInvalidate, isAlerted,
+	const { isFetching, didInvalidate, isValid,
 		timeslots, selectedTimeslotId, selectTimeslot } = props
 	return (
 		<Timeslots
 			isFetching={isFetching}
 			didInvalidate={didInvalidate}
-			isFieldAlerted={isAlerted}
+			isValid={isValid}
 		>
 		{timeslots.map(timeslot =>
 			<Timeslot
@@ -33,7 +33,7 @@ function mapStateToProps(state) {
 		timeslots: getTimeslots(state.timeslots),
 		isFetching: state.timeslots.isFetching,
 		didInvalidate: state.timeslots.didInvalidate,
-		isAlerted: isFieldAlerted(state, 'timeslot'),
+		isValid: isTimeslotSelected(state),
 	}
 }
 
@@ -57,10 +57,10 @@ TimeslotsContainer.propTypes = {
 		})
 	),
 	isFetching: PropTypes.bool,
-	isAlerted: PropTypes.bool,
 	isDisabled: PropTypes.bool,
 	didInvalidate: PropTypes.bool,
 	selectTimeslot: PropTypes.func,
+	isValid: PropTypes.bool,
 }
 
 export default connect(

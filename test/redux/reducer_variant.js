@@ -60,13 +60,13 @@ describe('variants reducer', () => {
 	it('should handle initially disable variants', () => {
 		const store = createStore(rootReducer);
 		store.dispatch(actions.receiveVariants(VARIANTS_STUB.variants));
-		expect(isVariantDisabled(store.getState(), 101)).toBe(true)
+		expect(isVariantDisabled(store.getState(), 101)).toBe(false)
 	})
 
 	it('should handle enable variants after date selection', () => {
 		const store = createStore(rootReducer);
-		store.dispatch(actions.selectDate('2016-04-01'));
 		store.dispatch(actions.receiveVariants(VARIANTS_STUB.variants));
-		expect(isVariantDisabled(store.getState(), 101)).toBe(false)
+		store.dispatch(actions.selectVariant(101, 1));
+		expect(isVariantDisabled(store.getState(), 102)).toBe(false)
 	})
 })

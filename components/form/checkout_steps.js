@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
-
-require('../../css/checkout_steps.css')
+import'../../css/checkout_steps.css'
 
 const CheckoutSteps = (props) =>
 	<div className="checkout-steps">

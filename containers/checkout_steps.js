@@ -5,7 +5,7 @@ import CheckoutSteps from '../components/form/checkout_steps'
 import CheckoutStep from '../components/form/checkout_step'
 
 const CheckoutStepsContainer = (props) => {
-	const { steps, activeStepIndex, goToStep } = props
+	const { steps, activeStepIndex, goToStepIfValid } = props
 	return (
 		<CheckoutSteps>
 		{steps.map((step, index) =>
@@ -13,7 +13,7 @@ const CheckoutStepsContainer = (props) => {
 				key={index}
 				index={index}
 				active={index === activeStepIndex}
-				onClick={() => { goToStep(index) }}
+				onClick={() => { goToStepIfValid(index) }}
 				{...step}
 			/>
 		)}
@@ -38,8 +38,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		goToStep: (index) => {
-			dispatch(actions.goToStep(index))
+		goToStepIfValid: (index) => {
+			dispatch(actions.goToStepIfValid(index))
 		},
 	}
 }
@@ -51,7 +51,7 @@ CheckoutStepsContainer.propTypes = {
 			title: PropTypes.string,
 		})
 	),
-	goToStep: PropTypes.func,
+	goToStepIfValid: PropTypes.func,
 }
 
 export default connect(
