@@ -199,37 +199,10 @@ export function goToStepIfValid(stepIndex) {
 	}
 }
 
-function validateBookingDetails(state) {
-	const validationFields = [
-		{
-			fieldName: 'date',
-			fieldValidation: selectionReducer.isDateSelected,
-		},
-		{
-			fieldName: 'timeslots',
-			fieldValidation: selectionReducer.isTimeslotSelected,
-		},
-		{
-			fieldName: 'variants',
-			fieldValidation: selectionReducer.areVariantsValid,
-		},
-	]
-
-	for (const field of validationFields) {
-		if (!field.fieldValidation(state)) {
-			const event = new CustomEvent(`validateField:${field.fieldName}`)
-			window.dispatchEvent(event)
-			return false
-		}
-	}
-
-	return true
-}
-
 export function goToPersonalDetails() {
 	return (dispatch, getState) => {
 		const state = getState()
-		if (validateBookingDetails(state)) {
+		if (selectionReducer.validateBookingDetails(state)) {
 			dispatch(setStepIndex(1))
 		}
 	}

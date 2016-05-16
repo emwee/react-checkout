@@ -173,3 +173,30 @@ export function bookingDetailsCompleted(state) {
 
 	return true
 }
+
+export function validateBookingDetails(state) {
+	const validationFields = [
+		{
+			fieldName: 'date',
+			fieldValidation: isDateSelected,
+		},
+		{
+			fieldName: 'timeslots',
+			fieldValidation: isTimeslotSelected,
+		},
+		{
+			fieldName: 'variants',
+			fieldValidation: areVariantsValid,
+		},
+	]
+
+	for (const field of validationFields) {
+		if (!field.fieldValidation(state)) {
+			const event = new CustomEvent(`validateField:${field.fieldName}`)
+			window.dispatchEvent(event)
+			return false
+		}
+	}
+
+	return true
+}
