@@ -202,9 +202,15 @@ export function goToStepIfValid(stepIndex) {
 export function goToPersonalDetails() {
 	return (dispatch, getState) => {
 		const state = getState()
-		if (selectionReducer.validateBookingDetails(state)) {
-			dispatch(setStepIndex(1))
+		const invalidFields = selectionReducer.getInvalidFields(state)
+		if (invalidFields.length) {
+			for (const field of invalidFields) {
+				const event = new CustomEvent(`validateField:${field.fieldName}`)
+				window.dispatchEvent(event)
+				return false
+			}
 		}
+		return dispatch(setStepIndex(1))
 	}
 }
 

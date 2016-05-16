@@ -20,6 +20,14 @@ p {
 	flex: 3;
 }
 
+.checkout-form-step {
+	display: none;
+}
+
+.checkout-form-step--active {
+	display: block;
+}
+
 .checkout-form__booking-details {
 	display: flex;
 }

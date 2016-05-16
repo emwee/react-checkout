@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
 import CheckoutStepsContainer from './checkout_steps'
 import SummaryContainer from './summary'
 import DatepickerContainer from './datepicker'
@@ -46,6 +47,20 @@ class App extends Component {
 			</div>
 		)
 	}
+	renderStep(stepIndex) {
+		const { activeStepIndex } = this.props
+		const isActive = stepIndex === activeStepIndex
+		return (
+			<div
+				className={classNames('checkout-form-step', {
+					'checkout-form-step--active': isActive,
+				})}
+			>
+				{stepIndex === 0 && this.renderBookingDetails()}
+				{stepIndex === 1 && this.renderCustomerDetails()}
+			</div>
+		)
+	}
 	render() {
 		const { activeStepIndex, goToPersonalDetails } = this.props
 		return (
@@ -53,8 +68,8 @@ class App extends Component {
 				<CheckoutStepsContainer />
 				<div className="checkout-form-wrapper">
 					<div className="checkout-form">
-						{activeStepIndex === 0 && this.renderBookingDetails() }
-						{activeStepIndex === 1 && this.renderCustomerDetails() }
+						{this.renderStep(0)}
+						{this.renderStep(1)}
 						<ActionBar
 							activeStepIndex={activeStepIndex}
 							goToPersonalDetails={goToPersonalDetails}

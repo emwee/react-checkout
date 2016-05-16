@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { scrollToField } from '../../helpers/utils'
+import zenscroll from 'zenscroll'
 
 const AlertFieldWrapper = (fieldName, Wrapped) => class AlertField extends Component {        // (1)
 	constructor(props) {
@@ -11,7 +11,8 @@ const AlertFieldWrapper = (fieldName, Wrapped) => class AlertField extends Compo
 		}
 	}
 	alertField() {
-		scrollToField(ReactDOM.findDOMNode(this.refs.field))
+		const node = ReactDOM.findDOMNode(this.refs.field)
+		zenscroll.intoView(node)
 		this.setState({ isValidated: true })
 	}
 	componentDidMount() {

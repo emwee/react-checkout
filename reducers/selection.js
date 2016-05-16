@@ -79,11 +79,6 @@ const customerDetails = (state = initialState.customerDetails, action) => {
 	switch (action.type) {
 		case types.SET_CUSTOMER_DETAILS:
 			return action.customerDetails
-		case 'redux-form/CHANGE':
-			return {
-				...state,
-				[action.field]: action.value,
-			}
 		default:
 			return state
 	}
@@ -151,30 +146,14 @@ export function isDateSelected(state) {
 }
 
 export function isTimeslotSelected(state) {
-	return state.product.hasTimeslots && state.selection.selectedTimeslotId
+	return state.product.hasTimeslots && !!state.selection.selectedTimeslotId
 }
 
 export function areVariantsValid(state) {
 	return getTotalQuantity(state) > 0
 }
 
-export function bookingDetailsCompleted(state) {
-	if (!isDateSelected(state)) {
-		return false
-	}
-
-	if (!isTimeslotSelected(state)) {
-		return false
-	}
-
-	if (!areVariantsValid(state)) {
-		return false
-	}
-
-	return true
-}
-
-export function validateBookingDetails(state) {
+export function getInvalidFields(state) {
 	const validationFields = [
 		{
 			fieldName: 'date',
@@ -190,13 +169,11 @@ export function validateBookingDetails(state) {
 		},
 	]
 
-	for (const field of validationFields) {
-		if (!field.fieldValidation(state)) {
-			const event = new CustomEvent(`validateField:${field.fieldName}`)
-			window.dispatchEvent(event)
-			return false
-		}
-	}
+	return validationFields.filter((field) =>
+		!field.fieldValidation(state)
+	)
+}
 
-	return true
+export function bookingDetailsCompleted(state) {
+	return !getInvalidFields(state).length
 }
