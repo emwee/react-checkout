@@ -1,5 +1,6 @@
 import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
+import CustomEvent from 'custom-event'
 import api from '../api/index'
 import * as types from '../constants/action_types'
 import * as selectionReducer from '../reducers/selection'
@@ -133,6 +134,45 @@ export function setProduct(product) {
 	}
 }
 
+export function requestCheckcouponCode(couponCode) {
+	return {
+		type: types.REQUEST_CHECK_COUPON_CODE,
+		couponCode,
+	}
+}
+
+export function checkcouponCodeSucceeded(couponCode, json) {
+	return {
+		type: types.CHECK_COUPON_CODE_SUCCEEDED,
+		json,
+		couponCode,
+	}
+}
+
+export function checkcouponCodeFailed(couponCode, json) {
+	return {
+		type: types.CHECK_COUPON_CODE_FAILED,
+		json,
+		couponCode,
+	}
+}
+
+export function checkcouponCode(couponCode) {
+	const status = couponCode === 'ams' ? 'success' : 'error'
+	return (dispatch) => {
+		dispatch(requestCheckcouponCode())
+		fetch(`./api/check_coupon.${status}.json`)
+			.then(response => response.json())
+			.then(json => {
+				if (json.success) {
+					dispatch(checkcouponCodeSucceeded(couponCode, json))
+				} else {
+					dispatch(checkcouponCodeFailed(couponCode, json))
+				}
+			})
+	}
+}
+
 export function setCustomerDetails(customerDetails) {
 	return {
 		type: types.SET_CUSTOMER_DETAILS,
@@ -228,7 +268,7 @@ export function submitOrder() {
 
 			// TODO: implement these fields
 			csrf_token: 'TODO',
-			discount_code: 'TODO',
+			COUPON_CODE: 'TODO',
 
 			// TODO: check if these fields are really necessary
 			country: '?', // should be set by backend IMO

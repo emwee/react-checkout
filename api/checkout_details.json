@@ -14,8 +14,8 @@
 			"addon_amount": 0
 		}
 	},
-	"xselection": {
-		"activeStepIndex": 1,
+	"selection": {
+		"activeStepIndex": 0,
 		"selectedDate": "20160402",
 		"selectedTimeslotId": 201,
 		"selectedVariantIds": [101, 102],

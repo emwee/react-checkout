@@ -2,3 +2,5 @@ node_modules
 
 bundle.js
 vendor.bundle.js
+
+*.log

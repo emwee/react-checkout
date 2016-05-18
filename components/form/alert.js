@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import zenscroll from 'zenscroll'
 
-const AlertFieldWrapper = (fieldName, Wrapped) => class AlertField extends Component {        // (1)
+const AlertFieldWrapper = (fieldName, Wrapped) => class AlertField extends Component {
 	constructor(props) {
 		super(props)
 		this.alertField = this.alertField.bind(this)

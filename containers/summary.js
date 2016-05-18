@@ -1,22 +1,43 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { getSelectedTimeslot, getSelectedVariants, getSubtotalPrice, getBookingFee,
-	getTotalPrice } from '../reducers/selection'
-import Summary from '../components/summary/'
+import * as actions from '../actions'
+import * as selectionReducer from '../reducers/selection'
+import SummaryDate from '../components/summary/date'
+import SummaryTimeslots from '../components/summary/timeslots'
+import SummaryVariants from '../components/summary/variants'
+import SummaryPrice from '../components/summary/price'
+import CouponForm from '../components/form/coupon_form'
 
 const SummaryContainer = (props) => {
-	const { selectedDate, hasTimeslots, selectedTimeslot, selectedVariants,
-		subtotalPrice, bookingFee, totalPrice } = props
+	const {
+		selectedDate,
+		hasTimeslots, selectedTimeslot,
+		selectedVariants,
+		subtotalPrice, bookingFee, discount, totalPrice, checkcouponCode,
+	} = props
 	return (
-		<Summary
-			hasTimeslots={hasTimeslots}
-			selectedDate={selectedDate}
-			selectedTimeslot={selectedTimeslot}
-			selectedVariants={selectedVariants}
-			subtotalPrice={subtotalPrice}
-			bookingFee={bookingFee}
-			totalPrice={totalPrice}
-		/>
+		<div className="order-summary">
+			<h3 className="order-summary__heading">Order summary</h3>
+			<SummaryDate
+				selectedDate={selectedDate}
+			/>
+			<SummaryTimeslots
+				hasTimeslots={hasTimeslots}
+				selectedTimeslot={selectedTimeslot}
+			/>
+			<SummaryVariants
+				selectedVariants={selectedVariants}
+			/>
+			{totalPrice > 0 && <CouponForm
+				checkcouponCode={checkcouponCode}
+			/>}
+			<SummaryPrice
+				subtotalPrice={subtotalPrice}
+				bookingFee={bookingFee}
+				discount={discount}
+				totalPrice={totalPrice}
+			/>
+		</div>
 	)
 }
 
@@ -24,11 +45,20 @@ function mapStateToProps(state) {
 	return {
 		hasTimeslots: state.product.hasTimeslots,
 		selectedDate: state.selection.selectedDate,
-		selectedTimeslot: getSelectedTimeslot(state),
-		selectedVariants: getSelectedVariants(state),
-		subtotalPrice: getSubtotalPrice(state),
-		bookingFee: getBookingFee(state),
-		totalPrice: getTotalPrice(state),
+		selectedTimeslot: selectionReducer.getSelectedTimeslot(state),
+		selectedVariants: selectionReducer.getSelectedVariants(state),
+		subtotalPrice: selectionReducer.getSubtotalPrice(state),
+		bookingFee: selectionReducer.getBookingFee(state),
+		discount: selectionReducer.getDiscount(state),
+		totalPrice: selectionReducer.getTotalPrice(state),
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		checkcouponCode: (couponCode) => {
+			dispatch(actions.checkcouponCode(couponCode))
+		},
 	}
 }
 
@@ -39,9 +69,12 @@ SummaryContainer.propTypes = {
 	selectedVariants: PropTypes.array,
 	subtotalPrice: PropTypes.number,
 	bookingFee: PropTypes.number,
+	discount: PropTypes.number,
 	totalPrice: PropTypes.number,
+	checkcouponCode: PropTypes.func,
 }
 
 export default connect(
-	mapStateToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(SummaryContainer)

@@ -9,6 +9,7 @@ const initialState = {
 	selectedVariantIds: [],
 	quantityByVariantId: {},
 	customerDetails: {},
+	coupon: null,
 }
 
 const activeStepIndex = (state = initialState.activeStepIndex, action) => {
@@ -83,6 +84,27 @@ const customerDetails = (state = initialState.customerDetails, action) => {
 			return state
 	}
 }
+const coupon = (state = initialState.coupon, action) => {
+	switch (action.type) {
+		case types.CHECK_COUPON_CODE_SUCCEEDED:
+			const {
+				couponCode,
+				json: {
+					discount_cash: discountCash,
+					discount_percentage: discountPct,
+				},
+			} = action
+
+			return {
+				...state,
+				discountCash,
+				discountPct,
+				couponCode,
+			}
+		default:
+			return state
+	}
+}
 
 export default combineReducers({
 	activeStepIndex,
@@ -91,6 +113,7 @@ export default combineReducers({
 	selectedVariantIds,
 	quantityByVariantId,
 	customerDetails,
+	coupon,
 })
 
 function getEnabledVariants(state) {
@@ -107,12 +130,13 @@ export function getSelectedTimeslot(state) {
 }
 
 export function getSelectedVariants(state) {
-	return getEnabledVariants(state).map(variantId =>
-		Object.assign({},
-			getVariant(state.variants, variantId),
-			{ quantity: state.selection.quantityByVariantId[variantId] }
-		)
-	)
+	return getEnabledVariants(state).map(variantId => {
+		const variant = getVariant(state.variants, variantId)
+		return {
+			...variant,
+			quantity: state.selection.quantityByVariantId[variantId],
+		}
+	})
 }
 
 export function getSubtotalPrice(state) {
@@ -130,8 +154,17 @@ export function getBookingFee(state) {
 		bookingFeeConfig.addon_amount
 }
 
+export function getDiscount(state) {
+	const { selection: { coupon: couponSelection } } = state
+	if (!couponSelection) {
+		return 0
+	}
+	return (((getSubtotalPrice(state) + getBookingFee(state)) * couponSelection.discountPct) / 100) +
+		couponSelection.discountCash
+}
+
 export function getTotalPrice(state) {
-	return getSubtotalPrice(state) + getBookingFee(state)
+	return getSubtotalPrice(state) + getBookingFee(state) - getDiscount(state)
 }
 
 export function getTotalQuantity(state) {

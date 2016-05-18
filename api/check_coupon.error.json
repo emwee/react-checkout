@@ -1,0 +1,7 @@
+{
+	"discount_cash": null,
+	"discount_percentage": null,
+	"errormsg": "Sorry, the code you entered was not found.",
+	"status": "notfound",
+	"success": false
+}
